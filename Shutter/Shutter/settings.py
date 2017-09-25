@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'Shutter.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ShutterDB',
+        'NAME': 'shutterdb',
         'USER': 'root',
         'PASSWORD': 'root@dm1n',
         'HOST': 'localhost',
