@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from datetime import timedelta
 
 
 # Create your models here.
@@ -36,9 +37,14 @@ class Topic(models.Model):
     title = models.CharField(max_length=100, null=True, blank=True)
     content = models.CharField(max_length=500, null=True, blank=True)
     time = models.DateTimeField(default=timezone.now)
-    author = models.ForeignKey('User', related_name='Topic_Author', on_delete=models.CASCADE)
+    # author = models.ForeignKey('User', related_name='Topic_Author', on_delete=models.CASCADE)
     remarks = models.CharField(max_length=500, null=True, blank=True)
 
+    def __str__(self):
+        return self.content
+
+    def recent_topic(self):
+        return self.time >= timezone.now()-timedelta(minutes=3)
 
 class TopicComment(models.Model):
     topic = models.ForeignKey('Topic', related_name='TopicComment_Topic', on_delete=models.CASCADE, null=True,
