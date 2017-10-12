@@ -8,7 +8,7 @@
 {% if latest_topic_list %}
     <ul>
     {% for t in latest_topic_list %}
-        <li>{{ t.title }}</a></li>
+        <li><a href="/ShutterWeb/topic/{{ t.id }}/">{{ t.title }}</a></li>
     {% endfor %}
     </ul>
 {% else %}

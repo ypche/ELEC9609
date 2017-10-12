@@ -79,7 +79,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'shutterdb',
         'USER': 'root',
-        'PASSWORD': 'root@dm1n',
+        'PASSWORD': '935575731Aa',
         'HOST': 'localhost',
         'PORT': '3306',
     }
