@@ -48,6 +48,7 @@
     <thead>
      <tr>
        <th>Topic Title</th>
+       <th>Remarks</th>
        <th>Public Time</th>
      </tr>
     </thead>
@@ -59,6 +60,9 @@
        <th>
          <li><a href="/ShutterWeb/topic/{{ t.id }}/">{{ t.title }}</a></li>
        </th>
+       <td>
+          {{ t.remarks }}
+       </td>
        <td>
           {{ t.time }}
        </td>

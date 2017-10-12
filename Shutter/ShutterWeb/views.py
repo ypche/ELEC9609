@@ -8,6 +8,11 @@ def forum(request):
     context = {'latest_topic_list': latest_topic_list}
     return render(request, 'forum.html', context)
 
+def hot_topic(request):
+    latest_topic_list=Topic.objects.order_by('-remarks')[:3]
+    context = {'latest_topic_list': latest_topic_list}
+    return render(request, 'hot_topic.html', context)
+
 def topic(request, topic_id):
     try:
         topic = Topic.objects.get(pk=topic_id)

@@ -38,7 +38,7 @@ class Topic(models.Model):
     content = models.CharField(max_length=500, null=True, blank=True)
     time = models.DateTimeField(default=timezone.now)
     # author = models.ForeignKey('User', related_name='Topic_Author', on_delete=models.CASCADE)
-    remarks = models.CharField(max_length=500, null=True, blank=True)
+    remarks = models.IntegerField(max_length=50, null=True, blank=True)
 
     def __str__(self):
         return self.content
@@ -53,8 +53,8 @@ class TopicComment(models.Model):
                                 blank=True)
     content = models.CharField(max_length=500, null=True, blank=True)
     time = models.DateTimeField(default=timezone.now)
-    author = models.ForeignKey('User', related_name='TopicComment_Author', on_delete=models.CASCADE)
-    remarks = models.CharField(max_length=500, null=True, blank=True)
+    # author = models.ForeignKey('User', related_name='TopicComment_Author', on_delete=models.CASCADE)
+    # remarks = models.CharField(max_length=500, null=True, blank=True)
 
 
 class News(models.Model):
