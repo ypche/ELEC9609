@@ -3,7 +3,7 @@ from django.http import Http404
 
 
 from .models import Topic, Topiccomment
-from .forms import CommentForm
+from .forms import CommentForm, TopicForm
 
 def forum(request):
     latest_topic_list=Topic.objects.order_by('-time')[:3]
@@ -15,6 +15,7 @@ def hot_topic(request):
     context = {'latest_topic_list': latest_topic_list}
     return render(request, 'hot_topic.html', context)
 
+# View topic detail and add comment
 def topic(request, topic_id):
     try:
         topic = Topic.objects.get(pk=topic_id)
@@ -37,4 +38,14 @@ def topic(request, topic_id):
 
 
 
+def add_topic(request):
+    if request.method == 'POST':
+        form = TopicForm(request.POST, request.FILES)
+        if form.is_valid():
+                # file is saved
+            form.save()
+            return redirect('/ShutterWeb/forum')
+    else:
+        form = TopicForm()
+    return render(request, 'add_topic.html', {'form': form})
 
