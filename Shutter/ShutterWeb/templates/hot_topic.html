@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+
+    <title>Title</title>
+</head>
+<body>
+
+
+<nav class="navbar  navbar-expand-xl navbar-dark bg-dark fixed-top ">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  <a class="navbar-brand" href="#">Shutter</a>
+
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Forum</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">News</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Register</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Log out</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+
+	<div class="m-titleModule f-mb40">
+		<h2 class="sub-t">Forum</h2>
+	</div>
+
+<table class="table">
+    <thead>
+     <tr>
+       <th>Topic Title</th>
+       <th>Remarks</th>
+       <th>Public Time</th>
+     </tr>
+    </thead>
+
+    <tbody>
+    {% if latest_topic_list %}
+    {% for t in latest_topic_list %}
+     <tr scope="row">
+       <th>
+         <li><a href="/ShutterWeb/topic/{{ t.id }}/">{{ t.title }}</a></li>
+       </th>
+       <td>
+          {{ t.remarks }}
+       </td>
+       <td>
+          {{ t.time }}
+       </td>
+     </tr>
+     {% endfor %}
+     {% else %}
+         <p>No topic is available.</p>
+        {% endif %}
+    </tbody>
+
+    <!--<div>-->
+        <!--{% if latest_topic_list %}-->
+        <!--<ul>-->
+        <!--{% for t in latest_topic_list %}-->
+
+             <!--<div class="row">-->
+                 <!--<div class="col">-->
+                    <!--<li><a href="/ShutterWeb/topic/{{ t.id }}/">{{ t.title }}</a></li>-->
+                 <!--</div>-->
+                 <!--<div class="col">-->
+                    <!--{{ t.time }}-->
+                  <!--</div>-->
+             <!--</div>-->
+            <!--<hr>-->
+        <!--{% endfor %}-->
+        <!--</ul>-->
+        <!--{% else %}-->
+         <!--<p>No topic is available.</p>-->
+        <!--{% endif %}-->
+    <!--</div>-->
+
+<!--</div>-->
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+</table>
+</body>
+</html>
