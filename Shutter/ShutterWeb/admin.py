@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import User
 from .models import Message
 from .models import Topic
-from .models import TopicComment
+from .models import Topiccomment
 from .models import News
 from .models import NewsComment
 from .models import Photo
@@ -27,7 +27,7 @@ admin.site.register(Message, MessageAdmin)
 
 admin.site.register(Topic)
 
-admin.site.register(TopicComment)
+admin.site.register(Topiccomment)
 
 admin.site.register(News)
 

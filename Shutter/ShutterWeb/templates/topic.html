@@ -1,10 +1,52 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>{{ topic.title }}</title>
 </head>
 <body>
-    {{ topic }}
+<div>
+    <span>
+       {{ topic.title }}
+    </span>
+</div>
+<div class="content">
+    <div class="blog">
+    <div class="title">
+        <a href="#">
+            <h2>{{ topic.title }}</h2>
+        </a>
+    </div>
+    <div class="info">
+{#      <span class="category" style="color: #ff9900;">{{ blog.category.name }}</span>#}
+{#      <span class="author" style="color: #4a86e8">{{ blog.author }}</span>#}
+      <span class="created" style="color: #6aa84f">{{ topic.time}}</span>
+    </div>
+    <div class="content">
+        {{ topic.content }}
+    </div>
+</div>
+</div>
+    <div class="comment">
+    <div class="comments-display" style="padding-top: 20px;">
+        <h3>Comments</h3>
+        {% for comment in TopicComments %}
+        <div class="comment-field" style="padding-top: 10px;">
+             {{ comment.content }} {{ comment.time }}
+        </div>
+        {% endfor %}
+    </div>
+    <div class="comment-post" style="padding-top: 20px;">
+        <h3>Add a Comment</h3>
+        <form action="{% url 'topic' topic.id %}" method="post">
+            {% csrf_token %}
+            {{ form }}
+
+            <button type="submit" style="margin-top: 10px">Summit</button>
+        </form>
+    </div>
+</div>
+
 </body>
 </html>

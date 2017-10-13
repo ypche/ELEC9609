@@ -43,14 +43,15 @@ class Topic(models.Model):
     def __str__(self):
         return self.content
 
+
     def recent_topic(self):
         return self.time >= timezone.now()-timedelta(minutes=3)
 
-class TopicComment(models.Model):
-    topic = models.ForeignKey('Topic', related_name='TopicComment_Topic', on_delete=models.CASCADE, null=True,
+class Topiccomment(models.Model):
+    topic = models.ForeignKey('Topic',  on_delete=models.CASCADE, null=True,
                               blank=True)
-    comment = models.ForeignKey('self', related_name='TopicComment_Comment', on_delete=models.CASCADE, null=True,
-                                blank=True)
+    # comment = models.ForeignKey('self', on_delete=models.CASCADE, null=True,
+    #                             blank=True)
     content = models.CharField(max_length=500, null=True, blank=True)
     time = models.DateTimeField(default=timezone.now)
     # author = models.ForeignKey('User', related_name='TopicComment_Author', on_delete=models.CASCADE)
