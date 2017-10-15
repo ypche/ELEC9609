@@ -66,6 +66,10 @@ class Topiccomment(models.Model):
     # author = models.ForeignKey('User', related_name='TopicComment_Author', on_delete=models.CASCADE)
     # remarks = models.CharField(max_length=500, null=True, blank=True)
 
+    def __str__(self):
+        return self.content
+
+
 
 class News(models.Model):
     title = models.CharField(max_length=100, null=True, blank=True)

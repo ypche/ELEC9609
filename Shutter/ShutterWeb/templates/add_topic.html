@@ -1,18 +1,143 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Add_topic</title>
-</head>
-<body>
-   <div class="comment-post" style="padding-top: 20px;">
-        <h3>Add a Topic</h3>
-        <form action="{% url 'add_topic'  %}" method="post">
-            {% csrf_token %}
-            {{ form }}
 
-            <button type="submit" style="margin-top: 10px">Summit</button>
-        </form>
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Blog Post - Start Bootstrap Template</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://blackrockdigital.github.io/startbootstrap-blog-post/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="https://blackrockdigital.github.io/startbootstrap-blog-post/css/blog-post.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+
+
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <a class="navbar-brand" href="#">Shutter</a>
+      <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item ">
+            <a class="nav-link" href="#">Home </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="#">Forum<span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Profile</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Help</a>
+          </li>
+        </ul>
+      </div>
+     </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
+          <ul class="nav nav-pills flex-column">
+            <li class="nav-item">
+              <a class="nav-link " href="#" style="">Overview </a>
+                  <li class="nav-item">
+              <a class="nav-link active" href="/ShutterWeb/forum">Newest topic<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/ShutterWeb/hot_topic">Hottest Topic</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/ShutterWeb/add_topic">Add a topic</a>
+            </li>
+          </ul>
+        </nav>
+
+        <!-- Post Content Column -->
+        <div class="col-lg-8" >
+            <br>
+          <!-- Title -->
+          <h1 class="mt-4" >Create A new Topic Here</h1>
+          <!-- Author -->
+
+
+            <!-- Comments Form -->
+          <div class="card my-4" style="top:10%">
+            <div class="card-body">
+              <form method="post">
+                  {% csrf_token %}
+                  <h3>Title</h3>
+                  <div class="form-group">
+                  <textarea class="form-control" rows="2" name="title"></textarea>
+                 </div>
+
+                  <h3>Content</h3>
+
+                <div class="form-group">
+                  <textarea class="form-control" rows="8" name="content"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" >Submit</button>
+              </form>
+            </div>
+          </div>
+
+
+        </div>
+
+
+
+      <!-- /.row -->
+      </div>
     </div>
-</body>
+    <!-- /.container -->
+
+    <!-- Footer -->
+    <footer class="py-4 bg-dark " style="position:absolute; bottom: 0px;width: 100%">
+      <div class="container ">
+        <p class="m-0 text-center text-white">Copyright &copy; Shutter 2017</p>
+      </div>
+    </footer>
+
+    <script src="https://blackrockdigital.github.io/startbootstrap-blog-post/vendor/jquery/jquery.min.js"></script>
+    <script src="https://blackrockdigital.github.io/startbootstrap-blog-post/vendor/popper/popper.min.js"></script>
+    <script src="https://blackrockdigital.github.io/startbootstrap-blog-post/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+  </body>
+
 </html>
+
+
+
+
+
+
+
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>Add_topic</title>#}
+{#</head>#}
+{#<body>#}
+{#   <div class="comment-post" style="padding-top: 20px;">#}
+{#        <h3>Add a Topic</h3>#}
+{#        <form action="{% url 'add_topic'  %}" method="post">#}
+{#            {% csrf_token %}#}
+{#            {{ form }}#}
+{##}
+{#            <button type="submit" style="margin-top: 10px">Summit</button>#}
+{#        </form>#}
+{#    </div>#}
+{#</body>#}
+{#</html>#}

@@ -71,7 +71,7 @@
             <h1>Hottest Topic</h1>
          <table class="table">
             <tbody>
-            {% if latest_topic_list %}
+            {% if latest_topic %}
                 <thead>
              <tr>
                  <th>Topic Title</th>
@@ -80,7 +80,7 @@
                  <th>Views</th>
              </tr>
         </thead>
-            {% for t in latest_topic_list %}
+            {% for t in latest_topic %}
              <tr scope="row">
             <th>
                 <li><a href="/ShutterWeb/topic/{{ t.id }}/">{{ t.title }}</a></li>
@@ -101,6 +101,22 @@
             {% endif %}
             </tbody>
         </table>
+
+            <div class="pagination" >
+                <span class="step-links">
+                    {% if latest_topic.has_previous %}
+                        <a href="?page={{ latest_topic.previous_page_number }}">previous</a>
+                    {% endif %}
+
+                    <span class="current">
+                     Page {{ latest_topic.number }} of {{ latest_topic.paginator.num_pages }}.
+                    </span>
+
+                    {% if latest_topic.has_next %}
+            <a href="?page={{ latest_topic.next_page_number }}">next</a>
+                {% endif %}
+                </span>
+                </div>
 
         </main>
         </nav>

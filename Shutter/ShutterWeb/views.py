@@ -1,18 +1,41 @@
 from django.shortcuts import render, redirect
 from django.http import Http404
+from django.core.paginator import PageNotAnInteger,Paginator,EmptyPage
 
 
 from .models import Topic, Topiccomment
 from .forms import CommentForm, TopicForm
 
 def forum(request):
-    latest_topic_list=Topic.objects.order_by('-time')[:3]
-    context = {'latest_topic_list': latest_topic_list}
+    latest_topic_list=Topic.objects.order_by('-time')
+    paginator = Paginator(latest_topic_list, 5) # Show 25 contacts per page
+
+    page = request.GET.get('page')
+    try:
+        latest_topic = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        latest_topic = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        latest_topic = paginator.page(paginator.num_pages)
+    context = {'latest_topic': latest_topic}
     return render(request, 'forum.html', context)
 
 def hot_topic(request):
     latest_topic_list=Topic.objects.order_by('-remarks')
-    context = {'latest_topic_list': latest_topic_list}
+    paginator = Paginator(latest_topic_list, 5) # Show 25 contacts per page
+
+    page = request.GET.get('page')
+    try:
+        latest_topic = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        latest_topic = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        latest_topic = paginator.page(paginator.num_pages)
+    context = {'latest_topic': latest_topic}
     return render(request, 'hot_topic.html', context)
 
 # View topic detail and add comment
