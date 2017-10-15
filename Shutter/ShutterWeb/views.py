@@ -11,7 +11,7 @@ def forum(request):
     return render(request, 'forum.html', context)
 
 def hot_topic(request):
-    latest_topic_list=Topic.objects.order_by('-remarks')[:3]
+    latest_topic_list=Topic.objects.order_by('-remarks')
     context = {'latest_topic_list': latest_topic_list}
     return render(request, 'hot_topic.html', context)
 
@@ -19,6 +19,7 @@ def hot_topic(request):
 def topic(request, topic_id):
     try:
         topic = Topic.objects.get(pk=topic_id)
+        topic.increase_views()
     except Topic.DoesNotExist:
         raise Http404("Topic does not exist")
     if request.method == 'GET':
@@ -29,6 +30,8 @@ def topic(request, topic_id):
             clean_data = form.cleaned_data
             clean_data['topic']= topic
             Topiccomment.objects.create(**clean_data)
+            topic.increase_remarks()
+
     context = {
         'topic': topic,
         'TopicComments':topic.topiccomment_set.all().order_by('-time'),

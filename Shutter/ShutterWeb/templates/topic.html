@@ -1,52 +1,153 @@
-
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ topic.title }}</title>
-</head>
-<body>
-<div>
-    <span>
-       {{ topic.title }}
-    </span>
-</div>
-<div class="content">
-    <div class="blog">
-    <div class="title">
-        <a href="#">
-            <h2>{{ topic.title }}</h2>
-        </a>
-    </div>
-    <div class="info">
-{#      <span class="category" style="color: #ff9900;">{{ blog.category.name }}</span>#}
-{#      <span class="author" style="color: #4a86e8">{{ blog.author }}</span>#}
-      <span class="created" style="color: #6aa84f">{{ topic.time}}</span>
-    </div>
-    <div class="content">
-        {{ topic.content }}
-    </div>
-</div>
-</div>
-    <div class="comment">
-    <div class="comments-display" style="padding-top: 20px;">
-        <h3>Comments</h3>
-        {% for comment in TopicComments %}
-        <div class="comment-field" style="padding-top: 10px;">
-             {{ comment.content }} {{ comment.time }}
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Blog Post - Start Bootstrap Template</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://blackrockdigital.github.io/startbootstrap-blog-post/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="https://blackrockdigital.github.io/startbootstrap-blog-post/css/blog-post.css" rel="stylesheet">
+
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <a class="navbar-brand" href="#">Shutter</a>
+      <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item ">
+            <a class="nav-link" href="#">Home </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="#">Forum<span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Profile</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Help</a>
+          </li>
+        </ul>
+      </div>
+     </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
+          <ul class="nav nav-pills flex-column">
+            <li class="nav-item">
+              <a class="nav-link " href="#">Overview </a>
+                  <li class="nav-item">
+              <a class="nav-link active" href="#">Newest topic<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/ShutterWeb/hot_topic">Hottest Topic</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/ShutterWeb/add_topic">Add a topic</a>
+            </li>
+          </ul>
+        </nav>
+
+        <!-- Post Content Column -->
+        <div class="col-lg-8">
+
+          <!-- Title -->
+          <h1 class="mt-4">{{ topic.title }}</h1>
+          <!-- Author -->
+          <p class="lead">
+               <small>By</small>
+            <a href="#"><small>Author</small></a>
+          </p>
+
+
+
+          <!-- Date/Time -->
+            <p class="text-right"><small>Created on {{ topic.time }}</small></p>
+
+          <hr>
+
+          <!-- Preview Image -->
+{#          <img class="img-fluid rounded" src="http://placehold.it/900x300" alt="">#}
+{##}
+{#          <hr>#}
+
+          <!-- Post Content -->
+          <blockquote class="blockquote">
+            <div style="height: auto"> {{ topic.content }} </div>
+             <div style="height: 200px" ></div>
+          </blockquote>
+
+
+
+
+          <!-- Comments Form -->
+          <div class="card my-4">
+            <h5 class="card-header">Leave a Comment:</h5>
+            <div class="card-body">
+              <form method="post">
+                  {% csrf_token %}
+                <div class="form-group">
+                  <textarea class="form-control" rows="3" name="content"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" >Submit</button>
+              </form>
+            </div>
+          </div>
+
+            {% for comment in TopicComments %}
+              <div class="media mt-4">
+
+                <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                <div class="media-body">
+                  <h5 class="mt-0">Commenter Name</h5>
+                 <div class="comment-field" style="padding-top: 10px;">
+              {{ comment.content }}
+               </div>
+                    <p class="text-right"><small>{{ comment.time }}</small></p>
+                </div>
+                      <hr>
+
+              </div>
+            {% endfor %}
+
+
         </div>
-        {% endfor %}
-    </div>
-    <div class="comment-post" style="padding-top: 20px;">
-        <h3>Add a Comment</h3>
-        <form action="{% url 'topic' topic.id %}" method="post">
-            {% csrf_token %}
-            {{ form }}
 
-            <button type="submit" style="margin-top: 10px">Summit</button>
-        </form>
-    </div>
-</div>
 
-</body>
+
+      <!-- /.row -->
+      </div>
+    </div>
+    <!-- /.container -->
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark button">
+      <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; Shutter 2017</p>
+      </div>
+    </footer>
+
+    <script src="https://blackrockdigital.github.io/startbootstrap-blog-post/vendor/jquery/jquery.min.js"></script>
+    <script src="https://blackrockdigital.github.io/startbootstrap-blog-post/vendor/popper/popper.min.js"></script>
+    <script src="https://blackrockdigital.github.io/startbootstrap-blog-post/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+  </body>
+
 </html>
+
+
+

@@ -38,11 +38,20 @@ class Topic(models.Model):
     content = models.CharField(max_length=500, null=True, blank=True)
     time = models.DateTimeField(default=timezone.now)
     # author = models.ForeignKey('User', related_name='Topic_Author', on_delete=models.CASCADE)
-    remarks = models.IntegerField(max_length=50, null=True, blank=True)
+    remarks = models.PositiveIntegerField(default=0)
+    views = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return self.content
 
+    def increase_remarks(self):
+        self.remarks += 1
+        self.save(update_fields=['remarks'])
+
+
+    def increase_views(self):
+        self.views += 1
+        self.save(update_fields=['views'])
 
     def recent_topic(self):
         return self.time >= timezone.now()-timedelta(minutes=3)
