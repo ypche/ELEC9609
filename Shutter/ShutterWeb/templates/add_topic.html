@@ -22,30 +22,29 @@
         </nav>
 
           <main class="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main">
-          <section class="row text-center placeholders">
-              <div class="col-6 col-sm-3 placeholder">
+          <section class="row text-left placeholders">
+              <div class="col-8 col-sm-10 placeholder">
         <!-- Post Content Column -->
-        <div class="col-lg-8" >
+        <div class="col-lg-20" >
             <br>
           <!-- Title -->
-          <h1 class="mt-4" >Create A new Topic Here</h1>
+          <h1  >Create A new Topic Here</h1>
           <!-- Author -->
+          <br><br>
 
-
-            <!-- Comments Form -->
-          <div class="card my-4" style="top:10%">
+            <div class="card my-10" style="top:10% " >
             <div class="card-body">
               <form method="post">
                   {% csrf_token %}
                   <h3>Title</h3>
                   <div class="form-group">
-                  <textarea class="form-control" rows="2" name="title"></textarea>
+                  <textarea class="form-control"  rows="2" name="title"></textarea>
                  </div>
 
                   <h3>Content</h3>
 
                 <div class="form-group">
-                  <textarea class="form-control" rows="8" name="content"></textarea>
+                  <textarea class="form-control" rows="10"  name="content"></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary" >Submit</button>
               </form>
