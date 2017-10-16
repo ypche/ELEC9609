@@ -75,3 +75,6 @@ def add_topic(request):
         form = TopicForm()
     return render(request, 'add_topic.html', {'form': form})
 
+def inbox(request):
+
+    return render(request, 'inbox.html')
