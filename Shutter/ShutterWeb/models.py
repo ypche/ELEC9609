@@ -74,7 +74,7 @@ class Topiccomment(models.Model):
 
 class News(models.Model):
     title = models.CharField(max_length=100, null=True, blank=True)
-    content = models.CharField(max_length=500, null=True, blank=True)
+    content = models.CharField(max_length=10000, null=True, blank=True)
     time = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey('User', related_name='News_Author', on_delete=models.CASCADE)
     remarks = models.CharField(max_length=500, null=True, blank=True)
