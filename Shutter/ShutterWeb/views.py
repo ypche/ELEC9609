@@ -78,3 +78,7 @@ def add_topic(request):
 def inbox(request):
 
     return render(request, 'inbox.html')
+
+def message_detail(request):
+
+    return render(request, 'message_detail.html')

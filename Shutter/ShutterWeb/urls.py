@@ -7,5 +7,6 @@ urlpatterns = [
     url(r'^topic/(?P<topic_id>[0-9]+)/$', views.topic, name='topic'),
     url(r'^add_topic/$', views.add_topic, name='add_topic'),
     url(r'^inbox/$', views.inbox, name='inbox'),
+    url(r'^message_detail/$', views.message_detail, name='message_detail'),
 ]
 
