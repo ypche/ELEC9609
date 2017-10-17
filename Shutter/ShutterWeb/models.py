@@ -25,6 +25,7 @@ class Message(models.Model):
     receiver = models.ForeignKey('User', related_name='Message_Receiver', on_delete=models.CASCADE)
     content = models.CharField(max_length=500, null=True, blank=True)
     time = models.DateTimeField(default=timezone.now)
+    readflag = models.CharField(max_length=6, default='UNREAD')
     remarks = models.CharField(max_length=500, null=True, blank=True)
 
     def __str__(self):
