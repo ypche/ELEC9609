@@ -2,6 +2,80 @@
 
 {% block title %}Message Detail{% endblock %}
 
-{% block MainBody %}
+{% block customcss %}
 
+{% endblock %}
+
+{% block MainBody %}
+<div class="container" style="margin-top: 0.75rem">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="card">
+        <img class="card-img-top text-center" src="..." alt="User Profile Picture">
+        <div class="card-body">
+          <h4 class="card-title text-center">Alice</h4>
+          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-9">
+      <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-6">
+          <textarea id="messageContent" rows="5" class="form-control" placeholder="Say Something..." required></textarea>
+        </div>
+        <div class="col-md-2">
+          <img class="text-center" src="..." alt="User Profile Picture">
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search for..." aria-label="Search for...">
+            <span class="input-group-btn">
+              <button class="btn btn-secondary" type="button">Go!</button>
+            </span>
+            </div>
+        </div>
+        <div class="col-md-3"></div>
+        <div class="col-md-3 text-right">
+          <button class="btn btn-secondary" type="button">Send</button>
+        </div>
+        <div class="col-md-2"></div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-6">
+          <li class="list-group-item">Message A</li>
+        </div>
+        <div class="col-md-2">
+          <img class="text-center" src="..." alt="User Profile Picture">
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-md-2">
+          <img class="text-center" src="..." alt="User Profile Picture">
+        </div>
+        <div class="col-md-6">
+          <li class="list-group-item">Message B</li>
+        </div>
+        <div class="col-md-4">
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-6">
+          <li class="list-group-item">Message C</li>
+        </div>
+        <div class="col-md-2">
+          <img class="text-center" src="..." alt="User Profile Picture">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
