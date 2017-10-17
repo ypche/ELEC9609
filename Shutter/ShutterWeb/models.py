@@ -77,6 +77,7 @@ class News(models.Model):
     content = models.CharField(max_length=10000, null=True, blank=True)
     time = models.DateTimeField(default=timezone.now)
     author = models.CharField(max_length=100, null=True, blank=True)
+    description = models.CharField(max_length=100, null=True, blank=True)
     remarks = models.CharField(max_length=500, null=True, blank=True)
 
 
