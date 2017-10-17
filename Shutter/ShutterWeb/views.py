@@ -6,6 +6,8 @@ from django.core.paginator import PageNotAnInteger,Paginator,EmptyPage
 from .models import Topic, Topiccomment
 from .forms import CommentForm, TopicForm
 
+from .models import News, NewsComment
+
 def forum(request):
     latest_topic_list=Topic.objects.order_by('-time')
     paginator = Paginator(latest_topic_list, 5) # Show 25 contacts per page
@@ -82,3 +84,10 @@ def inbox(request):
 def message_detail(request):
 
     return render(request, 'message_detail.html')
+
+def news_list(request):
+    all_news = News .objects.all()
+
+    return render(request, 'news_list.html',{
+        'all_news' : all_news
+    })
