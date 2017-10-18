@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
 from django.http import Http404
 from django.core.paginator import PageNotAnInteger,Paginator,EmptyPage
+from django.db import connection
 
 
-
-from .models import Topic, Topiccomment
+from .models import Topic, Topiccomment, Message
 from .forms import CommentForm, TopicForm
 
 def forum(request):
@@ -77,25 +77,22 @@ def add_topic(request):
     return render(request, 'add_topic.html', {'form': form})
 
 def inbox(request):
+    # message_list = Message.objects.extra('SELECT * FROM shutterdb.ShutterWeb_message where author_id = %s', '1')
+    message_list = Message.objects.all()
+    paginator = Paginator(message_list, 5)  # Show 25 contacts per page
 
-    return render(request, 'inbox.html')
+    page = request.GET.get('page')
+    try:
+        latest_message = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        latest_message = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        latest_message = paginator.page(paginator.num_pages)
+    context = {'latest_message': latest_message}
+    return render(request, 'inbox.html', context)
 
 def message_detail(request):
 
     return render(request, 'message_detail.html')
-
-def news_list(request):
-    all_news = News .objects.all()
-    try:
-        page = request.GET.get('page', 1)
-    except PageNotAnInteger:
-        page = 1
-
-    # 对所有新闻进行分页
-    p = Paginator( all_news, 1, request=request)
-
-    one_news = p.page(page)
-
-    return render(request, 'news_list.html',{
-        'all_news': one_news
-    })

@@ -38,30 +38,20 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="list-group">
+              {% if latest_message %}
+              {% for m in latest_message %}
               <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
                 <div class="d-flex w-100 justify-content-between">
-                  <h5 class="mb-1">Author: </h5>
-                  <small>3 days ago</small>
+                  <h5 class="mb-1">Author: {{ m.author }}</h5>
+                  <small>{{ m.time }}</small>
                 </div>
                 <p class="mb-1">Content</p>
-                <small>Donec id elit non mi porta.</small>
+                <small>{{ m.content }}</small>
               </a>
-              <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                <div class="d-flex w-100 justify-content-between">
-                  <h5 class="mb-1">Author: </h5>
-                  <small class="text-muted">3 days ago</small>
-                </div>
-                <p class="mb-1">Content</p>
-                <small class="text-muted">Donec id elit non mi porta.</small>
-              </a>
-              <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                <div class="d-flex w-100 justify-content-between">
-                  <h5 class="mb-1">Author: </h5>
-                  <small class="text-muted">3 days ago</small>
-                </div>
-                <p class="mb-1">Content</p>
-                <small class="text-muted">Donec id elit non mi porta.</small>
-              </a>
+              {% endfor %}
+              {% else %}
+              <p>No Messages!</p>
+              {% endif %}
             </div>
         </div>
     </div>
