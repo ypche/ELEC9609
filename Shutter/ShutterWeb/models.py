@@ -70,25 +70,24 @@ class Topiccomment(models.Model):
     def __str__(self):
         return self.content
 
-
-
 class News(models.Model):
-    title = models.CharField(max_length=100, null=True, blank=True)
-    content = models.CharField(max_length=10000, null=True, blank=True)
-    time = models.DateTimeField(default=timezone.now)
-    author = models.CharField(max_length=100, null=True, blank=True)
-    description = models.CharField(max_length=100, null=True, blank=True)
-    remarks = models.CharField(max_length=500, null=True, blank=True)
-
+        title = models.CharField(max_length=100, null=True, blank=True)
+        content = models.CharField(max_length=10000, null=True, blank=True)
+        time = models.DateTimeField(default=timezone.now)
+        author = models.CharField(max_length=100, null=True, blank=True)
+        description = models.CharField(max_length=100, null=True, blank=True)
+        remarks = models.CharField(max_length=500, null=True, blank=True)
 
 class NewsComment(models.Model):
-    topic = models.ForeignKey('News', related_name='NewsComment_Topic', on_delete=models.CASCADE, null=True, blank=True)
-    comment = models.ForeignKey('self', related_name='NewsComment_Comment', on_delete=models.CASCADE, null=True,
-                                blank=True)
-    content = models.CharField(max_length=500, null=True, blank=True)
-    time = models.DateTimeField(default=timezone.now)
-    author = models.ForeignKey('User', related_name='NewsComment_Author', on_delete=models.CASCADE)
-    remarks = models.CharField(max_length=500, null=True, blank=True)
+        topic = models.ForeignKey('News', related_name='NewsComment_Topic', on_delete=models.CASCADE, null=True,
+                                  blank=True)
+        comment = models.ForeignKey('self', related_name='NewsComment_Comment', on_delete=models.CASCADE, null=True,
+                                    blank=True)
+        content = models.CharField(max_length=500, null=True, blank=True)
+        time = models.DateTimeField(default=timezone.now)
+        author = models.ForeignKey('User', related_name='NewsComment_Author', on_delete=models.CASCADE)
+        remarks = models.CharField(max_length=500, null=True, blank=True)
+
 
 
 class Photo(models.Model):

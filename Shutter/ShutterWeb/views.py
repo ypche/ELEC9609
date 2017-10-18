@@ -1,14 +1,11 @@
 from django.shortcuts import render, redirect
 from django.http import Http404
 from django.core.paginator import PageNotAnInteger,Paginator,EmptyPage
-from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
 
 
 
 from .models import Topic, Topiccomment
 from .forms import CommentForm, TopicForm
-
-from .models import News, NewsComment
 
 def forum(request):
     latest_topic_list=Topic.objects.order_by('-time')
