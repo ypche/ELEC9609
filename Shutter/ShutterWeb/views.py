@@ -23,6 +23,7 @@ def forum(request):
     context = {'latest_topic': latest_topic}
     return render(request, 'forum.html', context)
 
+
 def hot_topic(request):
     latest_topic_list=Topic.objects.order_by('-remarks')
     paginator = Paginator(latest_topic_list, 5) # Show 25 contacts per page
