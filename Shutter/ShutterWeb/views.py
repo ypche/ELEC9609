@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.http import Http404
 from django.core.paginator import PageNotAnInteger,Paginator,EmptyPage
+from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
+
 
 
 from .models import Topic, Topiccomment
@@ -87,7 +89,16 @@ def message_detail(request):
 
 def news_list(request):
     all_news = News .objects.all()
+    try:
+        page = request.GET.get('page', 1)
+    except PageNotAnInteger:
+        page = 1
+
+    # 对所有新闻进行分页
+    p = Paginator( all_news, 1, request=request)
+
+    one_news = p.page(page)
 
     return render(request, 'news_list.html',{
-        'all_news' : all_news
+        'all_news': one_news
     })
