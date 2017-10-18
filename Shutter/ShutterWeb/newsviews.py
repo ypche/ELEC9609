@@ -12,7 +12,7 @@ def news_list(request):
         page = 1
 
     # 对所有新闻进行分页
-    p = Paginator(all_news, 1, request=request)
+    p = Paginator(all_news, 5, request=request)
 
     one_news = p.page(page)
 
