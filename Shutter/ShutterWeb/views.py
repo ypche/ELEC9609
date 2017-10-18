@@ -79,7 +79,7 @@ def add_topic(request):
 def inbox(request):
     # message_list = Message.objects.extra('SELECT * FROM shutterdb.ShutterWeb_message where author_id = %s', '1')
     message_list = Message.objects.all()
-    paginator = Paginator(message_list, 5)  # Show 25 contacts per page
+    paginator = Paginator(message_list, 5)  # Show 5 messages per page
 
     page = request.GET.get('page')
     try:
