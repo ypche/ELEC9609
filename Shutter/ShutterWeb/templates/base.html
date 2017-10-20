@@ -27,18 +27,22 @@
         <span class="navbar-toggler-icon"></span>
       </button>
 
+      {% url 'forum' as forum %}
+      {% url 'inbox' as inbox %}
+      {% url 'news_list' as news_list %}
+
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item ">
+          <li class="nav-item">
             <a class="nav-link" href="#">Home</a>
           </li>
-          <li class="nav-item">
+          <li {% if request.path == forum %} class="nav-item active" {% else %} class="nav-item" {% endif %}>
             <a class="nav-link" href="{% url 'forum' %}">Forum</a>
           </li>
-          <li class="nav-item">
+          <li {% if request.path == news_list %} class="nav-item active" {% else %} class="nav-item" {% endif %}>
             <a class="nav-link" href="{% url 'news_list' %}">News</a>
           </li>
-          <li class="nav-item">
+          <li {% if request.path == inbox %} class="nav-item active" {% else %} class="nav-item" {% endif %}>
             <a class="nav-link" href="{% url 'inbox' %}">Inbox</a>
           </li>
         </ul>

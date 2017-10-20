@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
 from django.http import Http404
 from django.core.paginator import PageNotAnInteger,Paginator,EmptyPage
+from django.db import connection
 
 
-
-from .models import Topic, Topiccomment
+from .models import Topic, Topiccomment, Message
 from .forms import CommentForm, TopicForm
 
 def forum(request):
@@ -22,6 +22,7 @@ def forum(request):
         latest_topic = paginator.page(paginator.num_pages)
     context = {'latest_topic': latest_topic}
     return render(request, 'forum.html', context)
+
 
 def hot_topic(request):
     latest_topic_list=Topic.objects.order_by('-remarks')
@@ -77,25 +78,26 @@ def add_topic(request):
     return render(request, 'add_topic.html', {'form': form})
 
 def inbox(request):
+    message_list = Message.objects.raw('SELECT * FROM ShutterWeb_message'
+                                       ' where author_id = %s or receiver_id = %s'
+                                       ' order by time desc' % ('1', '1'))
+    # message_list = Message.objects.order_by('-time')
+    paginator = Paginator(message_list, 5)  # Show 5 messages per page
+    paginator.count = len(list(message_list))
 
-    return render(request, 'inbox.html')
+    page = request.GET.get('page')
+    try:
+        latest_message = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        latest_message = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        latest_message = paginator.page(paginator.num_pages)
+    context = {'latest_message': latest_message}
+    # context = {'latest_message': message_list}
+    return render(request, 'inbox.html', context)
 
 def message_detail(request):
 
     return render(request, 'message_detail.html')
-
-def news_list(request):
-    all_news = News .objects.all()
-    try:
-        page = request.GET.get('page', 1)
-    except PageNotAnInteger:
-        page = 1
-
-    # 对所有新闻进行分页
-    p = Paginator( all_news, 1, request=request)
-
-    one_news = p.page(page)
-
-    return render(request, 'news_list.html',{
-        'all_news': one_news
-    })
