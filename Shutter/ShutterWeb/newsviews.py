@@ -19,3 +19,7 @@ def news_list(request):
     return render(request, 'news_list.html', {
         'all_news': one_news
     })
+
+def news_content(request):
+
+    return render(request, 'news_content.html')

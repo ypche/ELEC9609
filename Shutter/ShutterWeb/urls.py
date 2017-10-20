@@ -11,6 +11,7 @@ urlpatterns = [
     url(r'^inbox/$', views.inbox, name='inbox'),
     url(r'^message_detail/$', views.message_detail, name='message_detail'),
     url(r'^news/$', newsviews.news_list, name='news_list'),
+    url(r'^news_content/$', newsviews.news_content, name='news_content'),
 
 ]
 
