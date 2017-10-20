@@ -66,6 +66,8 @@
     <script>window.jQuery || document.write('<script src="http://getbootstrap.com/assets/js/vendor/popper.min.js"><\/script>')</script>
     <script src="http://getbootstrap.com/assets/js/vendor/popper.min.js"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    {% block customjs %}
+    {% endblock %}
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
   </body>
