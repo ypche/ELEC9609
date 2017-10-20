@@ -78,10 +78,23 @@ def add_topic(request):
     return render(request, 'add_topic.html', {'form': form})
 
 def inbox(request):
-    message_list = Message.objects.raw('SELECT * FROM ShutterWeb_message'
-                                       ' where author_id = %s or receiver_id = %s'
-                                       ' order by time desc' % ('1', '1'))
-    # message_list = Message.objects.order_by('-time')
+    if 'messageSortByDate' in request.POST:
+        message_list = Message.objects.raw('SELECT * FROM ShutterWeb_message'
+                                           ' where author_id = %s or receiver_id = %s'
+                                           ' order by time desc' % ('1', '1'))
+    elif 'messageSortByUnread' in request.POST:
+        message_list = Message.objects.raw('SELECT * FROM ShutterWeb_message'
+                                           ' where author_id = %s or receiver_id = %s'
+                                           ' and readflag = %s'
+                                           ' order by time desc' % ('1', '1', 'UNREAD'))
+    elif 'messageSortByFT' in request.POST:
+        message_list = Message.objects.raw('SELECT * FROM ShutterWeb_message'
+                                           ' where author_id = %s or receiver_id = %s'
+                                           ' order by author_id' % ('1', '1'))
+    else:
+        message_list = Message.objects.raw('SELECT * FROM ShutterWeb_message'
+                                           ' where author_id = %s or receiver_id = %s'
+                                           ' order by time desc' % ('1', '1'))
     paginator = Paginator(message_list, 5)  # Show 5 messages per page
     paginator.count = len(list(message_list))
 
