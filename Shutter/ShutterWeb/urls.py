@@ -10,12 +10,10 @@ urlpatterns = [
     url(r'^add_topic/$', views.add_topic, name='add_topic'),
     url(r'^inbox/$', views.inbox, name='inbox'),
     url(r'^message_detail/$', views.message_detail, name='message_detail'),
-<<<<<<< HEAD
+
     url(r'^news/$', newsviews.news_list, name='news_list'),
     url(r'^news_content/$', newsviews.news_content, name='news_content'),
-=======
     url(r'^news_list/$', newsviews.news_list, name='news_list'),
->>>>>>> 8be029d6377264b7a45a39f8e41bfeb1642da360
 
 ]
 
