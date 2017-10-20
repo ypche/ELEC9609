@@ -114,3 +114,11 @@ def inbox(request):
 def message_detail(request):
 
     return render(request, 'message_detail.html')
+
+
+# album
+def album_scenery(request):
+    return render(request, 'album_scenery.html')
+
+def album_people(request):
+    return render(request, 'album_scenery.html')
