@@ -7,6 +7,9 @@ from django.db import connection
 from .models import Topic, Topiccomment, Message
 from .forms import CommentForm, TopicForm
 
+
+
+
 def forum(request):
     latest_topic_list=Topic.objects.order_by('-time')
     paginator = Paginator(latest_topic_list, 5) # Show 25 contacts per page
@@ -112,7 +115,6 @@ def inbox(request):
     return render(request, 'inbox.html', context)
 
 def message_detail(request):
-
     return render(request, 'message_detail.html')
 
 
@@ -121,4 +123,8 @@ def album_scenery(request):
     return render(request, 'album_scenery.html')
 
 def album_people(request):
-    return render(request, 'album_scenery.html')
+    return render(request, 'album_people.html')
+
+# index
+def index(request):
+    return

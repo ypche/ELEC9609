@@ -15,10 +15,11 @@ urlpatterns = [
     url(r'^news_list/$', newsviews.news_list, name='news_list'),
 
     # scenery and people of album
-    url(r'^album_scenery/$', views.album_scenery, name='album_scenery'),
-    url(r'^album_people/$', views.album_people, name='album_people'),
+    url(r'^album/scenery/$', views.album_scenery, name='album_scenery'),
+    url(r'^album/people/$', views.album_people, name='album_people'),
+
     # home page
-    url(r'^$', views.album_scenery, name='home'),
+    url(r'^$', views.index, name='index'),
 
 ]
 
