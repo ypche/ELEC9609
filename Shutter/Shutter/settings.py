@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'ShutterWeb.apps.ShutterwebConfig',
+    'pure_pagination',
 ]
 
 MIDDLEWARE = [
@@ -79,7 +80,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'shutterdb',
         'USER': 'root',
-        'PASSWORD': '935575731Aa',
+        'PASSWORD': 'shenghaoisyummy',
         'HOST': 'localhost',
         'PORT': '3306',
     }
