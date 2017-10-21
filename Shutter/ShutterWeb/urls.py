@@ -24,8 +24,9 @@ urlpatterns = [
     # album
     url(r'^album/scenery/$', views.album_scenery, name='album_scenery'),
     url(r'^album/people/$', views.album_people, name='album_people'),
+    url(r'^album/photo/$', views.album_photo, name='album_photo'),
 
-    # home page
+    # home page will be redirected to album_scenery.html
     url(r'^$', views.index, name='index'),
 
 ]

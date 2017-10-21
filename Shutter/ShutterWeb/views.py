@@ -122,6 +122,9 @@ def album_scenery(request):
 def album_people(request):
     return render(request, 'album_people.html')
 
+def album_photo(request):
+    return render(request, 'album_photo.html')
+
 # index, index.html will be redirect to album_scenery.html
 def index(request):
     return HttpResponseRedirect('album/scenery/')
