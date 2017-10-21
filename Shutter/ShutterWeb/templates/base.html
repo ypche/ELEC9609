@@ -31,11 +31,22 @@
       {% url 'inbox' as inbox %}
       {% url 'news_list' as news_list %}
 
+      <!-- album collection of scenery and people
+      {% url 'album_scenery' as album_scenery %}
+      {% url 'album/people' as album_people %}
+      -->
+
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
+          <!--
           <li class="nav-item">
             <a class="nav-link" href="#">Home</a>
           </li>
+          -->
+          <li {% if request.path == album_scenery %} class="nav-item active" {% else %} class="nav-item" {% endif %}>
+            <a class="nav-link" href= "{% url 'album_scenery' %}">Home</a>
+          </li>
+
           <li {% if request.path == forum %} class="nav-item active" {% else %} class="nav-item" {% endif %}>
             <a class="nav-link" href="{% url 'forum' %}">Forum</a>
           </li>
@@ -66,6 +77,8 @@
     <script>window.jQuery || document.write('<script src="http://getbootstrap.com/assets/js/vendor/popper.min.js"><\/script>')</script>
     <script src="http://getbootstrap.com/assets/js/vendor/popper.min.js"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    {% block customjs %}
+    {% endblock %}
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
   </body>

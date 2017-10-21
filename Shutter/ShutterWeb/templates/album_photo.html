@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}Forum{% endblock %}
+
+{% block customcss %}
+
+{% endblock %}
+
+{% block MainBody %}
+{% load static %}
+
+<main role="main">
+
+      <section class="jumbotron text-center"> 
+        <div class="container" style="background-image:http://pic.qiantucdn.com/58pic/11/10/80/70558PICvpu.jpg!qt290">
+          <h1 class="jumbotron-heading">Album </h1>
+          <p class="lead text-muted">ENJOY THE WORLD OF COLOR</p>
+          <p>
+            <a href="#" class="btn btn-primary">Scenery</a>
+            <a href="#" class="btn btn-secondary">People</a>
+          </p>
+        </div>
+       </section> 
+
+      <div class="album text-muted">
+        <div class="container">
+          <div class="card" style="width: 100%; height: 100%">
+            <img border="0" src="{% static 'images/1.jpeg' %}" alt="Card image cap">
+            <p class="card-text">Picture-1</p>
+          </div>
+          <div class="card">
+            <img data-src="holder.js/100px280?theme=thumb" alt="Card image cap">
+            <p class="card-text">Picture-2</p>
+          </div>
+          <div class="card">
+            <img data-src="holder.js/100px280?theme=thumb" alt="Card image cap">
+            <p class="card-text">Picture-3</p>
+          </div>
+
+          <div class="card">
+            <img data-src="holder.js/100px280?theme=thumb" alt="Card image cap">
+            <p class="card-text">Picture-4</p>
+          </div>
+          <div class="card">
+            <img data-src="holder.js/100px280?theme=thumb" alt="Card image cap">
+            <p class="card-text">Picture-5</p>
+          </div>
+          <div class="card">
+            <img data-src="holder.js/100px280?theme=thumb" alt="Card image cap">
+            <p class="card-text">Picture-6</p>
+          </div>
+
+          <div class="card">
+            <img data-src="holder.js/100px280?theme=thumb" alt="Card image cap">
+            <p class="card-text">Picture-7</p>
+          </div>
+          <div class="card">
+            <img data-src="holder.js/100px280?theme=thumb" alt="Card image cap">
+            <p class="card-text">Picture-8</p>
+          </div>
+          <div class="card">
+            <img data-src="holder.js/100px280?theme=thumb" alt="Card image cap">
+            <p class="card-text">Picture-9</p>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+
+{% endblock %}

@@ -2,10 +2,10 @@ from django.shortcuts import render, redirect
 from django.http import Http404
 from django.core.paginator import PageNotAnInteger,Paginator,EmptyPage
 from django.db import connection
-
-
 from .models import Topic, Topiccomment, Message
 from .forms import CommentForm, TopicForm
+from django.http import HttpResponseRedirect
+
 
 def forum(request):
     latest_topic_list=Topic.objects.order_by('-time')
@@ -78,10 +78,23 @@ def add_topic(request):
     return render(request, 'add_topic.html', {'form': form})
 
 def inbox(request):
-    message_list = Message.objects.raw('SELECT * FROM ShutterWeb_message'
-                                       ' where author_id = %s or receiver_id = %s'
-                                       ' order by time desc' % ('1', '1'))
-    # message_list = Message.objects.order_by('-time')
+    if 'messageSortByDate' in request.POST:
+        message_list = Message.objects.raw('SELECT * FROM ShutterWeb_message'
+                                           ' where author_id = %s or receiver_id = %s'
+                                           ' order by time desc' % ('1', '1'))
+    elif 'messageSortByUnread' in request.POST:
+        message_list = Message.objects.raw('SELECT * FROM ShutterWeb_message'
+                                           ' where author_id = %s or receiver_id = %s'
+                                           ' and readflag = %s'
+                                           ' order by time desc' % ('1', '1', 'UNREAD'))
+    elif 'messageSortByFT' in request.POST:
+        message_list = Message.objects.raw('SELECT * FROM ShutterWeb_message'
+                                           ' where author_id = %s or receiver_id = %s'
+                                           ' order by author_id' % ('1', '1'))
+    else:
+        message_list = Message.objects.raw('SELECT * FROM ShutterWeb_message'
+                                           ' where author_id = %s or receiver_id = %s'
+                                           ' order by time desc' % ('1', '1'))
     paginator = Paginator(message_list, 5)  # Show 5 messages per page
     paginator.count = len(list(message_list))
 
@@ -99,5 +112,19 @@ def inbox(request):
     return render(request, 'inbox.html', context)
 
 def message_detail(request):
-
     return render(request, 'message_detail.html')
+
+
+# album
+def album_scenery(request):
+    return render(request, 'album_scenery.html')
+
+def album_people(request):
+    return render(request, 'album_people.html')
+
+def album_photo(request):
+    return render(request, 'album_photo.html')
+
+# index, index.html will be redirect to album_scenery.html
+def index(request):
+    return HttpResponseRedirect('album/scenery/')
