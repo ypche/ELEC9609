@@ -2,12 +2,9 @@ from django.shortcuts import render, redirect
 from django.http import Http404
 from django.core.paginator import PageNotAnInteger,Paginator,EmptyPage
 from django.db import connection
-
-
 from .models import Topic, Topiccomment, Message
 from .forms import CommentForm, TopicForm
-
-
+from django.http import HttpResponseRedirect
 
 
 def forum(request):
@@ -125,6 +122,6 @@ def album_scenery(request):
 def album_people(request):
     return render(request, 'album_people.html')
 
-# index
+# index, index.html will be redirect to album_scenery.html
 def index(request):
-    return
+    return HttpResponseRedirect('album/scenery/')
