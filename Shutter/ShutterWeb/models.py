@@ -1,14 +1,15 @@
 from django.db import models
 from django.utils import timezone
 from datetime import timedelta
+from django.contrib.auth.models import AbstractUser
+
 
 
 # Create your models here.
-class User(models.Model):
-    name = models.CharField(max_length=20, null=True)
-    gender = models.CharField(max_length=1, null=True, default='U')
+
+class UserProfile(AbstractUser):
+    gender = models.CharField(max_length=1, null=True, default='U',blank=True)
     email = models.EmailField(null=True, blank=True)
-    password = models.CharField(max_length=20, null=True)
     authorization = models.CharField(max_length=10, null=True, blank=True)
     pquestion1 = models.CharField(max_length=200, null=True, blank=True)
     panswer1 = models.CharField(max_length=200, null=True, blank=True)
@@ -16,13 +17,16 @@ class User(models.Model):
     panswer2 = models.CharField(max_length=200, null=True, blank=True)
     remarks = models.CharField(max_length=500, null=True, blank=True)
 
+    class Meta(AbstractUser.Meta):
+        pass
+
     def __str__(self):
         return (self.name)
 
 
 class Message(models.Model):
-    author = models.ForeignKey('User', related_name='Message_Author', on_delete=models.CASCADE)
-    receiver = models.ForeignKey('User', related_name='Message_Receiver', on_delete=models.CASCADE)
+    author = models.ForeignKey('UserProfile', related_name='Message_Author', on_delete=models.CASCADE)
+    receiver = models.ForeignKey('UserProfile', related_name='Message_Receiver', on_delete=models.CASCADE)
     content = models.CharField(max_length=500, null=True, blank=True)
     time = models.DateTimeField(default=timezone.now)
     readflag = models.CharField(max_length=6, default='UNREAD')
@@ -85,13 +89,13 @@ class NewsComment(models.Model):
                                     blank=True)
         content = models.CharField(max_length=500, null=True, blank=True)
         time = models.DateTimeField(default=timezone.now)
-        author = models.ForeignKey('User', related_name='NewsComment_Author', on_delete=models.CASCADE)
+        author = models.ForeignKey('UserProfile', related_name='NewsComment_Author', on_delete=models.CASCADE)
         remarks = models.CharField(max_length=500, null=True, blank=True)
 
 
 
 class Photo(models.Model):
-    author = models.ForeignKey('User', related_name='Photo_Author', on_delete=models.CASCADE)
+    author = models.ForeignKey('UserProfile', related_name='Photo_Author', on_delete=models.CASCADE)
     photo_path = models.FilePathField(null=True, blank=True)
     thumbs_up_number = models.IntegerField(null=True, blank=True)
     category = models.CharField(max_length=20, null=True, blank=True)
@@ -100,7 +104,7 @@ class Photo(models.Model):
 
 
 class PhotoComment(models.Model):
-    author = models.ForeignKey('User', related_name='PhotoComment_Author', on_delete=models.CASCADE)
+    author = models.ForeignKey('UserProfile', related_name='PhotoComment_Author', on_delete=models.CASCADE)
     photo = models.ForeignKey('Photo', related_name='PhotoComment_Photo', on_delete=models.CASCADE, null=True,
                               blank=True)
     comment = models.ForeignKey('self', related_name='PhotoComment_Comment', on_delete=models.CASCADE, null=True,

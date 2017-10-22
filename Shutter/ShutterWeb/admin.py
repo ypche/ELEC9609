@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User
+from .models import UserProfile
 from .models import Message
 from .models import Topic
 from .models import Topiccomment
@@ -12,10 +12,10 @@ from .models import PhotoComment
 # Register your models here.
 class UserAdmin(admin.ModelAdmin):
     class Meta:
-        model = User
+        model = UserProfile
 
 
-admin.site.register(User, UserAdmin)
+admin.site.register(UserProfile, UserAdmin)
 
 
 class MessageAdmin(admin.ModelAdmin):

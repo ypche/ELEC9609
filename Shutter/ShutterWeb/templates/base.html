@@ -61,8 +61,8 @@
         </ul>
           {%if not request.user.is_authenticated%}
         <div class="span12">
-           <a class="btn btn-primary" href="#" role="button">Signin</a>
-           <a class="btn btn-primary" href="{% url 'login' %}" role="button">Login</a>
+           <a class="btn btn-primary" href="#" role="button">Signup</a>
+           <a class="btn btn-primary" href="{% url 'login' %}" role="button">Signin</a>
 		</div>
           {%else%}
           <a class="btn btn-primary" href="{% url 'logout' %}" role="button">Logout</a>
