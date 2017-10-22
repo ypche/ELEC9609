@@ -11,10 +11,6 @@ class UserProfile(AbstractUser):
     gender = models.CharField(max_length=1, null=True, default='U',blank=True)
     email = models.EmailField(null=True, blank=True)
     authorization = models.CharField(max_length=10, null=True, blank=True)
-    pquestion1 = models.CharField(max_length=200, null=True, blank=True)
-    panswer1 = models.CharField(max_length=200, null=True, blank=True)
-    pquestion2 = models.CharField(max_length=200, null=True, blank=True)
-    panswer2 = models.CharField(max_length=200, null=True, blank=True)
     remarks = models.CharField(max_length=500, null=True, blank=True)
 
     class Meta(AbstractUser.Meta):
