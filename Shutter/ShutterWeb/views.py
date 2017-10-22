@@ -5,6 +5,7 @@ from django.db import connection
 from .models import Topic, Topiccomment, Message
 from .forms import CommentForm, TopicForm
 from django.http import HttpResponseRedirect
+from django.contrib.auth import authenticate, login,logout
 
 
 def forum(request):
@@ -128,3 +129,20 @@ def album_photo(request):
 # index, index.html will be redirect to album_scenery.html
 def index(request):
     return HttpResponseRedirect('album/scenery/')
+
+def user_login(request):
+    if request.method == "POST":
+        user_name = request.POST.get("username","")
+        pass_word = request.POST.get("password","")
+        user = authenticate(username=user_name, password=pass_word)
+        if user is not None:
+            login(request,user)
+            return render(request, "album_scenery.html")
+        else:
+            return render(request,"login.html",{})
+    elif request.method == "GET":
+        return render(request, "login.html",{})
+
+def user_logout(request):
+    logout(request)
+    return HttpResponseRedirect("/ShutterWeb")
