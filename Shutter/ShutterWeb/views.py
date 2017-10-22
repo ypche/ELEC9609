@@ -3,7 +3,7 @@ from django.http import Http404
 from django.core.paginator import PageNotAnInteger,Paginator,EmptyPage
 from django.db import connection
 from .models import Topic, Topiccomment, Message
-from .forms import CommentForm, TopicForm
+from .forms import CommentForm, TopicForm, RegisterForm
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login,logout
 
@@ -146,3 +146,13 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect("/ShutterWeb")
+
+def register(request):
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect("/ShutterWeb")
+    else:
+        form = RegisterForm()
+    return render(request, 'register.html', context={'form': form})
