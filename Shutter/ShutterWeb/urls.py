@@ -29,7 +29,7 @@ urlpatterns = [
     url(r'^album/scenery/new/$', views.album_scenery_new, name='album_scenery_new'),
     url(r'^album/scenery/hot/$', views.album_scenery_hot, name='album_scenery_hot'),
     url(r'^album/people/new/$', views.album_people_new, name='album_people_new'),
-    url(r'^album/people/hot/$', views.album_photo_hot, name='album_people_hot'),
+    url(r'^album/people/hot/$', views.album_people_hot, name='album_people_hot'),
     url(r'^album/photo/$', views.album_photo, name='album_photo'),
     url(r'^album/upload_image/$',views.album_upload_image, name='album_upload_image'),
 
