@@ -126,6 +126,25 @@ def album_people(request):
 def album_photo(request):
     return render(request, 'album_photo.html')
 
+def upload_image(request):###
+    if request.method == 'POST':
+        form = photoForm(request.POST,request.FILES)
+        if form.is_valid():
+            if 'docfile' in request.FILES:
+                image = request.FILES["docfile"]
+                image.name = str(request.user)+str(time)+'.jpg'
+                s=Photo(photographer=request.user,image_path=image)
+                s.save()
+                return HttpResponse('successful')
+            else:
+                return redirect('/ShutterWeb/album_scenery')
+        else:
+
+            image_path = None
+            return HttpResponse('fail')
+    else:
+        return render(request,'upload_image.html')
+
 # index, index.html will be redirect to album_scenery.html
 def index(request):
     return HttpResponseRedirect('album/scenery/')
