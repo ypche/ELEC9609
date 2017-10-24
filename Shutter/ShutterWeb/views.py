@@ -123,6 +123,18 @@ def message_detail(request):
 # album
 def album_scenery_new(request):
     return render(request, 'album_scenery_new.html')
+<<<<<<< HEAD
+
+def album_scenery_hot(request):
+    return render(request, 'album_scenery_hot.html')
+
+def album_people_new(request):
+    return render(request, 'album_people_new.html')
+
+def album_photo(request):
+    return render(request, 'album_photo.html')
+
+=======
 def album_scenery_hot(request):
     return render(request, 'album_scenery_hot.html')
 def album_people_new(request):
@@ -164,6 +176,7 @@ def album_photo(request):
     return render(request, 'album_photo.html')
 
 
+>>>>>>> e4ce2a2fe11a88db4d6e6c5717bbe649ba13240a
 
 
 def user_login(request):
