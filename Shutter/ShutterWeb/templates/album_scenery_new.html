@@ -7,6 +7,7 @@
 {% endblock %}
 
 {% block MainBody %}
+
 {% load static %}
 
 <main role="main">
@@ -46,133 +47,37 @@
                     onclick="window.location.href='{% url 'album_upload_image' %}'">Upload a Photo</button>
         </div>
       </div>
-
       <br>
 
-      <div class="row" >
-        <!-- 3 columns vertically-->
-        <div class="column">
-          <!-- column 1 starts -->
-          <div class="card" style="width: 22rem; margin: 0.5rem">
-            <!-- <a href="/ShutterWeb/album/photo/new"> -->
-            <a href="{% url 'album_photo' %}">
-              <img class="card-img-top" alt="Card image cap"
-                   src="{% static 'images/1.jpeg' %}">
-            </a>
-            <div class="card-block">
-              <h4 class="card-title text-center">Picture Title11111111111111111111111</h4>
-              <p class="card-text">Some text from photographer11111111111111111111111</p>
-              <a href="#" class="btn btn-primary" style="bottom-center">Thumb Up</a>
+      {% if newest_photos %}
+        {% for this_photo in newest_photos %}
+          <div class="row" >
+            <!-- 3 columns vertically-->
+            <div class="column">
+              <!-- column 1 starts -->
+              <div class="card" style="width: 22rem; margin: 0.5rem">
+                <!--<a href="/ShutterWeb/album/photo/new">-->
+                <a href="{% url 'album_photo' %}">
+                  <!--<img class="card-img-top" alt="Card image cap" src="{% static 'images/1.jpeg' %}">-->
+                  <img class="card-img-top" alt="Card image cap"
+                       src= "../../../../{{this_photo.image_path}}">
+                </a>
+                <div class="card-block">
+                  <h4 class="card-title text-center">{{ this_photo.photo_name}}</h4>
+                  <p class="card-text">Some text from photographer11111111111111111111111</p>
+                  <a href="#" class="btn btn-primary" style="bottom-center">Thumb Up</a>
+                </div>
+              </div>
             </div>
           </div>
-
-          <div class="card" style="width: 22rem; margin: 0.5rem">
-            <a href="/ShutterWeb/album/photo">
-              <img class="card-img-top" alt="Card image cap"
-                   src="{% static 'images/2.jpeg' %}">
-            </a>
-            <div class="card-block">
-              <h4 class="card-title text-center">Picture Title</h4>
-              <p class="card-text">Some text from photographer</p>
-              <a href="#" class="btn btn-primary">Thumb Up</a>
-            </div>
+        {% endfor %}
+      {% else %}
+        <p>No photo yet! You could upload your own photos!</p>
+      {% endif %}
+            <!-- column ends -->
           </div>
-
-          <div class="card" style="width: 22rem; margin: 0.5rem">
-            <a href="/ShutterWeb/album/photo">
-              <img class="card-img-top" alt="Card image cap"
-                   src="{% static 'images/3.jpeg' %}">
-            </a>
-            <div class="card-block">
-              <h4 class="card-title text-center">Picture Title</h4>
-              <p class="card-text">Some text from photographer</p>
-              <a href="#" class="btn btn-primary" style="bottom-center">Thumb Up</a>
-            </div>
-          </div>
-          <!-- column 1 ends -->
+          <!-- row ends -->
         </div>
-
-        <div class="column">
-          <!-- column 2 starts -->
-          <div class="card" style="width: 22rem; margin: 0.5rem">
-            <a href="/ShutterWeb/album/photo">
-              <img class="card-img-top" alt="Card image cap"
-                   src="{% static 'images/4.jpeg' %}">
-            </a>
-            <div class="card-block">
-              <h4 class="card-title text-center">Picture Title</h4>
-              <p class="card-text">Some text from photographer</p>
-              <a href="#" class="btn btn-primary" style="bottom-center">Thumb Up</a>
-            </div>
-          </div>
-
-          <div class="card" style="width: 22rem; margin: 0.5rem">
-            <a href="/ShutterWeb/album/photo">
-              <img class="card-img-top" alt="Card image cap"
-                   src="{% static 'images/5.jpeg' %}">
-            </a>
-            <div class="card-block">
-              <h4 class="card-title text-center">Picture Title</h4>
-              <p class="card-text">Some text from photographer</p>
-              <a href="#" class="btn btn-primary">Thumb Up</a>
-            </div>
-          </div>
-
-          <div class="card" style="width: 22rem; margin: 0.5rem">
-            <a href="/ShutterWeb/album/photo">
-              <img class="card-img-top" alt="Card image cap"
-                   src="{% static 'images/6.jpeg' %}">
-            </a>
-            <div class="card-block">
-              <h4 class="card-title text-center">Picture Title</h4>
-              <p class="card-text">Some text from photographer</p>
-              <a href="#" class="btn btn-primary" style="bottom-center">Thumb Up</a>
-            </div>
-          </div>
-          <!-- column 2 ends -->
-        </div>
-
-        <div class="column">
-          <!-- column starts -->
-          <div class="card" style="width: 22rem; margin: 0.5rem">
-            <a href="/ShutterWeb/album/photo">
-              <img class="card-img-top" alt="Card image cap"
-                   src="{% static 'images/7.jpeg' %}">
-            </a>
-            <div class="card-block">
-              <h4 class="card-title text-center">Picture Title</h4>
-              <p class="card-text">Some text from photographer</p>
-              <a href="#" class="btn btn-primary" style="bottom-center">Thumb Up</a>
-            </div>
-          </div>
-
-          <div class="card" style="width: 22rem; margin: 0.5rem">
-            <a href="/ShutterWeb/album/photo">
-              <img class="card-img-top" alt="Card image cap"
-                   src="{% static 'images/8.jpeg' %}">
-            </a>
-            <div class="card-block">
-              <h4 class="card-title text-center">Picture Title</h4>
-              <p class="card-text">Some text from photographer</p>
-              <a href="#" class="btn btn-primary">Thumb Up</a>
-            </div>
-          </div>
-
-          <div class="card" style="width: 22rem; margin: 0.5rem">
-            <a href="/ShutterWeb/album/photo">
-              <img class="card-img-top" alt="Card image cap"
-                   src="{% static 'images/9.jpeg' %}">
-            </a>
-            <div class="card-block">
-              <h4 class="card-title text-center">Picture Title</h4>
-              <p class="card-text">Some text from photographer</p>
-              <a href="#" class="btn btn-primary" style="bottom-center">Thumb Up</a>
-            </div>
-          </div>
-          <!-- column ends -->
-        </div>
-        <!-- row ends -->
-      </div>
     </div>
   </div>
 </main>

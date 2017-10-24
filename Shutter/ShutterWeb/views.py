@@ -17,6 +17,7 @@ def forum(request):
     paginator = Paginator(latest_topic_list, 5) # Show 25 contacts per page
 
     page = request.GET.get('page')
+    print(page)
     try:
         latest_topic = paginator.page(page)
     except PageNotAnInteger:
@@ -121,7 +122,25 @@ def message_detail(request):
 
 # album
 def album_scenery_new(request):
-    return render(request, 'album_scenery_new.html')
+
+    newest_photo_list = Photo.objects.order_by('-time')
+    #print(newest_photo_list)
+    # 3 photos per column, 3 columns per page
+    paginator = Paginator(newest_photo_list, 3)
+    page = request.GET.get('page')
+    #print(page)
+    try:
+        newest_photos = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        newest_photos = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        newest_photos = paginator.page(paginator.num_pages)
+    #print(page)
+    context = {'newest_photos': newest_photos}
+    return render(request, 'album_scenery_new.html', context)
+
 def album_scenery_hot(request):
     return render(request, 'album_scenery_hot.html')
 def album_people_new(request):
