@@ -2,10 +2,11 @@ from django.shortcuts import render, redirect
 from django.http import Http404
 from django.core.paginator import PageNotAnInteger,Paginator,EmptyPage
 from django.db import connection
-from .models import Topic, Topiccomment, Message
-from .forms import CommentForm, TopicForm, RegisterForm
-from django.http import HttpResponseRedirect
+from .models import Topic, Topiccomment, Message, Photo
+from .forms import CommentForm, TopicForm, RegisterForm, photoForm
+from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login,logout
+from django.utils import timezone
 
 # index, index.html will be redirect to album_scenery_new
 def index(request):
@@ -122,6 +123,7 @@ def message_detail(request):
 # album
 def album_scenery_new(request):
     return render(request, 'album_scenery_new.html')
+<<<<<<< HEAD
 
 def album_scenery_hot(request):
     return render(request, 'album_scenery_hot.html')
@@ -132,6 +134,36 @@ def album_people_new(request):
 def album_photo(request):
     return render(request, 'album_photo.html')
 
+=======
+def album_scenery_hot(request):
+    return render(request, 'album_scenery_hot.html')
+def album_people_new(request):
+    return render(request, 'album_people_new.html')
+def album_people_hot(request):
+    return render(request, 'album_people_hot.html')
+def album_photo(request):
+    return render(request, 'album_photo.html')
+
+def upload_image(request):###
+    if request.method == 'POST':
+        form = photoForm(request.POST,request.FILES)
+        if form.is_valid():
+            if 'docfile' in request.FILES:
+                image = request.FILES["docfile"]
+                image.name = str(request.user)+str(timezone.now())+'.jpg'
+                s=Photo(photographer_name=request.user,image_path=image)
+                s.save()
+                return HttpResponse('successful')
+            else:
+                return redirect('/ShutterWeb/album_scenery')
+        else:
+
+            image_path = None
+            return HttpResponse('fail')
+    else:
+        return render(request,'upload_image.html')
+
+>>>>>>> e4ce2a2fe11a88db4d6e6c5717bbe649ba13240a
 
 
 def user_login(request):

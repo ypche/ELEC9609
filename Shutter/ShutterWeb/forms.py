@@ -24,3 +24,6 @@ class RegisterForm(UserCreationForm):
         model = UserProfile
         fields = ("username", "email","gender")
 
+class photoForm(forms.Form):
+    image = forms.ImageField(required=False)
+

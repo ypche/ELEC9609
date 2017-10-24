@@ -31,16 +31,20 @@
       <div class="row">
         <h1 class="col-lg-8">Newest</h1>
         <div class="col-sm-2 ">
-            <div class="dropdown">
-              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Sort By
-              </button>
-              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="{% url 'album_scenery_new' %}">Newest Photos</a>
-                <a class="dropdown-item" href="{% url 'album_scenery_hot' %}">Hottest Photos</a>
-              </div>
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Sort By
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="{% url 'album_scenery_new' %}">Newest Photos</a>
+              <a class="dropdown-item" href="{% url 'album_scenery_hot' %}">Hottest Photos</a>
             </div>
+          </div>
+        </div>
+        <div class=" text-right">
+            <button type="button" class="btn btn-secondary" data-toggle="modal"
+                    onclick="window.location.href='{% url 'upload_photo' %}'">Upload a photo</button>
         </div>
       </div>
 
