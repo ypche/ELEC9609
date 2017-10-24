@@ -7,6 +7,8 @@ from .forms import CommentForm, TopicForm, RegisterForm, photoForm
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login,logout
 from django.utils import timezone
+import json
+from likes.decorator import check_login, check_request
 
 # index, index.html will be redirect to album_scenery_new
 def index(request):
@@ -138,7 +140,7 @@ def album_upload_image(request):
         if form.is_valid():
             if 'docfile' in request.FILES:
                 image = request.FILES["docfile"]
-                image.name = str(request.user)+str(timezone.now())+'.jpg'
+                image.name = str(timezone.now())+'.jpg'
                 s=Photo(photographer_name=request.user,image_path=image)
                 s.save()
                 HttpResponse('successful')
@@ -151,6 +153,34 @@ def album_upload_image(request):
             return HttpResponse('fail')
     else:
         return render(request,'album_upload_image.html')
+
+
+def thumbs_up_number_album_scenery_new(request):
+    s=Photo(image_path=image) #selected by image id
+    s.increase_thumbs_up_number()
+    return render(request,'album_scenery_new.html')
+
+def thumbs_up_number_album_scenery_hot(request):
+    s=Photo(image_path=image) #selected by image id
+    s.increase_thumbs_up_number()
+    return render(request,'album_scenery_hot.html')
+
+def thumbs_up_number_album_people_new(request):
+    s=Photo(image_path=image) #selected by image id
+    s.increase_thumbs_up_number()
+    return render(request,'album_people_new.html')
+
+def thumbs_up_number_album_people_hot(request):
+    s=Photo(image_path=image) #selected by image id
+    s.increase_thumbs_up_number()
+    return render(request,'album_people_hot.html')
+
+def thumbs_up_number_album_photo(request):
+    s=Photo(image_path=image) #selected by image id
+    s.increase_thumbs_up_number()
+    return render(request,'album_photo.html')
+
+
 
 
 

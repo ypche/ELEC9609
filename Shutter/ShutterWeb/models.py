@@ -98,11 +98,15 @@ class Photo(models.Model):
     thumbs_up_number = models.IntegerField(null=True, blank=True)
     category = models.CharField(max_length=20, null=True, blank=True)
     time = models.DateTimeField(default=timezone.now)
-    photo_name = models.CharField(max_length=500, null=True, blank=True)
+    photo_name = models.CharField(max_length=50, null=True, blank=True)
     photographer_name = models.CharField(max_length=500, null=True, blank=True)
 
     def __unicode__(self):
         return'%s %s'%(self.owner,self.image)  
+
+    def increase_thumbs_up_number(self):
+        self.thumbs_up_number += 1
+        self.save(update_fields=['thumbs_up_number'])
 
 
 class PhotoComment(models.Model):
