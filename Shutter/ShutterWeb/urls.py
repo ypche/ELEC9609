@@ -4,8 +4,12 @@ from . import newsviews
 
 
 urlpatterns = [
+    # home page will be redirected to album_scenery.html
+    url(r'^$', views.index, name='index'),
+
     # forum
     url(r'^forum/$',views.forum, name='forum'),
+
 
     # hot topic
     url(r'^hot_topic/$', views.hot_topic, name='hot_topic'),
@@ -22,13 +26,14 @@ urlpatterns = [
     url(r'^news_list/$', newsviews.news_list, name='news_list'),
 
     # album
-    url(r'^album/scenery/$', views.album_scenery, name='album_scenery'),
-    url(r'^album/people/$', views.album_people, name='album_people'),
+    url(r'^album/scenery/new/$', views.album_scenery_new, name='album_scenery_new'),
+    url(r'^album/scenery/hot/$', views.album_scenery_hot, name='album_scenery_hot'),
+    url(r'^album/people/new/$', views.album_people_new, name='album_people_new'),
+    url(r'^album/people/hot/$', views.album_people_hot, name='album_people_hot'),
     url(r'^album/photo/$', views.album_photo, name='album_photo'),
     url(r'^upload_image/$',views.upload_image, name='upload_image'),
 
-    # home page will be redirected to album_scenery.html
-    url(r'^$', views.index, name='index'),
+
 
     # login,logout,register
     url(r'^login/$', views.user_login, name="login"),
