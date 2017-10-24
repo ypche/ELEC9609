@@ -132,7 +132,7 @@ def album_people_hot(request):
 def album_photo(request):
     return render(request, 'album_photo.html')
 
-def upload_image(request):###
+def album_upload_image(request):###
     if request.method == 'POST':
         form = photoForm(request.POST,request.FILES)
         if form.is_valid():
@@ -141,15 +141,28 @@ def upload_image(request):###
                 image.name = str(request.user)+str(timezone.now())+'.jpg'
                 s=Photo(photographer_name=request.user,image_path=image)
                 s.save()
-                return HttpResponse('successful')
+                HttpResponse('successful')
+                return redirect('/ShutterWeb/')
             else:
-                return redirect('/ShutterWeb/album_scenery')
+                return redirect('/ShutterWeb/')
         else:
 
             image_path = None
             return HttpResponse('fail')
     else:
-        return render(request,'upload_image.html')
+        return render(request,'album_upload_image.html')
+
+
+
+def album_scenery_hot(request):
+    return render(request, 'album_scenery_hot.html')
+
+def album_people_new(request):
+    return render(request, 'album_people_new.html')
+
+def album_photo(request):
+    return render(request, 'album_photo.html')
+
 
 
 
