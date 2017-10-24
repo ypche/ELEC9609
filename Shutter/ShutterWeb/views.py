@@ -119,22 +119,15 @@ def inbox(request):
 def message_detail(request):
     return render(request, 'message_detail.html')
 
-
 # album
 def album_scenery_new(request):
     return render(request, 'album_scenery_new.html')
-<<<<<<< HEAD
-
 def album_scenery_hot(request):
     return render(request, 'album_scenery_hot.html')
-
 def album_people_new(request):
     return render(request, 'album_people_new.html')
-
 def album_photo(request):
     return render(request, 'album_photo.html')
-
-=======
 def album_scenery_hot(request):
     return render(request, 'album_scenery_hot.html')
 def album_people_new(request):
@@ -144,7 +137,8 @@ def album_people_hot(request):
 def album_photo(request):
     return render(request, 'album_photo.html')
 
-def upload_image(request):###
+# upload photo
+def album_upload_image(request):
     if request.method == 'POST':
         form = photoForm(request.POST,request.FILES)
         if form.is_valid():
@@ -162,9 +156,6 @@ def upload_image(request):###
             return HttpResponse('fail')
     else:
         return render(request,'upload_image.html')
-
->>>>>>> e4ce2a2fe11a88db4d6e6c5717bbe649ba13240a
-
 
 def user_login(request):
     if request.method == "POST":
