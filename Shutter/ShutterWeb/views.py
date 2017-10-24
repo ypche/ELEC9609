@@ -2,10 +2,12 @@ from django.shortcuts import render, redirect
 from django.http import Http404
 from django.core.paginator import PageNotAnInteger,Paginator,EmptyPage
 from django.db import connection
-from .models import Topic, Topiccomment, Message
-from .forms import CommentForm, TopicForm, RegisterForm
-from django.http import HttpResponseRedirect
+from .models import Topic, Topiccomment, Message, Photo
+from .forms import CommentForm, TopicForm, RegisterForm, photoForm
+from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login,logout
+from django.utils import timezone
+
 
 
 def forum(request):
@@ -132,8 +134,8 @@ def upload_image(request):###
         if form.is_valid():
             if 'docfile' in request.FILES:
                 image = request.FILES["docfile"]
-                image.name = str(request.user)+str(time)+'.jpg'
-                s=Photo(photographer=request.user,image_path=image)
+                image.name = str(request.user)+str(timezone.now())+'.jpg'
+                s=Photo(photographer_name=request.user,image_path=image)
                 s.save()
                 return HttpResponse('successful')
             else:
