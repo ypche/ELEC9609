@@ -7,6 +7,9 @@ from .forms import CommentForm, TopicForm, RegisterForm
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login,logout
 
+# index, index.html will be redirect to album_scenery_new
+def index(request):
+    return HttpResponseRedirect("album/scenery/new")
 
 def forum(request):
     latest_topic_list=Topic.objects.order_by('-time')
@@ -117,18 +120,19 @@ def message_detail(request):
 
 
 # album
-def album_scenery(request):
-    return render(request, 'album_scenery.html')
+def album_scenery_new(request):
+    return render(request, 'album_scenery_new.html')
 
-def album_people(request):
-    return render(request, 'album_people.html')
+def album_scenery_hot(request):
+    return render(request, 'album_scenery_hot.html')
+
+def album_people_new(request):
+    return render(request, 'album_people_new.html')
 
 def album_photo(request):
     return render(request, 'album_photo.html')
 
-# index, index.html will be redirect to album_scenery.html
-def index(request):
-    return HttpResponseRedirect('album/scenery/')
+
 
 def user_login(request):
     if request.method == "POST":
