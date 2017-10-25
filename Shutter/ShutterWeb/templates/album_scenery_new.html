@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Home Page{% endblock %}
+{% block title %}Scenery Album - Newest{% endblock %}
 
 {% block customcss %}
 
@@ -14,9 +14,7 @@
   <!-- select from scenery and people types of photos -->
   <section class="jumbotron text-center text-white"
            style="background-image:url({% static 'images/background.jpeg' %});
-           background-position: center;
-           background-repeat: no-repeat;
-           ">
+           background-position: center; background-repeat: no-repeat;">
     <div id="T1" class="container"  >
       <h1 class="jumbotron-heading">Album </h1>
       <p class="lead">Enjoy the world of color !</p>
@@ -49,9 +47,9 @@
         </div>
       </div>
       <br>
-      {% if newest_photos %}
+      {% if newest_scenery_photos %}
         <div class="row" >
-          {% for this_photo in newest_photos %}
+          {% for this_photo in newest_scenery_photos %}
             <div class="card" style="width: 22rem; margin: 0.5rem; border: 0">
               <!--<a href="/ShutterWeb/album/photo/new">-->
               <a href="../../../album/photo/{{ this_photo.id }}/">
@@ -74,14 +72,14 @@
       {% endif %}
       <div class="pagination">
         <span class="step-links">
-          {% if newest_photos.has_previous %}
-            <a href="?page={{ newest_photos.previous_page_number }}">previous</a>
+          {% if newest_scenery_photos.has_previous %}
+            <a href="?page={{ newest_scenery_photos.previous_page_number }}">previous</a>
           {% endif %}
           <span class="current">
-            Page {{ newest_photos.number }} of {{ newest_photos.paginator.num_pages }}.
+            Page {{ newest_scenery_photos.number }} of {{ newest_scenery_photos.paginator.num_pages }}.
           </span>
-          {% if newest_photos.has_next %}
-            <a href="?page={{ newest_photos.next_page_number }}">next</a>
+          {% if newest_scenery_photos.has_next %}
+            <a href="?page={{ newest_scenery_photos.next_page_number }}">next</a>
           {% endif %}
         </span>
       </div>

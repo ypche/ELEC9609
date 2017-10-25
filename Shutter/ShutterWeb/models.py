@@ -5,7 +5,6 @@ from django.contrib.auth.models import AbstractUser
 import os
 
 
-
 # Create your models here.
 
 class UserProfile(AbstractUser):
