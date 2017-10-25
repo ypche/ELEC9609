@@ -110,6 +110,8 @@
 
             {% if photos_list.has_next %}
               <a href="?page={{ photos_list.next_page_number }}">&nbsp Next</a>
+            {% else %}
+              <li class="disabled"><span>&nbsp Next</span></li>
             {% endif %}
           <!--</span>-->
         </ul>

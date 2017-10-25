@@ -127,7 +127,7 @@ def album_scenery_new(request):
     # filter out all scenery photos (category = 1) and order by time
     newest_scenery_photos_list = Photo.objects.filter(category=1).order_by('-time')
     # 9 photos per page
-    paginator = Paginator(newest_scenery_photos_list, 3)
+    paginator = Paginator(newest_scenery_photos_list, 9)
     page = request.GET.get('page')
     try:
         newest_scenery_photos = paginator.page(page)
@@ -146,7 +146,7 @@ def album_scenery_hot(request):
     # filter out all scenery photos (category = 1) and order by time
     hottest_scenery_photos_list = Photo.objects.filter(category=1).order_by('-thumbs_up_number')
     # 9 photos per page
-    paginator = Paginator(hottest_scenery_photos_list, 3)
+    paginator = Paginator(hottest_scenery_photos_list, 9)
     page = request.GET.get('page')
     try:
         hottest_scenery_photos = paginator.page(page)
@@ -166,7 +166,7 @@ def album_people_new(request):
     # filter out all scenery photos (category = 1) and order by time
     newest_people_photos_list = Photo.objects.filter(category=2).order_by('-time')
     # 9 photos per page
-    paginator = Paginator(newest_people_photos_list, 3)
+    paginator = Paginator(newest_people_photos_list, 9)
     page = request.GET.get('page')
     try:
         newest_people_photos = paginator.page(page)
@@ -186,7 +186,7 @@ def album_people_hot(request):
     # filter out all scenery photos (category = 1) and order by time
     hottest_people_photos_list = Photo.objects.filter(category=2).order_by('-thumbs_up_number')
     # 9 photos per page
-    paginator = Paginator(hottest_people_photos_list, 3)
+    paginator = Paginator(hottest_people_photos_list, 9)
     page = request.GET.get('page')
     try:
         hottest_people_photos = paginator.page(page)
