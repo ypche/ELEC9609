@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Forum{% endblock %}
+{% block title %}Home Page{% endblock %}
 
 {% block customcss %}
 
@@ -44,40 +44,47 @@
         </div>
         <div class=" text-right">
             <button type="button" class="btn btn-secondary" data-toggle="modal"
-                    onclick="window.location.href='{% url 'album_upload_image' %}'">Upload a Photo</button>
+                    onclick="window.location.href='{% url 'album_upload_image' %}'">Upload a Photo
+            </button>
         </div>
       </div>
       <br>
-
       {% if newest_photos %}
-        {% for this_photo in newest_photos %}
-          <div class="row" >
-            <!-- 3 columns vertically-->
-            <div class="column">
-              <!-- column 1 starts -->
-              <div class="card" style="width: 22rem; margin: 0.5rem">
-                <!--<a href="/ShutterWeb/album/photo/new">-->
-                <a href="{% url 'album_photo' %}">
-                  <!--<img class="card-img-top" alt="Card image cap" src="{% static 'images/1.jpeg' %}">-->
-                  <img class="card-img-top" alt="Card image cap"
-                       src= "../../../../{{this_photo.image_path}}">
-                </a>
-                <div class="card-block">
-                  <h4 class="card-title text-center">{{ this_photo.photo_name}}</h4>
-                  <p class="card-text">Some text from photographer11111111111111111111111</p>
-                  <a href="#" class="btn btn-primary" style="bottom-center">Thumb Up</a>
-                </div>
+        <div class="row" >
+          {% for this_photo in newest_photos %}
+            <div class="card" style="width: 22rem; margin: 0.5rem; border: 0">
+              <!--<a href="/ShutterWeb/album/photo/new">-->
+              <a href="../../../album/photo/{{ this_photo.id }}/">
+                <!--<img class="card-img-top" alt="Card image cap" src="{% static 'images/1.jpeg' %}">-->
+                <img class="card-img-top" alt="Card image cap"
+                     src= "../../../../{{this_photo.image_path}}">
+              </a>
+              <div class="card-body">
+                <h4 class="card-title text-center">{{ this_photo.photo_name}}</h4>
+                <p class="card-text">Testing Text
+                  99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999</p>
+                <!--<p class="card-text">{{ this_photo.photo_remarks}}</p>-->
+                <!--<a href="#" class="btn btn-primary" style="bottom-center">Thumb Up</a>-->
               </div>
             </div>
-          </div>
-        {% endfor %}
+          {% endfor %}
+        </div>
       {% else %}
         <p>No photo yet! You could upload your own photos!</p>
       {% endif %}
-            <!-- column ends -->
-          </div>
-          <!-- row ends -->
-        </div>
+      <div class="pagination">
+        <span class="step-links">
+          {% if newest_photos.has_previous %}
+            <a href="?page={{ newest_photos.previous_page_number }}">previous</a>
+          {% endif %}
+          <span class="current">
+            Page {{ newest_photos.number }} of {{ newest_photos.paginator.num_pages }}.
+          </span>
+          {% if newest_photos.has_next %}
+            <a href="?page={{ newest_photos.next_page_number }}">next</a>
+          {% endif %}
+        </span>
+      </div>
     </div>
   </div>
 </main>

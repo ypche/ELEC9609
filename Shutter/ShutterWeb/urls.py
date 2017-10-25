@@ -9,8 +9,6 @@ urlpatterns = [
 
     # forum
     url(r'^forum/$',views.forum, name='forum'),
-
-    # hot topic
     url(r'^hot_topic/$', views.hot_topic, name='hot_topic'),
     url(r'^topic/(?P<topic_id>[0-9]+)/$', views.topic, name='topic'),
     url(r'^add_topic/$', views.add_topic, name='add_topic'),
@@ -29,7 +27,8 @@ urlpatterns = [
     url(r'^album/scenery/hot/$', views.album_scenery_hot, name='album_scenery_hot'),
     url(r'^album/people/new/$', views.album_people_new, name='album_people_new'),
     url(r'^album/people/hot/$', views.album_people_hot, name='album_people_hot'),
-    url(r'^album/photo/$', views.album_photo, name='album_photo'),
+    url(r'^album/photo/(\d+)/$', views.album_photo, name='album_photo'),
+    #url(r'^album/photo/$', views.album_photo, name='album_photo'),
     url(r'^album/upload_image/$',views.album_upload_image, name='album_upload_image'),
 
     # login,logout,register
