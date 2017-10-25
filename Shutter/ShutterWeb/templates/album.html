@@ -90,29 +90,27 @@
           {% endfor %}
         </div>
         <!-- page in the bottom -->
-        <div class="pagination">
-          <span class="step-links">
+        <ul class="pagination">
+          <!--<span class="step-links">-->
             {% if photos_list.has_previous %}
-              <a href="?page={{ photos_list.previous_page_number }}">Previous </a>
+              <a href="?page={{ photos_list.previous_page_number }}">Previous&nbsp</a>
+            {% else %}
+              <li class="disabled"><span>Previous&nbsp</span></li>
             {% endif %}
-            {% if photos_list.has_next %}
-              <a href="?page={{ photos_list.next_page_number }}"> Next</a>
-            {% endif %}
-            <!--
-            <span class="current">
-              Page {{ photos_list.number }} of {{ photos_list.paginator.num_pages }}.
-            </span>
-            -->
+
             {% for i in photos_list.paginator.page_range %}
               {% if photos_list.number == i %}
-                <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                <li class="active"><span> &nbsp{{ i }}&nbsp <span class="sr-only">(current)</span></span></li>
               {% else %}
                 <li><a href="?page={{ i }}">{{ i }}</a></li>
               {% endif %}
             {% endfor %}
 
-          </span>
-        </div>
+            {% if photos_list.has_next %}
+              <a href="?page={{ photos_list.next_page_number }}">&nbsp Next</a>
+            {% endif %}
+          <!--</span>-->
+        </ul>
 
       {% else %}
         <p>No photo yet! You could upload your own photos!</p>
