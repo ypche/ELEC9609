@@ -21,10 +21,10 @@
       <p>
         {% if newest_scenery_photos or hottest_scenery_photos %}
           <a href="{% url 'album_scenery_new' %}" class="btn btn-primary">Scenery</a>
-          <a href="{% url 'album_people_new' %}" class="btn btn-secondary">People</a>
+          <a href="{% url 'album_people_new' %}" class="btn btn-secondary">Portraiture</a>
         {% else %}
           <a href="{% url 'album_scenery_new' %}" class="btn btn-secondary">Scenery</a>
-          <a href="{% url 'album_people_new' %}" class="btn btn-primary">People</a>
+          <a href="{% url 'album_people_new' %}" class="btn btn-primary">Portraiture</a>
         {% endif %}
       </p>
     </div>
@@ -43,7 +43,7 @@
         </h1>
         <div class="col-sm-2 ">
           <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sort By</button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               {% if newest_scenery_photos %}
@@ -64,7 +64,7 @@
         </div>
 
         <div class=" text-right">
-            <button type="button" class="btn btn-secondary" data-toggle="modal"
+            <button type="button" class="btn btn-primary" data-toggle="modal"
                     onclick="window.location.href='{% url 'album_upload_image' %}'">Upload a Photo
             </button>
         </div>
@@ -82,9 +82,11 @@
               </a>
               <div class="card-body">
                 <h4 class="card-title text-center">{{ this_photo.photo_name}}</h4>
+                <!--
                 <p class="card-text">Testing Text
                   999999999999999999999999999999999999999999999999999999999999999999
                   99999999999999999999999999999</p>
+                -->
               </div>
             </div>
           {% endfor %}
