@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'^news_list/$', newsviews.news_list, name='news_list'),
 
     # album
+    url(r'^album/$', views.album_scenery_new, name='album_scenery_new'),
     url(r'^album/scenery/new/$', views.album_scenery_new, name='album_scenery_new'),
     url(r'^album/scenery/hot/$', views.album_scenery_hot, name='album_scenery_hot'),
     url(r'^album/people/new/$', views.album_people_new, name='album_people_new'),

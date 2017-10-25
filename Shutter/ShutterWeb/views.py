@@ -127,9 +127,8 @@ def album_scenery_new(request):
     # filter out all scenery photos (category = 1) and order by time
     newest_scenery_photos_list = Photo.objects.filter(category=1).order_by('-time')
     # 9 photos per page
-    paginator = Paginator(newest_scenery_photos_list, 9)
+    paginator = Paginator(newest_scenery_photos_list, 3)
     page = request.GET.get('page')
-    #print(page)
     try:
         newest_scenery_photos = paginator.page(page)
     except PageNotAnInteger:
@@ -138,66 +137,70 @@ def album_scenery_new(request):
     except EmptyPage:
         # If page is out of range (e.g. 9999), deliver last page of results.
         newest_scenery_photos = paginator.page(paginator.num_pages)
-    #print(page)
-    context = {'newest_scenery_photos': newest_scenery_photos}
-    return render(request, 'album_scenery_new.html', context)
+    photos_list = newest_scenery_photos
+    context = {'newest_scenery_photos': newest_scenery_photos, 'photos_list': photos_list}
+    #return render(request, 'album_scenery_new.html', context)
+    return render(request, 'album.html', context)
 
 def album_scenery_hot(request):
     # filter out all scenery photos (category = 1) and order by time
     hottest_scenery_photos_list = Photo.objects.filter(category=1).order_by('-thumbs_up_number')
     # 9 photos per page
-    paginator = Paginator(hottest_scenery_photos_list, 9)
+    paginator = Paginator(hottest_scenery_photos_list, 3)
     page = request.GET.get('page')
-    # print(page)
     try:
         hottest_scenery_photos = paginator.page(page)
     except PageNotAnInteger:
         # If page is not an integer, deliver first page.
-        newest_scenery_photos = paginator.page(1)
+        hottest_scenery_photos = paginator.page(1)
     except EmptyPage:
         # If page is out of range (e.g. 9999), deliver last page of results.
-        newest_scenery_photos = paginator.page(paginator.num_pages)
-    # print(page)
-    context = {'hottest_scenery_photos': hottest_scenery_photos}
-    return render(request, 'album_scenery_hot.html', context)
+        hottest_scenery_photos = paginator.page(paginator.num_pages)
+    photos_list = hottest_scenery_photos
+    context = {'hottest_scenery_photos': hottest_scenery_photos, 'photos_list': photos_list}
+    #return render(request, 'album_scenery_hot.html', context)
+    return render(request, 'album.html', context)
+
 
 def album_people_new(request):
     # filter out all scenery photos (category = 1) and order by time
     newest_people_photos_list = Photo.objects.filter(category=2).order_by('-time')
     # 9 photos per page
-    paginator = Paginator(newest_people_photos_list, 9)
+    paginator = Paginator(newest_people_photos_list, 3)
     page = request.GET.get('page')
-    # print(page)
     try:
         newest_people_photos = paginator.page(page)
     except PageNotAnInteger:
         # If page is not an integer, deliver first page.
-        newest_scenery_photos = paginator.page(1)
+        newest_people_photos = paginator.page(1)
     except EmptyPage:
         # If page is out of range (e.g. 9999), deliver last page of results.
-        newest_scenery_photos = paginator.page(paginator.num_pages)
-    # print(page)
-    context = {'newest_people_photos': newest_people_photos}
-    return render(request, 'album_people_new.html', context)
+        newest_people_photos = paginator.page(paginator.num_pages)
+    photos_list = newest_people_photos
+    context = {'newest_people_photos': newest_people_photos, 'photos_list': photos_list}
+    #return render(request, 'album_people_new.html', context)
+    return render(request, 'album.html', context)
+
 
 def album_people_hot(request):
     # filter out all scenery photos (category = 1) and order by time
-    hottest_people_photos_list = Photo.objects.filter(category=1).order_by('-thumbs_up_number')
+    hottest_people_photos_list = Photo.objects.filter(category=2).order_by('-thumbs_up_number')
     # 9 photos per page
-    paginator = Paginator(hottest_people_photos_list, 9)
+    paginator = Paginator(hottest_people_photos_list, 3)
     page = request.GET.get('page')
-    # print(page)
     try:
-        hottest_scenery_photos = paginator.page(page)
+        hottest_people_photos = paginator.page(page)
     except PageNotAnInteger:
         # If page is not an integer, deliver first page.
         hottest_people_photos = paginator.page(1)
     except EmptyPage:
         # If page is out of range (e.g. 9999), deliver last page of results.
-        newest_scenery_photos = paginator.page(paginator.num_pages)
-    # print(page)
-    context = {'hottest_people_photos': hottest_people_photos}
-    return render(request, 'album_people_hot.html', context)
+        hottest_people_photos = paginator.page(paginator.num_pages)
+    photos_list = hottest_people_photos
+    context = {'hottest_people_photos': hottest_people_photos, 'photos_list': photos_list}
+    #return render(request, 'album_people_hot.html', context)
+    return render(request, 'album.html', context)
+
 
 def album_photo(request, photo_id):
     image_path = ''
