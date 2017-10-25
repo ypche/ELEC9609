@@ -64,6 +64,7 @@ def topic(request, topic_id):
             clean_data = form.cleaned_data
             clean_data['topic']= topic
             Topiccomment.objects.create(**clean_data)
+            Topiccomment.author=request.user
             topic.increase_remarks()
 
     context = {
@@ -82,7 +83,7 @@ def add_topic(request):
             # form.save()
             form=form.save(commit=False)
             form.author = request.user
-            author=request.user
+            # author=request.user
             form.save()
             return redirect('/ShutterWeb/forum')
     else:
