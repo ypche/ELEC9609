@@ -39,6 +39,7 @@
                 <thead>
              <tr>
                  <th>Topic Title</th>
+                 <th>Author</th>
                  <th>Public Time</th>
                  <th>Remarks</th>
                  <th>Views</th>
@@ -49,6 +50,9 @@
             <th>
                 <li><a href="/ShutterWeb/topic/{{ t.id }}/">{{ t.title }}</a></li>
             </th>
+                <td>
+                {{ t.author}}
+                </td>
                 <td>
                 {{ t.time }}
                 </td>

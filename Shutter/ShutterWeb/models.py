@@ -17,7 +17,7 @@ class UserProfile(AbstractUser):
         pass
 
     def __str__(self):
-        return (self.name)
+        return (self.username)
 
 
 class Message(models.Model):
@@ -38,7 +38,8 @@ class Topic(models.Model):
     title = models.CharField(max_length=100, null=True, blank=True)
     content = models.CharField(max_length=500, null=True, blank=True)
     time = models.DateTimeField(default=timezone.now)
-    # author = models.ForeignKey('User', related_name='Topic_Author', on_delete=models.CASCADE)
+    author = models.ForeignKey('UserProfile', related_name='Topic_Author', on_delete=models.CASCADE,null=True,
+                              blank=True)
     remarks = models.PositiveIntegerField(default=0)
     views = models.PositiveIntegerField(default=0)
 
@@ -64,7 +65,8 @@ class Topiccomment(models.Model):
     #                             blank=True)
     content = models.CharField(max_length=500, null=True, blank=True)
     time = models.DateTimeField(default=timezone.now)
-    # author = models.ForeignKey('User', related_name='TopicComment_Author', on_delete=models.CASCADE)
+    author = models.ForeignKey('UserProfile', related_name='TopicComment_Author', on_delete=models.CASCADE,null=True,
+                              blank=True)
     # remarks = models.CharField(max_length=500, null=True, blank=True)
 
     def __str__(self):

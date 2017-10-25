@@ -8,6 +8,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login,logout
 from django.utils import timezone
 from . import filters
+from django.contrib.auth.decorators import login_required
 
 # index, index.html will be redirect to album_scenery_new
 def index(request):
@@ -48,6 +49,7 @@ def hot_topic(request):
     return render(request, 'hot_topic.html', context)
 
 # View topic detail and add comment
+@login_required(login_url='/ShutterWeb/login')
 def topic(request, topic_id):
     try:
         topic = Topic.objects.get(pk=topic_id)
@@ -72,12 +74,15 @@ def topic(request, topic_id):
     return render(request,'topic.html', context)
 
 
-
+@login_required(login_url='/ShutterWeb/login')
 def add_topic(request):
     if request.method == 'POST':
         form = TopicForm(request.POST, request.FILES)
         if form.is_valid():
-                # file is saved
+            # form.save()
+            form=form.save(commit=False)
+            form.author = request.user
+            author=request.user
             form.save()
             return redirect('/ShutterWeb/forum')
     else:
