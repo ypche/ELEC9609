@@ -132,7 +132,7 @@ def album_scenery_new(request):
     # filter out all scenery photos (category = 1) and order by time
     newest_scenery_photos_list = Photo.objects.filter(category=1).order_by('-time')
     # 9 photos per page
-    paginator = Paginator(newest_scenery_photos_list, 3)
+    paginator = Paginator(newest_scenery_photos_list, 9)
     page = request.GET.get('page')
     try:
         newest_scenery_photos = paginator.page(page)
@@ -151,7 +151,7 @@ def album_scenery_hot(request):
     # filter out all scenery photos (category = 1) and order by time
     hottest_scenery_photos_list = Photo.objects.filter(category=1).order_by('-thumbs_up_number')
     # 9 photos per page
-    paginator = Paginator(hottest_scenery_photos_list, 3)
+    paginator = Paginator(hottest_scenery_photos_list, 9)
     page = request.GET.get('page')
     try:
         hottest_scenery_photos = paginator.page(page)
@@ -171,7 +171,7 @@ def album_people_new(request):
     # filter out all scenery photos (category = 1) and order by time
     newest_people_photos_list = Photo.objects.filter(category=2).order_by('-time')
     # 9 photos per page
-    paginator = Paginator(newest_people_photos_list, 3)
+    paginator = Paginator(newest_people_photos_list, 9)
     page = request.GET.get('page')
     try:
         newest_people_photos = paginator.page(page)
@@ -191,7 +191,7 @@ def album_people_hot(request):
     # filter out all scenery photos (category = 1) and order by time
     hottest_people_photos_list = Photo.objects.filter(category=2).order_by('-thumbs_up_number')
     # 9 photos per page
-    paginator = Paginator(hottest_people_photos_list, 3)
+    paginator = Paginator(hottest_people_photos_list, 9)
     page = request.GET.get('page')
     try:
         hottest_people_photos = paginator.page(page)
@@ -208,12 +208,26 @@ def album_people_hot(request):
 
 
 def album_photo(request, photo_id):
-    clicked_photo = Photo.objects.filter(id=int(photo_id))
-    photo_path = clicked_photo[0].image_path
-    print(photo_path)
-    #image_path = ''
-    # some algorithm to get image_path from photo_id
-    context = {'photo_path': photo_path}
+    clicked_photo_list = Photo.objects.filter(id=int(photo_id))
+    clicked_photo = clicked_photo_list[0]
+    # get context for html
+    photo_name = clicked_photo.photo_name
+    #photo_remarks = clicked_photo.photo_remarks
+    photo_path = clicked_photo.image_path
+    category = clicked_photo.category
+    thumbs_up_number = clicked_photo.thumbs_up_number
+    photographer_id = clicked_photo.photographer_id
+    photographer_name = clicked_photo.photographer_name
+
+    context = {'photo_id': photo_id,
+               'photo_name': photo_name,
+               #'photo_remarks': photo_remarks,
+               'photo_path': photo_path,
+               'category': category,
+               'thumbs_up_number': thumbs_up_number,
+               'photographer_id': photographer_id,
+               'photographer_name': photographer_name
+               }
     return render(request, 'album_photo.html', context)
 
 # upload photo
