@@ -203,9 +203,12 @@ def album_people_hot(request):
 
 
 def album_photo(request, photo_id):
-    image_path = ''
+    clicked_photo = Photo.objects.filter(id=int(photo_id))
+    photo_path = clicked_photo[0].image_path
+    print(photo_path)
+    #image_path = ''
     # some algorithm to get image_path from photo_id
-    context = {'image_path': image_path}
+    context = {'photo_path': photo_path}
     return render(request, 'album_photo.html', context)
 
 # upload photo
