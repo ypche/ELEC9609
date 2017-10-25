@@ -125,7 +125,7 @@ def album_scenery_new(request):
 
     newest_photo_list = Photo.objects.order_by('-time')
     #print(newest_photo_list)
-    # 3 photos per column, 3 columns per page
+    # 9 photos per page
     paginator = Paginator(newest_photo_list, 3)
     page = request.GET.get('page')
     #print(page)
@@ -147,8 +147,10 @@ def album_people_new(request):
     return render(request, 'album_people_new.html')
 def album_people_hot(request):
     return render(request, 'album_people_hot.html')
-def album_photo(request):
-    return render(request, 'album_photo.html')
+
+def album_photo(request, photo_id):
+    context = {'photo_id': photo_id}
+    return render(request, 'album_photo.html', context)
 
 # upload photo
 def album_upload_image(request):
