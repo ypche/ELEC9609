@@ -12,15 +12,13 @@
 <main role="main">
   <section class="jumbotron text-center text-white"
            style="background-image:url({% static 'images/background.jpeg' %});
-           background-position: center;
-           background-repeat: no-repeat;
-           ">
+           background-position: center; background-repeat: no-repeat;">
     <div id="T1" class="container"  >
       <h1 class="jumbotron-heading">Album </h1>
       <p class="lead">Enjoy the world of color !</p>
       <p>
         <a href="{% url 'album_scenery_new' %}" class="btn btn-secondary">Scenery</a>
-        <a href="{% url 'album_scenery_hot' %}" class="btn btn-secondary">People</a>
+        <a href="{% url 'album_people_new' %}" class="btn btn-secondary">People</a>
       </p>
     </div>
   </section>
