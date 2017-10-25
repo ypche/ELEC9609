@@ -178,7 +178,7 @@ def user_login(request):
         user = authenticate(username=user_name, password=pass_word)
         if user is not None:
             login(request,user)
-            return render(request, "album_scenery.html")
+            return render(request, "album_people_new.html")
         else:
             return render(request,"login.html",{})
     elif request.method == "GET":
