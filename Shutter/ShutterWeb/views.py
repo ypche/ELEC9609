@@ -101,7 +101,6 @@ def inbox(request):
     elif 'messageSortByFT' in request.POST:
         message_list = Message.objects.filter(Q(author=request.user)|Q(receiver=request.user)).order_by('author')
     elif 'messageSend' in request.POST:
-        # print(request.POST)
         form = messageSendForm(request.POST)
         if form.is_valid():
             try:
@@ -113,8 +112,6 @@ def inbox(request):
                 message.save()
             except ObjectDoesNotExist:
                 print('no user admin')
-            # form.author = request.user
-            # form.save()
         message_list = Message.objects.filter(Q(author=request.user)|Q(receiver=request.user)).order_by('-time')
     else:
         message_list = Message.objects.filter(Q(author=request.user)|Q(receiver=request.user)).order_by('-time')
@@ -136,6 +133,18 @@ def inbox(request):
 
 @login_required(login_url='/ShutterWeb/login')
 def message_detail(request, message_id):
+    if 'messageSend' in request.POST:
+        form = messageSendForm(request.POST)
+        if form.is_valid():
+            message = Message.objects.get(pk=message_id)
+            newMessage = Message()
+            if str(message.receiver) == str(request.user):
+                newMessage.receiver = message.author
+            else:
+                newMessage.receiver = message.receiver
+            newMessage.content = form.cleaned_data['content']
+            newMessage.author = request.user
+            newMessage.save()
     try:
         message = Message.objects.get(pk=message_id)
         author = message.author
