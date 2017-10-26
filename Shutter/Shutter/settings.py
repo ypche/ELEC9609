@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'ShutterWeb.apps.ShutterwebConfig',
     'pure_pagination',
+    'django_filters'
 ]
 
 MIDDLEWARE = [

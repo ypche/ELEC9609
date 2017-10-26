@@ -1,6 +1,8 @@
 from django.conf.urls import url
 from . import views
 from . import newsviews
+from django.contrib.auth import views as auth
+
 
 
 urlpatterns = [
@@ -37,9 +39,11 @@ urlpatterns = [
     url(r'^logout/$', views.user_logout, name="logout"),
     url(r'^register/', views.register, name='register'),
     url(r'^forget/$', views.register, name='register'),
-    url(r'^info/', views.UserinfoView.as_view(), name='info'),
-
-
+    url(r'^info/', views.Userinfo, name='info'),
+    url(r'^pwdc/$', auth.PasswordChangeView.as_view(
+        template_name='password_change_form.html'), name='password_change'),
+    url(r'^pwdd/$', auth.PasswordChangeDoneView.as_view(
+        template_name='password_change_done.html'), name='password_change_done'),
 
 ]
 

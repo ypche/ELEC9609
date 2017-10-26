@@ -38,3 +38,6 @@ class photocommentForm(forms.ModelForm):
         fields = ['photo', 'content']
 
 
+
+
+

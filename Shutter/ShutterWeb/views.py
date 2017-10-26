@@ -11,6 +11,13 @@ from django.contrib.auth import authenticate, login,logout
 from django.utils import timezone
 from . import filters
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
+from django.contrib.auth.hashers import make_password
+import json
+
+
+
+
 
 # index, index.html will be redirect to album_scenery_new
 def index(request):
@@ -289,7 +296,7 @@ def user_login(request):
         user = authenticate(username=user_name, password=pass_word)
         if user is not None:
             login(request,user)
-            return render(request, "album_people_new.html")
+            return render(request, "album.html")
         else:
             return render(request,"login.html",{})
     elif request.method == "GET":
@@ -309,7 +316,8 @@ def register(request):
         form = RegisterForm()
     return render(request, 'register.html', context={'form': form})
 
-class UserinfoView(View):
-    def get(self,request):
-        return  render(request, 'user_profile.html',{})
+
+def Userinfo(request):
+    return  render(request, 'user_profile.html',{})
+
 

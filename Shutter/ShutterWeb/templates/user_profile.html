@@ -10,4 +10,6 @@
 {{request.user.username}}
 {{request.user.gender}}
 {{request.user.email}}
+          <a class="btn btn-primary" href="{% url 'password_change' %}" role="button">change password</a>
+
 {% endblock %}
