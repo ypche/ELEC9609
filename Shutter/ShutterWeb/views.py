@@ -7,8 +7,7 @@ from .forms import CommentForm, TopicForm, RegisterForm, photoForm
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login,logout
 from django.utils import timezone
-import json
-from likes.decorator import check_login, check_request
+
 
 # index, index.html will be redirect to album_scenery_new
 def index(request):
@@ -131,54 +130,70 @@ def album_people_new(request):
     return render(request, 'album_people_new.html')
 def album_people_hot(request):
     return render(request, 'album_people_hot.html')
-def album_photo(request):
-    return render(request, 'album_photo.html')
+
+def album_photo(request, photo_id):
+    photo=Photo.objects.filter(id=int(photo_id))
+    this_photo=photo[0] 
+    image_path = this_photo.image_path
+    thumbs_up_number = this_photo.thumbs_up_number
+    # some algorithm to get image_path from photo_id
+
+    if request.method == 'POST':
+        form = photoForm(request.POST)
+        if form.is_valid():
+            content=form.cleaned_data['content']
+            s=PhotoComment()
+            s.content=content
+            s.save()
+
+    context = {
+        'photo_id': photo_id,
+        'PhotoComment':PhotoComment.all().order_by('-time'),
+        'form': form,
+        'image_path': image_path,
+        'thumbs_up_number':thumbs_up_number
+    }
+
+    return render(request, 'album_photo.html', context)
 
 def album_upload_image(request):
     if request.method == 'POST':
         form = photoForm(request.POST,request.FILES)
         if form.is_valid():
+ 
             if 'docfile' in request.FILES:
                 image = request.FILES["docfile"]
                 image.name = str(timezone.now())+'.jpg'
-                s=Photo(photographer_name=request.user,image_path=image)
+                category=form.cleaned_data['category']
+                photo_name=form.cleaned_data['photo_name']
+                photographer_name=form.cleaned_data['photographer_name']
+                photographer_remark=form.cleaned_data['photographer_remark']
+                s=Photo(image_path=image,thumbs_up_number=0)
+                s.category=category
+                s.photo_name=photo_name
+                s.photographer_name=photographer_name
+                s.photographer_remark=photographer_remark
                 s.save()
-                HttpResponse('successful')
-                return redirect('/ShutterWeb/')
+
+                return HttpResponse('successful!')
             else:
-                return redirect('/ShutterWeb/')
+                return HttpResponse('fail 123')
         else:
 
             image_path = None
             return HttpResponse('fail')
     else:
-        return render(request,'album_upload_image.html')
+        form = photoForm()
+        return render(request,'album_upload_image.html',{'form': form})
 
 
-def thumbs_up_number_album_scenery_new(request):
-    s=Photo(image_path=image) #selected by image id
-    s.increase_thumbs_up_number()
-    return render(request,'album_scenery_new.html')
+def thumbs_up(request,photo_id):
+    photo=Photo.objects.filter(id = photo_id)
+    this_photo=photo[0] 
+    this_photo.increase_thumbs_up()
+        
 
-def thumbs_up_number_album_scenery_hot(request):
-    s=Photo(image_path=image) #selected by image id
-    s.increase_thumbs_up_number()
-    return render(request,'album_scenery_hot.html')
-
-def thumbs_up_number_album_people_new(request):
-    s=Photo(image_path=image) #selected by image id
-    s.increase_thumbs_up_number()
-    return render(request,'album_people_new.html')
-
-def thumbs_up_number_album_people_hot(request):
-    s=Photo(image_path=image) #selected by image id
-    s.increase_thumbs_up_number()
-    return render(request,'album_people_hot.html')
-
-def thumbs_up_number_album_photo(request):
-    s=Photo(image_path=image) #selected by image id
-    s.increase_thumbs_up_number()
-    return render(request,'album_photo.html')
+    return render(request,'thumbs_up.html',{'photo_id':photo_id,'thumbs_up_number':this_photo.thumbs_up_number})
 
 
 

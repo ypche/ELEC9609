@@ -30,18 +30,14 @@ urlpatterns = [
     url(r'^album/scenery/hot/$', views.album_scenery_hot, name='album_scenery_hot'),
     url(r'^album/people/new/$', views.album_people_new, name='album_people_new'),
     url(r'^album/people/hot/$', views.album_people_hot, name='album_people_hot'),
-    url(r'^album/photo/$', views.album_photo, name='album_photo'),
+    url(r'^album/photo/(\d+)/$', views.album_photo, name='album_photo'),
     url(r'^album/upload_image/$',views.album_upload_image, name='album_upload_image'),
-    url(r'^album/thumbs_up_number_album_scenery_new/$',views.thumbs_up_number_album_scenery_new, name='thumbs_up_number_album_scenery_new'),
-    url(r'^album/thumbs_up_number_album_scenery_hot/$',views.thumbs_up_number_album_scenery_hot, name='thumbs_up_number_album_scenery_hot'),
-    url(r'^album/thumbs_up_number_album_people_new/$',views.thumbs_up_number_album_people_new, name='thumbs_up_number_album_people_new'),
-    url(r'^album/thumbs_up_number_album_people_hot/$',views.thumbs_up_number_album_people_hot, name='thumbs_up_number_album_people_hot'),
-    url(r'^album/thumbs_up_number_photo/$',views.thumbs_up_number_album_photo, name='thumbs_up_number_album_photo'),
+    url(r'^album/thumbs_up/(\d+)/$',views.thumbs_up, name='thumbs_up'),
 
     # login,logout,register
-    url(r'^login/$', views.user_login, name="login"),
-    url(r'^logout/$', views.user_logout, name="logout"),
-    url(r'^register/', views.register, name='register'),
+    url(r'^login/$', views.user_login, name='login'),
+    url(r'^logout/$', views.user_logout, name='logout'),
+    url(r'^register/$', views.register, name='register'),
 
 ]
 

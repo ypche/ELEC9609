@@ -1,8 +1,8 @@
 from django import forms
-from .models import Topiccomment,Topic
+from .models import Topiccomment,Topic, Photo, PhotoComment
 from django.contrib.auth.forms import UserCreationForm
 from .models import UserProfile
-
+from django.db import models
 
 class CommentForm(forms.ModelForm):
     # content=forms.CharField(label='comment_content',max_length=500)
@@ -24,6 +24,14 @@ class RegisterForm(UserCreationForm):
         model = UserProfile
         fields = ("username", "email","gender")
 
-class photoForm(forms.Form):
+class photoForm(forms.ModelForm):
     image = forms.ImageField(required=False)
 
+    class Meta:
+        model= Photo
+        fields = ['category', 'photo_name', 'photographer_name', 'photographer_remark', 'image_path']
+
+class photocommentForm(forms.ModelForm):
+    class Meta:
+        model= PhotoComment
+        fields = ['photo', 'content']
