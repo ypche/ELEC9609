@@ -31,6 +31,7 @@ urlpatterns = [
     url(r'^album/photo/(\d+)/$', views.album_photo, name='album_photo'),
     #url(r'^album/photo/$', views.album_photo, name='album_photo'),
     url(r'^album/upload_image/$', views.album_upload_image, name='album_upload_image'),
+    url(r'^album/thumbs_up/(\d+)/$', views.thumbs_up, name='thumbs_up'),
 
     # login,logout,register
     url(r'^login/$', views.user_login, name="login"),

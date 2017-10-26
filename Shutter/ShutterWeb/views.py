@@ -284,8 +284,7 @@ def thumbs_up(request, photo_id):
     photo = Photo.objects.filter(id=photo_id)
     this_photo = photo[0]
     this_photo.increase_thumbs_up()
-    return render(request, 'thumbs_up.html', {'photo_id': photo_id, 'thumbs_up_number': this_photo.thumbs_up_number})
-
+    return redirect('/ShutterWeb/album/photo/' + str(this_photo.id))
 
 def user_login(request):
     if request.method == "POST":
