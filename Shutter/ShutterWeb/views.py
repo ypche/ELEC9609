@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import Http404
 from django.core.paginator import PageNotAnInteger,Paginator,EmptyPage
-from django.db import connection
+from django.db.models import Q
 from .models import Topic, Topiccomment, Message, Photo, PhotoComment, UserProfile
 from .forms import CommentForm, TopicForm, RegisterForm, photoForm, photocommentForm, messageSendForm
 from django.http import HttpResponseRedirect, HttpResponse
@@ -95,18 +95,12 @@ def add_topic(request):
 @login_required(login_url='/ShutterWeb/login')
 def inbox(request):
     if 'messageSortByDate' in request.POST:
-        message_list = Message.objects.raw('SELECT * FROM ShutterWeb_message'
-                                           ' where author_id = %s or receiver_id = %s'
-                                           ' order by time desc' % ('1', '1'))
+        message_list = Message.objects.filter(Q(author=request.user)|Q(receiver=request.user)).order_by('-time')
     elif 'messageSortByUnread' in request.POST:
-        message_list = Message.objects.raw('SELECT * FROM ShutterWeb_message'
-                                           ' where author_id = %s or receiver_id = %s'
-                                           ' and readflag = %s'
-                                           ' order by time desc' % ('1', '1', 'UNREAD'))
+        message_list = Message.objects.filter((Q(author=request.user)|Q(receiver=request.user))&Q(readflag='UNREAD'))
+        message_list = message_list.order_by('-time')
     elif 'messageSortByFT' in request.POST:
-        message_list = Message.objects.raw('SELECT * FROM ShutterWeb_message'
-                                           ' where author_id = %s or receiver_id = %s'
-                                           ' order by author_id' % ('1', '1'))
+        message_list = Message.objects.filter(Q(author=request.user)|Q(receiver=request.user)).order_by('author')
     elif 'messageSend' in request.POST:
         # print(request.POST)
         form = messageSendForm(request.POST)
@@ -122,13 +116,9 @@ def inbox(request):
                 print('no user admin')
             # form.author = request.user
             # form.save()
-        message_list = Message.objects.raw('SELECT * FROM ShutterWeb_message'
-                                           ' where author_id = %s or receiver_id = %s'
-                                           ' order by time desc' % ('1', '1'))
+        message_list = Message.objects.filter(Q(author=request.user)|Q(receiver=request.user)).order_by('-time')
     else:
-        message_list = Message.objects.raw('SELECT * FROM ShutterWeb_message'
-                                           ' where author_id = %s or receiver_id = %s'
-                                           ' order by time desc' % ('1', '1'))
+        message_list = Message.objects.filter(Q(author=request.user)|Q(receiver=request.user)).order_by('-time')
     paginator = Paginator(message_list, 5)  # Show 5 messages per page
     paginator.count = len(list(message_list))
 
