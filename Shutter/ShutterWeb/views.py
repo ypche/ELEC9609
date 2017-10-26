@@ -140,7 +140,9 @@ def inbox(request):
     # context = {'latest_message': message_list}
     return render(request, 'inbox.html', context)
 
+@login_required(login_url='/ShutterWeb/login')
 def message_detail(request):
+
     return render(request, 'message_detail.html')
 
 
