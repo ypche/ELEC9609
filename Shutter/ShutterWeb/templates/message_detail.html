@@ -21,62 +21,64 @@
       </div>
     </div>
     <div class="col-md-9">
+      <form method="post">
+        {% csrf_token %}
+        <div class="row">
+          <div class="col-md-4"></div>
+          <div class="col-md-6">
+            <textarea id="messageContent" rows="5" class="form-control" placeholder="Say Something..." required></textarea>
+          </div>
+          <div class="col-md-2">
+            <img class="text-center" src="..." alt="{% if me %} {{me}} {% endif %}">
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Search for..." aria-label="Search for...">
+              <span class="input-group-btn">
+                <button class="btn btn-secondary" type="button">Go!</button>
+              </span>
+              </div>
+          </div>
+          <div class="col-md-3"></div>
+          <div class="col-md-3 text-right">
+            <button class="btn btn-secondary" type="button">Send</button>
+          </div>
+          <div class="col-md-2"></div>
+        </div>
+      </form>
+      <br>
+      {% if message %}
+      {% for m in message %}
+      {% if m.author == me %}
       <div class="row">
         <div class="col-md-4"></div>
         <div class="col-md-6">
-          <textarea id="messageContent" rows="5" class="form-control" placeholder="Say Something..." required></textarea>
+          <li class="list-group-item">{{m.content}}</li>
         </div>
         <div class="col-md-2">
-          <img class="text-center" src="..." alt="User Profile Picture">
+          <img class="text-center" src="..." alt="{{talker}}">
         </div>
       </div>
       <br>
+      {% endif %}
+      {% if m.receiver == me %}
       <div class="row">
+        <div class="col-md-2">
+          <img class="text-center" src="..." alt="{{me}}">
+        </div>
+        <div class="col-md-6">
+          <li class="list-group-item">{{m.content}}</li>
+        </div>
         <div class="col-md-4">
-          <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search for..." aria-label="Search for...">
-            <span class="input-group-btn">
-              <button class="btn btn-secondary" type="button">Go!</button>
-            </span>
-            </div>
-        </div>
-        <div class="col-md-3"></div>
-        <div class="col-md-3 text-right">
-          <button class="btn btn-secondary" type="button">Send</button>
-        </div>
-        <div class="col-md-2"></div>
-      </div>
-      <br>
-      <div class="row">
-        <div class="col-md-4"></div>
-        <div class="col-md-6">
-          <li class="list-group-item">Message A</li>
-        </div>
-        <div class="col-md-2">
-          <img class="text-center" src="..." alt="User Profile Picture">
         </div>
       </div>
       <br>
-      <div class="row">
-        <div class="col-md-2">
-          <img class="text-center" src="..." alt="User Profile Picture">
-        </div>
-        <div class="col-md-6">
-          <li class="list-group-item">Message B</li>
-        </div>
-        <div class="col-md-4">
-        </div>
-      </div>
-      <br>
-      <div class="row">
-        <div class="col-md-4"></div>
-        <div class="col-md-6">
-          <li class="list-group-item">Message C</li>
-        </div>
-        <div class="col-md-2">
-          <img class="text-center" src="..." alt="User Profile Picture">
-        </div>
-      </div>
+      {% endif %}
+      {% endfor %}
+      {% endif %}
     </div>
   </div>
 </div>

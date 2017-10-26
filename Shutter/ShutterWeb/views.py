@@ -138,10 +138,14 @@ def inbox(request):
 def message_detail(request, message_id):
     try:
         message = Message.objects.get(pk=message_id)
+        author = message.author
+        receiver = message.receiver
         if str(message.receiver) == str(request.user):
-            context = {'message': message, 'talker': message.author}
+            message = Message.objects.filter(Q(author=message.author)|Q(receiver=message.author)).order_by('-time')
+            context = {'message': message, 'talker': author, 'me': request.user}
         elif str(message.author) == str(request.user):
-            context = {'message': message, 'talker': message.receiver}
+            message = Message.objects.filter(Q(author=message.receiver) | Q(receiver=message.receiver)).order_by('-time')
+            context = {'message': message, 'talker': receiver, 'me': request.user}
         else:
             raise Http404("Not your message!")
     except ObjectDoesNotExist:
