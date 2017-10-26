@@ -2,14 +2,15 @@ from django.shortcuts import render, redirect
 from django.http import Http404
 from django.core.paginator import PageNotAnInteger,Paginator,EmptyPage
 from django.db import connection
-from .models import Topic, Topiccomment, Message, Photo, PhotoComment
-from .forms import CommentForm, TopicForm, RegisterForm, photoForm, photocommentForm
+from .models import Topic, Topiccomment, Message, Photo, PhotoComment, UserProfile
+from .forms import CommentForm, TopicForm, RegisterForm, photoForm, photocommentForm, messageSendForm
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login,logout
 from django.utils import timezone
 from . import filters
 from django.contrib.auth.decorators import login_required
 from django.views.generic.base import View
+from django.core.exceptions import ObjectDoesNotExist
 
 # index, index.html will be redirect to album_scenery_new
 def index(request):
@@ -91,7 +92,7 @@ def add_topic(request):
         form = TopicForm()
     return render(request, 'add_topic.html', {'form': form})
 
-
+@login_required(login_url='/ShutterWeb/login')
 def inbox(request):
     if 'messageSortByDate' in request.POST:
         message_list = Message.objects.raw('SELECT * FROM ShutterWeb_message'
@@ -106,6 +107,24 @@ def inbox(request):
         message_list = Message.objects.raw('SELECT * FROM ShutterWeb_message'
                                            ' where author_id = %s or receiver_id = %s'
                                            ' order by author_id' % ('1', '1'))
+    elif 'messageSend' in request.POST:
+        # print(request.POST)
+        form = messageSendForm(request.POST)
+        if form.is_valid():
+            try:
+                receiver = UserProfile.objects.get(username=request.POST['receiver'])
+                message = Message()
+                message.author = request.user
+                message.receiver = receiver
+                message.content = form.cleaned_data['content']
+                message.save()
+            except ObjectDoesNotExist:
+                print('no user admin')
+            # form.author = request.user
+            # form.save()
+        message_list = Message.objects.raw('SELECT * FROM ShutterWeb_message'
+                                           ' where author_id = %s or receiver_id = %s'
+                                           ' order by time desc' % ('1', '1'))
     else:
         message_list = Message.objects.raw('SELECT * FROM ShutterWeb_message'
                                            ' where author_id = %s or receiver_id = %s'
