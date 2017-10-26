@@ -303,7 +303,7 @@ def album_upload_image(request):
 def delete_photo(request, photo_id):
     this_photo=Photo.objects.get(id = photo_id)
     this_photo.delete()
-    return render(request,'delete_photo.html',{})
+    return render(request,'album_delete_photo.html',{})
 
 def delete_comment(request, comment_id):
     this_photocomment=PhotoComment.objects.get(id = comment_id)
@@ -311,7 +311,7 @@ def delete_comment(request, comment_id):
     this_photocomment.delete()
     context = {'photo_id': photo_id
     }
-    return render(request,'delete_comment.html', context)
+    return render(request,'album_delete_comment.html', context)
 
 
 
