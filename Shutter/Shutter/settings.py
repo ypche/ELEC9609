@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'ShutterWeb.apps.ShutterwebConfig',
     'pure_pagination',
-    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -51,11 +50,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
-MEDIA_ROOT = [
-    os.path.join("/mnt/hgfs/Git_Project/ELEC9609_Website/Shutter/ShutterWeb/").replace('\\', '/')
-]
-
 
 ROOT_URLCONF = 'Shutter.urls'
 
@@ -86,7 +80,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'shutterdb',
         'USER': 'root',
-        'PASSWORD': 'Dimes1992826',
+        'PASSWORD': 'shenghaoisyummy',
         'HOST': 'localhost',
         'PORT': '3306',
     }
@@ -111,6 +105,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 AUTH_USER_MODEL = 'ShutterWeb.UserProfile'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 
 
 
