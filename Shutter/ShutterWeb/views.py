@@ -7,6 +7,8 @@ from .forms import CommentForm, TopicForm, RegisterForm, photoForm
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login,logout
 from django.utils import timezone
+from django.views.generic.base import View
+
 
 # index, index.html will be redirect to album_scenery_new
 def index(request):
@@ -199,3 +201,8 @@ def register(request):
     else:
         form = RegisterForm()
     return render(request, 'register.html', context={'form': form})
+
+
+class UserinfoView(View):
+    def get(self,request):
+        return  render(request, 'user_profile.html',{})

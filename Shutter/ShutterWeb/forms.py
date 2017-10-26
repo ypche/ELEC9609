@@ -22,7 +22,7 @@ class TopicForm(forms.ModelForm):
 class RegisterForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = UserProfile
-        fields = ("username", "email","gender")
+        fields = ("username", "email")
 
 class photoForm(forms.Form):
     image = forms.ImageField(required=False)

@@ -105,6 +105,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 AUTH_USER_MODEL = 'ShutterWeb.UserProfile'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 
 
 

@@ -68,6 +68,7 @@
            <a class="btn btn-primary" href="{% url 'login' %}" role="button">Signin</a>
 		</div>
           {%else%}
+          <a class="btn btn-primary" href="{% url 'info' %}" role="button">{{request.user.username}}</a>
           <a class="btn btn-primary" href="{% url 'logout' %}" role="button">Logout</a>
 
           {%endif%}
