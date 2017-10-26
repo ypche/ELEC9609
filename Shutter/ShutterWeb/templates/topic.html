@@ -8,63 +8,21 @@
 
 {% block MainBody %}
 
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-      <a class="navbar-brand" href="#">Shutter</a>
-      <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item ">
-            <a class="nav-link" href="#">Home </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" href="#">Forum<span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Profile</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Help</a>
-          </li>
-        </ul>
-      </div>
-     </nav>
-
-{#    <div class="container-fluid">#}
-{#      <div class="row">#}
-{#        <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">#}
-{#          <ul class="nav nav-pills flex-column">#}
-{#            <li class="nav-item">#}
-{#              <div class="nav-link" style="text-decoration: #3e2240"><h4>Overview</h4> </div>#}
-{#                  <li class="nav-item">#}
-{#              <a class="nav-link " href="/ShutterWeb/forum">Newest topic<span class="sr-only">(current)</span></a>#}
-{#            </li>#}
-{#            <li class="nav-item">#}
-{#              <a class="nav-link" href="/ShutterWeb/hot_topic">Hottest Topic</a>#}
-{#            </li>#}
-{#            <li class="nav-item">#}
-{#              <a class="nav-link" href="/ShutterWeb/add_topic">Add a topic</a>#}
-{#            </li>#}
-{#          </ul>#}
-{#        </nav>#}
-
         <!-- Post Content Column -->
         <div class="container">
-
+         <br>
           <!-- Title -->
           <h1 class="mt-lg-4">{{ topic.title }}</h1>
           <!-- Author -->
-          <p class="lead">
-               <small>Author:</small>
-            <small>{{ topic.author }}</small>
+          <p class="text-right">
+               Author:
+            {{ topic.author }}
           </p>
 
 
 
           <!-- Date/Time -->
-            <p class="text-right"><small>Created on {{ topic.time}}</small></p>
+            <p class="text-right">Created on {{ topic.time}}</p>
 
           <hr>
 
