@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import Http404
 from django.core.paginator import PageNotAnInteger,Paginator,EmptyPage
 from django.db import connection
-from .models import Topic, Topiccomment, Message, Photo
+from .models import Topic, Topiccomment, Message, Photo, PhotoComment
 from .forms import CommentForm, TopicForm, RegisterForm, photoForm
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login,logout
@@ -212,22 +212,28 @@ def album_photo(request, photo_id):
     clicked_photo_list = Photo.objects.filter(id=int(photo_id))
     clicked_photo = clicked_photo_list[0]
     # get context for html
-    photo_name = clicked_photo.photo_name
+    #photo_name = clicked_photo.photo_name
     #photo_remarks = clicked_photo.photo_remarks
-    photo_path = clicked_photo.image_path
+    image_path = clicked_photo.image_path
     category = clicked_photo.category
     thumbs_up_number = clicked_photo.thumbs_up_number
     photographer_id = clicked_photo.photographer_id
     photographer_name = clicked_photo.photographer_name
 
+    if request.method == 'POST':
+        form = photoForm(request.POST)
+        if form.is_valid():
+            content = form.cleaned_data['content']
+            s = PhotoComment()
+            s.content = content
+            s.save()
+
     context = {'photo_id': photo_id,
-               'photo_name': photo_name,
-               #'photo_remarks': photo_remarks,
-               'photo_path': photo_path,
-               'category': category,
+               #'photo_name': photo_name,
+               'PhotoComment':PhotoComment.all().order_by('-time'),
+               'form': form,
+               'image_path': image_path,
                'thumbs_up_number': thumbs_up_number,
-               'photographer_id': photographer_id,
-               'photographer_name': photographer_name
                }
     return render(request, 'album_photo.html', context)
 
@@ -239,10 +245,17 @@ def album_upload_image(request):
             if 'docfile' in request.FILES:
                 image = request.FILES["docfile"]
                 image.name = str(request.user)+str(timezone.now())+'.jpg'
-                s=Photo(photographer_name=request.user,image_path=image)
+                category = form.cleaned_data['category']
+                photo_name = form.cleaned_data['photo_name']
+                photographer_name = form.cleaned_data['photographer_name']
+                photographer_remark = form.cleaned_data['photographer_remark']
+                s = Photo(image_path=image, thumbs_up_number=0)
+                s.category = category
+                s.photo_name = photo_name
+                s.photographer_name = photographer_name
+                s.photographer_remark = photographer_remark
                 s.save()
-                HttpResponse('successful')
-                return redirect('/ShutterWeb/')
+                return HttpResponse('successful!')
             else:
                 return redirect('/ShutterWeb/')
         else:
@@ -250,7 +263,22 @@ def album_upload_image(request):
             image_path = None
             return HttpResponse('fail')
     else:
-        return render(request,'album_upload_image.html')
+        form = photoForm()
+        return render(request, 'album_upload_image.html', {'form': form})
+
+
+def thumbs_up(request,photo_id):
+    photo=Photo.objects.filter(id = photo_id)
+    this_photo=photo[0]
+    this_photo.increase_thumbs_up()
+    return render(request, 'thumbs_up.html', {'photo_id': photo_id, 'thumbs_up_number': this_photo.thumbs_up_number})
+
+
+
+
+
+
+
 
 def user_login(request):
     if request.method == "POST":

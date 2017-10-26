@@ -1,23 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>upload</title>
-</head>
-<body>
-<form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+{% extends 'base.html' %}
 
-<fieldset>
+{% block title %}Upload a Photo{% endblock %}
 
-<legend>upload file</legend>
+{% block customcss %}
 
-<input type="file" name="docfile" />
+{% endblock %}
 
-<input type="submit" value="upload"/>
+{% block MainBody %}
 
-</fieldset>
+<div class="card my-4" style="top:10%">
+    <div class="card-body">
+        <form method="post" enctype="multipart/form-data">
+               {% csrf_token %}
+               <h3>Photo name</h3>
+               <div class="form-group">
+ 
+               <textarea class="form-control" rows="1" name="photo_name"></textarea>
+               </div>
+               <h3>Category</h3>
+               <div class="form-group">
+               <textarea class="form-control" rows="1" name="category"></textarea>
+               </div>
+               <h3>Photographer Name</h3>
+               <div class="form-group">
+               <textarea class="form-control" rows="1" name="photographer_name"></textarea>
+               </div>
 
-</form>
-</body>
-</html>
+                <h3>Photographer Remark</h3>
 
+                 <div class="form-group">
+                   <textarea class="form-control" rows="8" name="photographer_remark"></textarea>
+                 </div>
+                 
+                 <fieldset>
+
+                 <legend>upload file</legend>
+
+                 <input type="file" name="docfile" />
+
+
+                 </fieldset>
+                 
+                 <button type="submit" class="btn btn-primary " >Submit</button>
+                 <a  class="btn btn-primary" href="/ShutterWeb/" >Cancel</a>
+               </form>
+             </div>
+           </div>
+
+
+
+{% endblock %}

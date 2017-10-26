@@ -51,11 +51,12 @@
              src= "../../../../{{photo_path}}">
         <div class="card-body">
           <h4 class="card-title">{{ photo_name }}</h4>
+          <h6 class="card-subtitle mb-2 text-muted">{{ photographer_name }}</h6>
           <p class="card-text">Testing Photo Remarks
             999999999999999999999999999999999999999999999999999999999999999999
             99999999999999999999999999999</p>
           <!--
-          <p class="card-text">{{ photo_remarks }}</p>
+          <p class="card-text">{{ photographer_remarks }}</p>
           -->
           <a href="#" class="btn btn-primary">Thumbs Up</a>
         </div>
@@ -78,7 +79,7 @@
       </div>
 
       <!-- comment table -->
-      {% for comment in TopicComments %}
+      {% for comment in PhotoComment %}
         <div class="media mt-4">
           <img class="d-flex mr-3 rounded-circle " width="70" src="http://s3.amazonaws.com/37assets/svn/765-default-avatar.png" alt="">
           <div class="media-body">
