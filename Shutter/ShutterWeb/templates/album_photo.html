@@ -40,6 +40,10 @@
             <button type="button" class="btn btn-primary" data-toggle="modal"
                     onclick="window.location.href='{% url 'album_upload_image' %}'">Upload a Photo
             </button>
+          <button type="button" class="btn btn-primary" data-toggle="modal"
+                  onclick="window.location.href='/ShutterWeb/album/delete_photo/{{ photo_id}}'">
+            Delete This Photo
+          </button>
         </div>
       </div>
 

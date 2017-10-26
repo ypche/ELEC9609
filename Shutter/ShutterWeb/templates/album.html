@@ -75,7 +75,7 @@
           {% for this_photo in photos_list %}
             <div class="card" style="width: 22rem; margin: 0.5rem; border: 0">
               <!--<a href="/ShutterWeb/album/photo/new">-->
-              <a href="../../photo/{{ this_photo.id }}/">
+              <a href="../../../album/photo/{{ this_photo.id }}/">
                 <!--<img class="card-img-top" alt="Card image cap" src="{% static 'images/1.jpeg' %}">-->
                 <img class="card-img-top" alt="Card image cap"
                      src= "../../../../{{this_photo.image_path}}">

@@ -424,6 +424,7 @@ def album_photo(request, photo_id):
     this_photo=photo[0]
     image_path = this_photo.image_path
     photo_name = this_photo.photo_name
+    photographer_name = this_photo.photographer_name
     photographer_remark = this_photo.photographer_remark
     category = this_photo.category
     thumbs_up_number = this_photo.thumbs_up_number
@@ -452,6 +453,7 @@ def album_photo(request, photo_id):
         'image_path': image_path,
         'thumbs_up_number': thumbs_up_number,
         'photo_name': photo_name,
+        'photographer_name': photographer_name,
         'photographer_remark': photographer_remark,
         'category': category,
     }
@@ -488,6 +490,12 @@ def album_upload_image(request):
         form = photoForm()
         return render(request, 'album_upload_image.html', {'form': form})
 
+def delete_photo(request, photo_id):
+    this_photo=Photo.objects.get(id = photo_id)
+    this_photo.delete()
+    return render(request,'delete_photo.html',{})
+
+
 
 def thumbs_up(request, photo_id):
     photo = Photo.objects.filter(id=photo_id)
@@ -502,7 +510,7 @@ def user_login(request):
         user = authenticate(username=user_name, password=pass_word)
         if user is not None:
             login(request,user)
-            return render(request, "album_people_new.html")
+            return render(request, "album.html")
         else:
             return render(request,"login.html",{})
     elif request.method == "GET":
