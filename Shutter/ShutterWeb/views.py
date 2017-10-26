@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 from django.shortcuts import render, redirect
 from django.http import Http404
 from django.core.paginator import PageNotAnInteger,Paginator,EmptyPage
@@ -207,7 +206,7 @@ def register(request):
 class UserinfoView(View):
     def get(self,request):
         return  render(request, 'user_profile.html',{})
-=======
+
 from django.shortcuts import render, redirect
 from django.http import Http404
 from django.core.paginator import PageNotAnInteger,Paginator,EmptyPage
@@ -516,4 +515,4 @@ def register(request):
     else:
         form = RegisterForm()
     return render(request, 'register.html', context={'form': form})
->>>>>>> 121f15826fdb5baa22b4f295269c28db8547b221
+
