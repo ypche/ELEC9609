@@ -4,7 +4,7 @@ from django.http import Http404
 from django.core.paginator import PageNotAnInteger,Paginator,EmptyPage
 from django.db.models import Q
 from .models import Topic, Topiccomment, Message, Photo, PhotoComment, UserProfile
-from .forms import CommentForm, TopicForm, RegisterForm, photoForm, photocommentForm, messageSendForm
+from .forms import CommentForm, TopicForm, RegisterForm, photoForm, photocommentForm, messageSendForm,UserInfoForm
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login,logout
 from django.utils import timezone
@@ -345,4 +345,16 @@ def register(request):
 
 def Userinfo(request):
     return  render(request, 'user_profile.html',{})
+
+def editprofile(request):
+    user_info_form = UserInfoForm(request.POST, instance=request.user)
+    if user_info_form.is_valid():
+        user_info_form.save()
+        return HttpResponseRedirect("/ShutterWeb/info")
+    else:
+        user_info_form = UserInfoForm()
+    return render(request, 'edit_profile.html', context={'user_info_form': user_info_form})
+
+
+
 

@@ -36,12 +36,13 @@ urlpatterns = [
     url(r'^album/thumbs_up/(\d+)/$', views.thumbs_up, name='thumbs_up'),
     url(r'^album/delete_photo/(\d+)/$',views.delete_photo, name='delete_photo'),
 
-    # login,logout,register
+    # login,logout,register,change password,password reset by email
     url(r'^login/$', views.user_login, name="login"),
     url(r'^logout/$', views.user_logout, name="logout"),
     url(r'^register/', views.register, name='register'),
     url(r'^forget/$', views.register, name='register'),
     url(r'^info/', views.Userinfo, name='info'),
+    url(r'^edit_profile/', views.editprofile, name='edit_profile'),
 
     url(r'^pwdc/$', auth.PasswordChangeView.as_view(
         template_name='password_change_form.html'), name='password_change'),

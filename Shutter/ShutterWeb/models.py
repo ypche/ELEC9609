@@ -8,10 +8,12 @@ import os
 # Create your models here.
 
 class UserProfile(AbstractUser):
-    gender = models.CharField(max_length=1, null=True, default='U',blank=True)
+    gender = models.CharField(max_length=6, choices=(("male",u"male"),("female","female")), default="female")
     email = models.EmailField(null=True, blank=True)
-    authorization = models.CharField(max_length=10, null=True, blank=True)
     remarks = models.CharField(max_length=500, null=True, blank=True)
+    address = models.CharField(max_length=100, default=u"")
+
+
 
     class Meta(AbstractUser.Meta):
         pass

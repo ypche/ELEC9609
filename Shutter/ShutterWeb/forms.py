@@ -1,8 +1,6 @@
 from django import forms
 from .models import Topiccomment,Topic, Photo, PhotoComment, Message, UserProfile
 from django.contrib.auth.forms import UserCreationForm
-from .models import UserProfile
-from django.db import models
 
 
 class CommentForm(forms.ModelForm):
@@ -42,3 +40,7 @@ class messageSendForm(forms.ModelForm):
         model = Message
         fields = ['content']
 
+class UserInfoForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ['username', 'gender', 'address', 'email']
