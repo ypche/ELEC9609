@@ -45,20 +45,13 @@
 
       <div class="card" style="margin: 0.5rem">
         <h2 class="card-header">{{ photo_name }}</h2>
-        <!--<h2 class="card-header">Test photo name 999999999999999999999999999999999
-        999999999999999999999999999999999999999999</h2>-->
         <img class="card-img-top" alt="Card image cap"
-             src= "../../../../{{photo_path}}">
+             src= "../../../../{{image_path}}">
         <div class="card-body">
           <h4 class="card-title">{{ photo_name }}</h4>
           <h6 class="card-subtitle mb-2 text-muted">{{ photographer_name }}</h6>
-          <p class="card-text">Testing Photo Remarks
-            999999999999999999999999999999999999999999999999999999999999999999
-            99999999999999999999999999999</p>
-          <!--
-          <p class="card-text">{{ photographer_remarks }}</p>
-          -->
-          <a href="#" class="btn btn-primary">Thumbs Up</a>
+          <p class="card-text">{{ photographer_remark }}</p>
+          <a href=" "  class="btn btn-primary">Thumb_up +{{ thumbs_up_number }}</a>
         </div>
 
       </div>

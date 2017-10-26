@@ -35,6 +35,6 @@ class photoForm(forms.ModelForm):
 class photocommentForm(forms.ModelForm):
     class Meta:
         model = PhotoComment
-        fields = ['photo', 'content']
+        fields = ['content']
 
 
