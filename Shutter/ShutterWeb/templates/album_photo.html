@@ -17,12 +17,12 @@
       <h1 class="jumbotron-heading">Album </h1>
       <p class="lead">Enjoy the world of color !</p>
       <p>
-        {% if category == '1' %}
-          <a href="{% url 'album_scenery_new' %}" class="btn btn-primary">Scenery</a>
-          <a href="{% url 'album_people_new' %}" class="btn btn-secondary">Portraiture</a>
-        {% else %}
+        {% if category == '2' %}
           <a href="{% url 'album_scenery_new' %}" class="btn btn-secondary">Scenery</a>
           <a href="{% url 'album_people_new' %}" class="btn btn-primary">Portraiture</a>
+        {% else %}
+          <a href="{% url 'album_scenery_new' %}" class="btn btn-primary">Scenery</a>
+          <a href="{% url 'album_people_new' %}" class="btn btn-secondary">Portraiture</a>
         {% endif %}
       </p>
     </div>
@@ -31,20 +31,35 @@
   <div class="album">
     <div class="container">
       <div class="row">
-        <h1 class="col-lg-10 text-muted">
-          {% if category == '1' %}Scenery
-          {% else %}Portraiture
-          {% endif %}
-        </h1>
-        <div class=" text-right">
+        {% if photographer_name == request.user.username %}
+          <h1 class="col-lg-8 text-muted">
+            {% if category == '2' %}Portraiture
+            {% else %}Scenery
+            {% endif %}
+          </h1>
+          <div class="col-lg-2">
+            <button type="button" class="btn btn-primary" data-toggle="modal"
+                    onclick="window.location.href='/ShutterWeb/album/delete_photo/{{ photo_id}}'">
+              Delete This Photo
+            </button>
+          </div>
+          <div class="col-lg-2">
             <button type="button" class="btn btn-primary" data-toggle="modal"
                     onclick="window.location.href='{% url 'album_upload_image' %}'">Upload a Photo
             </button>
-          <button type="button" class="btn btn-primary" data-toggle="modal"
-                  onclick="window.location.href='/ShutterWeb/album/delete_photo/{{ photo_id}}'">
-            Delete This Photo
-          </button>
-        </div>
+          </div>
+        {% else %}
+          <h1 class="col-lg-10 text-muted">
+            {% if category == '2' %}Portraiture
+            {% else %}Scenery
+            {% endif %}
+          </h1>
+          <div class="col-lg-2">
+            <button type="button" class="btn btn-primary" data-toggle="modal"
+                    onclick="window.location.href='{% url 'album_upload_image' %}'">Upload a Photo
+            </button>
+          </div>
+        {% endif %}
       </div>
 
       <div class="card" style="margin: 0.5rem">
@@ -55,7 +70,13 @@
           <h4 class="card-title">{{ photo_name }}</h4>
           <h6 class="card-subtitle mb-2 text-muted">{{ photographer_name }}</h6>
           <p class="card-text">{{ photographer_remark }}</p>
-          <a href="/ShutterWeb/album/thumbs_up/{{ photo_id }}" class="btn btn-primary">Thumb_up +{{ thumbs_up_number }}</a>
+          {% if photographer_name == request.user.username %}
+            <a href="/ShutterWeb/album/thumbs_up/{{ photo_id }}"
+               class="btn btn-secondary disabled">{{ thumbs_up_number }} &nbsp Likes</a>
+          {% else %}
+            <a href="/ShutterWeb/album/thumbs_up/{{ photo_id }}"
+               class="btn btn-primary">{{ thumbs_up_number }} &nbsp Likes</a>
+          {% endif %}
         </div>
       </div>
       <br>
@@ -77,9 +98,19 @@
       <!-- comment table -->
       {% for comment in PhotoComment %}
         <div class="media mt-4">
-          <img class="d-flex mr-3 rounded-circle " width="70" src="http://s3.amazonaws.com/37assets/svn/765-default-avatar.png" alt="">
+          <img class="d-flex mr-3 rounded-circle" width="70"
+               src="http://s3.amazonaws.com/37assets/svn/765-default-avatar.png" alt="">
           <div class="media-body">
-            <h5 class="mt-0">Commenter Name</h5>
+            <div class="row">
+              <h5 class="col-lg-10">{{ comment.author }}</h5>
+                {% if comment.author == request.user %}
+                  <button type="button" class="btn btn-primary" data-toggle="modal" onclick=
+                  "window.location.href='/ShutterWeb/album/delete_comment/{{ comment.id}}'">
+                    Delete this Comment
+                  </button>
+                {% endif %}
+            </div>
+
             <div class="comment-field" style="padding-top: 10px;">
               {{ comment.content }}
             </div>

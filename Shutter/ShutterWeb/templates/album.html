@@ -19,12 +19,12 @@
       <h1 class="jumbotron-heading">Album </h1>
       <p class="lead">Enjoy the world of color !</p>
       <p>
-        {% if newest_scenery_photos or hottest_scenery_photos %}
-          <a href="{% url 'album_scenery_new' %}" class="btn btn-primary">Scenery</a>
-          <a href="{% url 'album_people_new' %}" class="btn btn-secondary">Portraiture</a>
-        {% else %}
+        {% if newest_people_photos or hottest_people_photos %}
           <a href="{% url 'album_scenery_new' %}" class="btn btn-secondary">Scenery</a>
           <a href="{% url 'album_people_new' %}" class="btn btn-primary">Portraiture</a>
+        {% else %}
+          <a href="{% url 'album_scenery_new' %}" class="btn btn-primary">Scenery</a>
+          <a href="{% url 'album_people_new' %}" class="btn btn-secondary">Portraiture</a>
         {% endif %}
       </p>
     </div>
@@ -34,6 +34,7 @@
   <div class="album text-muted">
     <div class="container">
       <div class="row">
+
         <h1 class="col-lg-8">
           {% if newest_scenery_photos %}Newest Scenery
           {% elif hottest_scenery_photos%}Hottest Scenery
@@ -41,21 +42,19 @@
           {% elif hottest_people_photos%}Hottest Portraiture
           {% endif %}
         </h1>
-        <div class="col-sm-2 ">
+
+        <div class="col-sm-2">
           <div class="dropdown">
             <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sort By</button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              {% if newest_scenery_photos %}
+              {% if hottest_scenery_photos %}
                 <a class="dropdown-item" href="{% url 'album_scenery_new' %}">Newest</a>
                 <a class="dropdown-item" href="{% url 'album_scenery_hot' %}">Hottest</a>
-              {% elif hottest_scenery_photos%}
-                <a class="dropdown-item" href="{% url 'album_scenery_new' %}">Newest</a>
-                <a class="dropdown-item" href="{% url 'album_scenery_hot' %}">Hottest</a>
-              {% elif newest_people_photos%}
+              {% elif newest_people_photos or hottest_people_photos %}
                 <a class="dropdown-item" href="{% url 'album_people_new' %}">Newest</a>
                 <a class="dropdown-item" href="{% url 'album_people_hot' %}">Hottest</a>
-              {% elif hottest_people_photos%}
+              {% else %}
                 <a class="dropdown-item" href="{% url 'album_people_new' %}">Newest</a>
                 <a class="dropdown-item" href="{% url 'album_people_hot' %}">Hottest</a>
               {% endif %}
@@ -63,11 +62,12 @@
           </div>
         </div>
 
-        <div class=" text-right">
+        <div class="col-sm-2">
             <button type="button" class="btn btn-primary" data-toggle="modal"
                     onclick="window.location.href='{% url 'album_upload_image' %}'">Upload a Photo
             </button>
         </div>
+
       </div>
       <br>
       {% if photos_list %}

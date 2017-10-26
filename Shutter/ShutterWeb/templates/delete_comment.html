@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Delete Photo{% endblock %}
+{% block title %}Delete Comment{% endblock %}
 
 {% block customcss %}
 
@@ -14,10 +14,12 @@
 <div class="container">
     <h1 class="jumbotron-heading text-center" style="text-center">Your comment has been deleted</h1>
     <div class="text-center">
-        <a href="/ShutterWeb/album/scenery/new" class="btn btn-primary">back</a>
+        <a href="/ShutterWeb/album/photo/{{ photo_id }}" class="btn btn-primary">back</a>
     </div>
 
 </div>
+
+
 </main>
 
 

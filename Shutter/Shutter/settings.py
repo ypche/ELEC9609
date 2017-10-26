@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     'django_filters'
 ]
 
+# path to store images in local
+MEDIA_ROOT = os.path.join("/mnt/hgfs/Git_Project/ELEC9609_Website/Shutter/ShutterWeb/")
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -81,7 +84,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'shutterdb',
         'USER': 'root',
-        'PASSWORD': 'shenghaoisyummy',
+        'PASSWORD': 'Dimes1992826',
         'HOST': 'localhost',
         'PORT': '3306',
     }

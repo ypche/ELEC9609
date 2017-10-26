@@ -94,8 +94,8 @@ class NewsComment(models.Model):
 
 
 class Photo(models.Model):
-    photographer = models.ForeignKey('UserProfile', related_name='Photo_Author', on_delete=models.CASCADE, null=True,
-                                     blank=True)
+    photographer = models.ForeignKey('UserProfile', related_name='Photo_Author',
+                                     on_delete=models.CASCADE, null=True, blank=True)
     image_path = models.ImageField(upload_to='static/images/album/%m-%Y/', blank=True, null=True)
     thumbs_up_number = models.IntegerField(null=False, blank=True, default=0)
     category = models.CharField(max_length=20, null=True, blank=True)
@@ -116,8 +116,10 @@ class Photo(models.Model):
 
 
 class PhotoComment(models.Model):
-    author = models.ForeignKey('UserProfile', related_name='PhotoComment_Author', on_delete=models.CASCADE, null=True)
-    photo = models.ForeignKey('Photo', related_name='PhotoID', on_delete=models.CASCADE, null=True)
+    author = models.ForeignKey('UserProfile', related_name='PhotoComment_Author',
+                               on_delete=models.CASCADE, null=True)
+    photo = models.ForeignKey('Photo', related_name='PhotoID',
+                              on_delete=models.CASCADE, null=True)
     time = models.DateTimeField(default=timezone.now)
     content = models.CharField(max_length=500, null=True, blank=True)
 
@@ -126,4 +128,3 @@ class PhotoComment(models.Model):
 
     def __str__(self):
         return self.content
-

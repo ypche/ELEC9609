@@ -1,20 +1,14 @@
-
 from django.shortcuts import render, redirect
-from django.http import Http404
-from django.core.paginator import PageNotAnInteger,Paginator,EmptyPage
-from django.db.models import Q
-from .models import Topic, Topiccomment, Message, Photo, PhotoComment, UserProfile
-from .forms import CommentForm, TopicForm, RegisterForm, photoForm, photocommentForm, messageSendForm,UserInfoForm
-from django.http import HttpResponseRedirect, HttpResponse
-from django.contrib.auth import authenticate, login,logout
-from django.utils import timezone
-from . import filters
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
-
-
-
+from django.http import Http404, HttpResponseRedirect, HttpResponse
+from django.core.paginator import PageNotAnInteger, Paginator, EmptyPage
 from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Q
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.utils import timezone
+from .models import Topic, Topiccomment, Message, Photo, PhotoComment, UserProfile
+from .forms import CommentForm, TopicForm, RegisterForm, photoForm, photocommentForm, messageSendForm, UserInfoForm
+from . import filters
 
 
 # index, index.html will be redirect to album_scenery_new
@@ -236,9 +230,9 @@ def album_photo(request, photo_id):
     photographer_remark = this_photo.photographer_remark
     category = this_photo.category
     thumbs_up_number = this_photo.thumbs_up_number
-    photocomment_set=PhotoComment.objects.filter( photo_id = photo_id)
+    photocomment_set=PhotoComment.objects.filter(photo_id=photo_id)
 
-    # some algorithm to get image_path from photo_id
+    # comment form
     if request.method == 'POST':
         form = photocommentForm(request.POST)
         #return HttpResponse('successful!')
@@ -246,12 +240,12 @@ def album_photo(request, photo_id):
             content=form.cleaned_data['content']
             s=PhotoComment()
             s.content=content
+            s.author = request.user
             s.photo_id = photo_id
             s.save()
             #return HttpResponse('successful!')
         else:
             return HttpResponse('fail!')
-
     else:
         form = photocommentForm()
     context = {
@@ -265,7 +259,6 @@ def album_photo(request, photo_id):
         'photographer_remark': photographer_remark,
         'category': category,
     }
-
     return render(request, 'album_photo.html', context)
 
 
@@ -304,6 +297,14 @@ def delete_photo(request, photo_id):
     this_photo=Photo.objects.get(id = photo_id)
     this_photo.delete()
     return render(request,'delete_photo.html',{})
+
+def delete_comment(request, comment_id):
+    this_photocomment=PhotoComment.objects.get(id = comment_id)
+    photo_id = this_photocomment.photo_id
+    this_photocomment.delete()
+    context = {'photo_id': photo_id
+    }
+    return render(request,'delete_comment.html', context)
 
 
 
