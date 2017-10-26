@@ -135,6 +135,10 @@ def album_photo(request, photo_id):
     photo=Photo.objects.filter(id=int(photo_id))
     this_photo=photo[0] 
     image_path = this_photo.image_path
+    photo_name = this_photo.photo_name
+    photographer_name = this_photo.photographer_name
+    photographer_remark = this_photo.photographer_remark
+    category = this_photo.category
     thumbs_up_number = this_photo.thumbs_up_number
     photocomment_set=PhotoComment.objects.filter( photo_id = photo_id)
     # some algorithm to get image_path from photo_id
@@ -150,7 +154,6 @@ def album_photo(request, photo_id):
             s.content=content
             s.photo_id = photo_id
             s.save()
-            return HttpResponse('successful!')
         else:
             return HttpResponse('fail!')
 
@@ -163,7 +166,12 @@ def album_photo(request, photo_id):
         'PhotoComment':photocomment_set.all().order_by('-time'),
         'form': form,
         'image_path': image_path,
-        'thumbs_up_number':thumbs_up_number
+        'thumbs_up_number':thumbs_up_number,
+        'photo_name': photo_name,
+        'photographer_name' : photographer_name,
+        'photographer_remark' : photographer_remark,
+        'category' : category,
+
     }
 
     return render(request, 'album_photo.html', context)
@@ -186,8 +194,8 @@ def album_upload_image(request):
                 s.photographer_name=photographer_name
                 s.photographer_remark=photographer_remark
                 s.save()
+                return redirect('/ShutterWeb/album/photo/'+str(s.id))
 
-                return HttpResponse('successful!')
             else:
                 return HttpResponse('fail 123')
         else:
@@ -203,9 +211,9 @@ def thumbs_up(request,photo_id):
     photo=Photo.objects.filter(id = photo_id)
     this_photo=photo[0] 
     this_photo.increase_thumbs_up()
-        
+    return redirect('/ShutterWeb/album/photo/'+str(this_photo.id))
 
-    return render(request,'thumbs_up.html',{'photo_id':photo_id,'thumbs_up_number':this_photo.thumbs_up_number})
+    #return render(request,'thumbs_up.html',{'photo_id':photo_id,'thumbs_up_number':this_photo.thumbs_up_number})
 
 
 
