@@ -5,7 +5,6 @@ from django.contrib.auth.models import AbstractUser
 import os
 
 
-
 # Create your models here.
 
 class UserProfile(AbstractUser):
@@ -18,7 +17,7 @@ class UserProfile(AbstractUser):
         pass
 
     def __str__(self):
-        return (self.name)
+        return (self.username)
 
 
 class Message(models.Model):
@@ -39,7 +38,8 @@ class Topic(models.Model):
     title = models.CharField(max_length=100, null=True, blank=True)
     content = models.CharField(max_length=500, null=True, blank=True)
     time = models.DateTimeField(default=timezone.now)
-    # author = models.ForeignKey('User', related_name='Topic_Author', on_delete=models.CASCADE)
+    author = models.ForeignKey('UserProfile', related_name='Topic_Author', on_delete=models.CASCADE,null=True,
+                              blank=True)
     remarks = models.PositiveIntegerField(default=0)
     views = models.PositiveIntegerField(default=0)
 
@@ -65,7 +65,8 @@ class Topiccomment(models.Model):
     #                             blank=True)
     content = models.CharField(max_length=500, null=True, blank=True)
     time = models.DateTimeField(default=timezone.now)
-    # author = models.ForeignKey('User', related_name='TopicComment_Author', on_delete=models.CASCADE)
+    author = models.ForeignKey('UserProfile', related_name='TopicComment_Author', on_delete=models.CASCADE,null=True,
+                              blank=True)
     # remarks = models.CharField(max_length=500, null=True, blank=True)
 
     def __str__(self):
@@ -92,27 +93,38 @@ class NewsComment(models.Model):
 
 
 class Photo(models.Model):
-    photographer = models.ForeignKey('UserProfile', related_name='Photo_Author',on_delete=models.CASCADE,null=True,
-                              blank=True)
-    image_path = models.ImageField(upload_to='ShutterWeb/static/images/album/%m-%Y/',blank=True,null=True)
-    thumbs_up_number = models.IntegerField(null=True, blank=True)
+    # if it is a foreignKey, the photographer will automatically become photographer_id
+    photographer = models.ForeignKey('UserProfile', related_name='Photo_Author',on_delete=models.CASCADE,
+                                     null=True, blank=True)
+    image_path = models.ImageField(upload_to='static/images/album/%m-%Y/',blank=True,null=True)
+    thumbs_up_number = models.IntegerField(null=False, blank=True, default=0)
     category = models.CharField(max_length=20, null=True, blank=True)
     time = models.DateTimeField(default=timezone.now)
-    photo_name = models.CharField(max_length=500, null=True, blank=True)
-    photographer_name = models.CharField(max_length=500, null=True, blank=True)
+    photo_name = models.CharField(max_length=50, null=True, blank=True)
+    photographer_name = models.CharField(max_length=50, null=True, blank=True)
+    photographer_remark = models.CharField(max_length=500, null=True, blank=True)
+
 
     def __unicode__(self):
-        return'%s %s'%(self.owner,self.image)  
+        return'%s %s'%(self.owner,self.image)
+
+    def increase_thumbs_up(self):
+        self.thumbs_up_number += 1
+        self.save(update_fields=['thumbs_up_number'])
+
+    def __str__(self):
+        return self.content
 
 
 class PhotoComment(models.Model):
+    # if it is a foreignKey, the author will automatically become author_id
     author = models.ForeignKey('UserProfile', related_name='PhotoComment_Author', on_delete=models.CASCADE)
     photo = models.ForeignKey('Photo', related_name='PhotoComment_Photo', on_delete=models.CASCADE, null=True,
                               blank=True)
-    comment = models.ForeignKey('self', related_name='PhotoComment_Comment', on_delete=models.CASCADE, null=True,
-                                blank=True)
-    thumbs_up_number = models.IntegerField(null=True, blank=True)
-    thumbs_down_number = models.IntegerField(null=True, blank=True)
+    #thumbs_up_number = models.IntegerField(null=True, blank=True)
+    #thumbs_down_number = models.IntegerField(null=True, blank=True)
     time = models.DateTimeField(default=timezone.now)
     content = models.CharField(max_length=500, null=True, blank=True)
-    remarks = models.CharField(max_length=500, null=True, blank=True)
+
+    def __str__(self):
+        return self.content

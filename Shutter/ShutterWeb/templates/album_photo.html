@@ -10,39 +10,93 @@
 {% load static %}
 
 <main role="main">
+  <section class="jumbotron text-center text-white"
+           style="background-image:url({% static 'images/background.jpeg' %});
+           background-position: center; background-repeat: no-repeat;">
+    <div id="T1" class="container"  >
+      <h1 class="jumbotron-heading">Album </h1>
+      <p class="lead">Enjoy the world of color !</p>
+      <p>
+        {% if category == '1' %}
+          <a href="{% url 'album_scenery_new' %}" class="btn btn-primary">Scenery</a>
+          <a href="{% url 'album_people_new' %}" class="btn btn-secondary">Portraiture</a>
+        {% else %}
+          <a href="{% url 'album_scenery_new' %}" class="btn btn-secondary">Scenery</a>
+          <a href="{% url 'album_people_new' %}" class="btn btn-primary">Portraiture</a>
+        {% endif %}
+      </p>
+    </div>
+  </section>
 
-      <section class="jumbotron text-center text-white"
-               style="background-image:url({% static 'images/background.jpeg' %});
-               background-position: center;
-               background-repeat: no-repeat;
-               ">
-        <div id="T1" class="container"  >
-          <h1 class="jumbotron-heading">Album </h1>
-          <p class="lead">Enjoy the world of color !</p>
-          <p>
-            <a href="{% url 'album_scenery_new' %}" class="btn btn-secondary">Scenery</a>
-            <a href="{% url 'album_scenery_hot' %}" class="btn btn-secondary">People</a>
-          </p>
-        </div>
-       </section>
-
-
-
-      <div class="album text-muted">
-        <div class="container">
-          <div class="card" >
-            <img class="card-img-top" alt="Card image cap"
-                 src="../../../photo/{{ photo_id }}">
-                 <!--src="{% static 'images/10.jpeg' %}">-->
-
-              <div class="block">
-                  <p class="card-text">Picture-1</p>
-              </div>
-          </div>
+  <div class="album">
+    <div class="container">
+      <div class="row">
+        <h1 class="col-lg-10 text-muted">
+          {% if category == '1' %}Scenery
+          {% else %}Portraiture
+          {% endif %}
+        </h1>
+        <div class=" text-right">
+            <button type="button" class="btn btn-primary" data-toggle="modal"
+                    onclick="window.location.href='{% url 'album_upload_image' %}'">Upload a Photo
+            </button>
         </div>
       </div>
 
-    </main>
+      <div class="card" style="margin: 0.5rem">
+        <h2 class="card-header">{{ photo_name }}</h2>
+        <!--<h2 class="card-header">Test photo name 999999999999999999999999999999999
+        999999999999999999999999999999999999999999</h2>-->
+        <img class="card-img-top" alt="Card image cap"
+             src= "../../../../{{photo_path}}">
+        <div class="card-body">
+          <h4 class="card-title">{{ photo_name }}</h4>
+          <h6 class="card-subtitle mb-2 text-muted">{{ photographer_name }}</h6>
+          <p class="card-text">Testing Photo Remarks
+            999999999999999999999999999999999999999999999999999999999999999999
+            99999999999999999999999999999</p>
+          <!--
+          <p class="card-text">{{ photographer_remarks }}</p>
+          -->
+          <a href="#" class="btn btn-primary">Thumbs Up</a>
+        </div>
+
+      </div>
+      <br>
+
+      <!-- comment submission -->
+      <div class="card" style="margin: 0.5rem">
+        <h5 class="card-header">Leave a Comment:</h5>
+        <div class="card-body">
+          <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+              <textarea class="form-control" rows="3" name="content"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" >Submit</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- comment table -->
+      {% for comment in PhotoComment %}
+        <div class="media mt-4">
+          <img class="d-flex mr-3 rounded-circle " width="70" src="http://s3.amazonaws.com/37assets/svn/765-default-avatar.png" alt="">
+          <div class="media-body">
+            <h5 class="mt-0">Commenter Name</h5>
+            <div class="comment-field" style="padding-top: 10px;">
+              {{ comment.content }}
+            </div>
+            <p class="text-right"><small>{{ comment.time }}</small></p>
+          </div>
+          <hr>
+        </div>
+      {% endfor %}
+
+
+    </div>
+  </div>
+</main>
 
 
 {% endblock %}

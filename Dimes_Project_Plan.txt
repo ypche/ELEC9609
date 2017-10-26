@@ -1,3 +1,0 @@
-Dimes R F TU
-
-Project jobs: user login, register and profile database

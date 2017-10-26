@@ -1,24 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
 
-  <head>
+{% block title %}Forum{% endblock %}
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+{% block customcss %}
 
-    <title>Blog Post - Start Bootstrap Template</title>
+{% endblock %}
 
-    <!-- Bootstrap core CSS -->
-    <link href="https://blackrockdigital.github.io/startbootstrap-blog-post/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="https://blackrockdigital.github.io/startbootstrap-blog-post/css/blog-post.css" rel="stylesheet">
-
-  </head>
-
-  <body>
+{% block MainBody %}
 
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
       <a class="navbar-brand" href="#">Shutter</a>
@@ -44,39 +32,39 @@
       </div>
      </nav>
 
-    <div class="container-fluid">
-      <div class="row">
-        <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
-          <ul class="nav nav-pills flex-column">
-            <li class="nav-item">
-              <a class="nav-link " href="#">Overview </a>
-                  <li class="nav-item">
-              <a class="nav-link active" href="/ShutterWeb/forum">Newest topic<span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/ShutterWeb/hot_topic">Hottest Topic</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/ShutterWeb/add_topic">Add a topic</a>
-            </li>
-          </ul>
-        </nav>
+{#    <div class="container-fluid">#}
+{#      <div class="row">#}
+{#        <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">#}
+{#          <ul class="nav nav-pills flex-column">#}
+{#            <li class="nav-item">#}
+{#              <div class="nav-link" style="text-decoration: #3e2240"><h4>Overview</h4> </div>#}
+{#                  <li class="nav-item">#}
+{#              <a class="nav-link " href="/ShutterWeb/forum">Newest topic<span class="sr-only">(current)</span></a>#}
+{#            </li>#}
+{#            <li class="nav-item">#}
+{#              <a class="nav-link" href="/ShutterWeb/hot_topic">Hottest Topic</a>#}
+{#            </li>#}
+{#            <li class="nav-item">#}
+{#              <a class="nav-link" href="/ShutterWeb/add_topic">Add a topic</a>#}
+{#            </li>#}
+{#          </ul>#}
+{#        </nav>#}
 
         <!-- Post Content Column -->
-        <div class="col-lg-8">
+        <div class="container">
 
           <!-- Title -->
-          <h1 class="mt-4">{{ topic.title }}</h1>
+          <h1 class="mt-lg-4">{{ topic.title }}</h1>
           <!-- Author -->
           <p class="lead">
-               <small>By</small>
-            <a href="#"><small>Author</small></a>
+               <small>Author:</small>
+            <small>{{ topic.author }}</small>
           </p>
 
 
 
           <!-- Date/Time -->
-            <p class="text-right"><small>Created on {{ topic.time }}</small></p>
+            <p class="text-right"><small>Created on {{ topic.time}}</small></p>
 
           <hr>
 
@@ -113,7 +101,7 @@
 
                 <img class="d-flex mr-3 rounded-circle " width="70" src="http://s3.amazonaws.com/37assets/svn/765-default-avatar.png" alt="">
                 <div class="media-body">
-                  <h5 class="mt-0">Commenter Name</h5>
+                  <h5 class="mt-0">Commenter: {{ comment.author }}</h5>
                  <div class="comment-field" style="padding-top: 10px;">
               {{ comment.content }}
                </div>
@@ -133,21 +121,6 @@
       </div>
     </div>
     <!-- /.container -->
-
-    <!-- Footer -->
-{#    <footer class="py-4 bg-dark " style="position: relative; bottom: 0px;width: 100%">#}
-{#      <div class="container ">#}
-{#        <p class="m-0 text-center text-white">Copyright &copy; Shutter 2017</p>#}
-{#      </div>#}
-{#    </footer>#}
-
-    <script src="https://blackrockdigital.github.io/startbootstrap-blog-post/vendor/jquery/jquery.min.js"></script>
-    <script src="https://blackrockdigital.github.io/startbootstrap-blog-post/vendor/popper/popper.min.js"></script>
-    <script src="https://blackrockdigital.github.io/startbootstrap-blog-post/vendor/bootstrap/js/bootstrap.min.js"></script>
-
-  </body>
-
-</html>
-
+{% endblock %}
 
 
