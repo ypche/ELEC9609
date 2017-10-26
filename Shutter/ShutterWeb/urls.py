@@ -42,10 +42,22 @@ urlpatterns = [
     url(r'^register/', views.register, name='register'),
     url(r'^forget/$', views.register, name='register'),
     url(r'^info/', views.Userinfo, name='info'),
+
     url(r'^pwdc/$', auth.PasswordChangeView.as_view(
         template_name='password_change_form.html'), name='password_change'),
     url(r'^pwdd/$', auth.PasswordChangeDoneView.as_view(
         template_name='password_change_done.html'), name='password_change_done'),
+
+    url(r'^reset_form$', auth.PasswordResetView.as_view(template_name='password_reset_form.html'),
+        name='password_reset'),
+    url(r'^reset_done$', auth.PasswordResetDoneView.as_view(
+        template_name='password_reset_done.html'), name='password_reset_done'),
+    url(r'^reset_confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+        auth.PasswordResetConfirmView.as_view(template_name='password_reset_confirm.html'),
+        name='password_reset_confirm'),
+    url(r'^reset_complete/$',
+        auth.PasswordResetCompleteView.as_view(template_name='password_reset_complete.html'),
+        name='password_reset_complete'),
 
 ]
 
