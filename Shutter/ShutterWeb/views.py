@@ -418,7 +418,7 @@ def album_people_hot(request):
     #return render(request, 'album_people_hot.html', context)
     return render(request, 'album.html', context)
 
-
+@login_required(login_url='/ShutterWeb/login')
 def album_photo(request, photo_id):
     photo=Photo.objects.filter(id=int(photo_id))
     this_photo=photo[0]
@@ -462,6 +462,7 @@ def album_photo(request, photo_id):
 
 
 # upload photo
+@login_required(login_url='/ShutterWeb/login')
 def album_upload_image(request):
     if request.method == 'POST':
         form = photoForm(request.POST, request.FILES)
@@ -489,6 +490,7 @@ def album_upload_image(request):
     else:
         form = photoForm()
         return render(request, 'album_upload_image.html', {'form': form})
+
 
 def delete_photo(request, photo_id):
     this_photo=Photo.objects.get(id = photo_id)
