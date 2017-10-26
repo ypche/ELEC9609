@@ -13,8 +13,10 @@
       <div class="card">
         <img class="card-img-top text-center" src="..." alt="User Profile Picture">
         <div class="card-body">
-          <h4 class="card-title text-center">Alice</h4>
+          {% if talker %}
+          <h4 class="card-title text-center">{{talker}}</h4>
           <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+          {% endif %}
         </div>
       </div>
     </div>

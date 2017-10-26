@@ -138,13 +138,15 @@ def inbox(request):
 def message_detail(request, message_id):
     try:
         message = Message.objects.get(pk=message_id)
-        if str(message.receiver) == str(request.user) or str(message.author) == str(request.user):
-            print('yes')
+        if str(message.receiver) == str(request.user):
+            context = {'message': message, 'talker': message.author}
+        elif str(message.author) == str(request.user):
+            context = {'message': message, 'talker': message.receiver}
         else:
-            print('not your message')
+            raise Http404("Not your message!")
     except ObjectDoesNotExist:
-        print('no such message')
-    return render(request, 'message_detail.html')
+        raise Http404("Message does not exist")
+    return render(request, 'message_detail.html', context)
 
 
 # album
