@@ -1,5 +1,5 @@
 from django import forms
-from .models import Topiccomment,Topic, Photo, PhotoComment
+from .models import Topiccomment,Topic, Photo, PhotoComment, Message, UserProfile
 from django.contrib.auth.forms import UserCreationForm
 from .models import UserProfile
 from django.db import models
@@ -35,9 +35,10 @@ class photoForm(forms.ModelForm):
 class photocommentForm(forms.ModelForm):
     class Meta:
         model = PhotoComment
-        fields = ['photo', 'content']
+        fields = ['content']
 
-
-
-
+class messageSendForm(forms.ModelForm):
+    class Meta:
+        model = Message
+        fields = ['content']
 

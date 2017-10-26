@@ -1,37 +1,21 @@
-<<<<<<< HEAD
 
-from django.views.generic.base import View
-from django.shortcuts import render, redirect
-from django.http import Http404
-from django.core.paginator import PageNotAnInteger,Paginator,EmptyPage
-from django.db import connection
-from .models import Topic, Topiccomment, Message, Photo, PhotoComment
-from .forms import CommentForm, TopicForm, RegisterForm, photoForm
-=======
 from django.shortcuts import render, redirect
 from django.http import Http404
 from django.core.paginator import PageNotAnInteger,Paginator,EmptyPage
 from django.db.models import Q
 from .models import Topic, Topiccomment, Message, Photo, PhotoComment, UserProfile
 from .forms import CommentForm, TopicForm, RegisterForm, photoForm, photocommentForm, messageSendForm
->>>>>>> ae3fa59d5fa89338cb674e5af3e6af9ca3749d4f
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login,logout
 from django.utils import timezone
 from . import filters
 from django.contrib.auth.decorators import login_required
-<<<<<<< HEAD
 from django.shortcuts import render
-from django.contrib.auth.hashers import make_password
-import json
 
 
 
-
-=======
-from django.views.generic.base import View
 from django.core.exceptions import ObjectDoesNotExist
->>>>>>> ae3fa59d5fa89338cb674e5af3e6af9ca3749d4f
+
 
 # index, index.html will be redirect to album_scenery_new
 def index(request):
@@ -356,14 +340,7 @@ def register(request):
         form = RegisterForm()
     return render(request, 'register.html', context={'form': form})
 
-<<<<<<< HEAD
 
 def Userinfo(request):
     return  render(request, 'user_profile.html',{})
 
-
-=======
-class UserinfoView(View):
-    def get(self,request):
-        return  render(request, 'user_profile.html',{})
->>>>>>> ae3fa59d5fa89338cb674e5af3e6af9ca3749d4f
