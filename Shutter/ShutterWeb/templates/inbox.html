@@ -43,7 +43,7 @@
             <div class="list-group">
               {% if latest_message %}
               {% for m in latest_message %}
-              <a href="{% url 'message_detail' %}" class="list-group-item list-group-item-action flex-column align-items-start">
+              <a href="{% url 'message_detail' message_id=m.id %}" class="list-group-item list-group-item-action flex-column align-items-start">
                 <div class="d-flex w-100 justify-content-between">
                   <h5 class="mb-1">{{ m.author }}</h5>
                   <small>{{ m.time }}</small>

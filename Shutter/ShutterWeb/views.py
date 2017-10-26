@@ -135,8 +135,15 @@ def inbox(request):
     return render(request, 'inbox.html', context)
 
 @login_required(login_url='/ShutterWeb/login')
-def message_detail(request):
-
+def message_detail(request, message_id):
+    try:
+        message = Message.objects.get(pk=message_id)
+        if str(message.receiver) == str(request.user) or str(message.author) == str(request.user):
+            print('yes')
+        else:
+            print('not your message')
+    except ObjectDoesNotExist:
+        print('no such message')
     return render(request, 'message_detail.html')
 
 
