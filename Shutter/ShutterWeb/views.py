@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 from django.views.generic.base import View
 from django.shortcuts import render, redirect
@@ -6,11 +7,20 @@ from django.core.paginator import PageNotAnInteger,Paginator,EmptyPage
 from django.db import connection
 from .models import Topic, Topiccomment, Message, Photo, PhotoComment
 from .forms import CommentForm, TopicForm, RegisterForm, photoForm
+=======
+from django.shortcuts import render, redirect
+from django.http import Http404
+from django.core.paginator import PageNotAnInteger,Paginator,EmptyPage
+from django.db.models import Q
+from .models import Topic, Topiccomment, Message, Photo, PhotoComment, UserProfile
+from .forms import CommentForm, TopicForm, RegisterForm, photoForm, photocommentForm, messageSendForm
+>>>>>>> ae3fa59d5fa89338cb674e5af3e6af9ca3749d4f
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login,logout
 from django.utils import timezone
 from . import filters
 from django.contrib.auth.decorators import login_required
+<<<<<<< HEAD
 from django.shortcuts import render
 from django.contrib.auth.hashers import make_password
 import json
@@ -18,6 +28,10 @@ import json
 
 
 
+=======
+from django.views.generic.base import View
+from django.core.exceptions import ObjectDoesNotExist
+>>>>>>> ae3fa59d5fa89338cb674e5af3e6af9ca3749d4f
 
 # index, index.html will be redirect to album_scenery_new
 def index(request):
@@ -99,24 +113,33 @@ def add_topic(request):
         form = TopicForm()
     return render(request, 'add_topic.html', {'form': form})
 
+@login_required(login_url='/ShutterWeb/login')
 def inbox(request):
     if 'messageSortByDate' in request.POST:
-        message_list = Message.objects.raw('SELECT * FROM ShutterWeb_message'
-                                           ' where author_id = %s or receiver_id = %s'
-                                           ' order by time desc' % ('1', '1'))
+        message_list = Message.objects.filter(Q(author=request.user)|Q(receiver=request.user)).order_by('-time')
     elif 'messageSortByUnread' in request.POST:
-        message_list = Message.objects.raw('SELECT * FROM ShutterWeb_message'
-                                           ' where author_id = %s or receiver_id = %s'
-                                           ' and readflag = %s'
-                                           ' order by time desc' % ('1', '1', 'UNREAD'))
+        message_list = Message.objects.filter((Q(author=request.user)|Q(receiver=request.user))&Q(readflag='UNREAD'))
+        message_list = message_list.order_by('-time')
     elif 'messageSortByFT' in request.POST:
-        message_list = Message.objects.raw('SELECT * FROM ShutterWeb_message'
-                                           ' where author_id = %s or receiver_id = %s'
-                                           ' order by author_id' % ('1', '1'))
+        message_list = Message.objects.filter(Q(author=request.user)|Q(receiver=request.user)).order_by('author')
+    elif 'messageSend' in request.POST:
+        # print(request.POST)
+        form = messageSendForm(request.POST)
+        if form.is_valid():
+            try:
+                receiver = UserProfile.objects.get(username=request.POST['receiver'])
+                message = Message()
+                message.author = request.user
+                message.receiver = receiver
+                message.content = form.cleaned_data['content']
+                message.save()
+            except ObjectDoesNotExist:
+                print('no user admin')
+            # form.author = request.user
+            # form.save()
+        message_list = Message.objects.filter(Q(author=request.user)|Q(receiver=request.user)).order_by('-time')
     else:
-        message_list = Message.objects.raw('SELECT * FROM ShutterWeb_message'
-                                           ' where author_id = %s or receiver_id = %s'
-                                           ' order by time desc' % ('1', '1'))
+        message_list = Message.objects.filter(Q(author=request.user)|Q(receiver=request.user)).order_by('-time')
     paginator = Paginator(message_list, 5)  # Show 5 messages per page
     paginator.count = len(list(message_list))
 
@@ -136,8 +159,8 @@ def inbox(request):
 def message_detail(request):
     return render(request, 'message_detail.html')
 
-# album
 
+# album
 def album_scenery_new(request):
     # filter out all scenery photos (category = 1) and order by time
     newest_scenery_photos_list = Photo.objects.filter(category=1).order_by('-time')
@@ -156,6 +179,7 @@ def album_scenery_new(request):
     context = {'newest_scenery_photos': newest_scenery_photos, 'photos_list': photos_list}
     #return render(request, 'album_scenery_new.html', context)
     return render(request, 'album.html', context)
+
 
 def album_scenery_hot(request):
     # filter out all scenery photos (category = 1) and order by time
@@ -216,44 +240,58 @@ def album_people_hot(request):
     #return render(request, 'album_people_hot.html', context)
     return render(request, 'album.html', context)
 
-
+@login_required(login_url='/ShutterWeb/login')
 def album_photo(request, photo_id):
-    clicked_photo_list = Photo.objects.filter(id=int(photo_id))
-    clicked_photo = clicked_photo_list[0]
-    # get context for html
-    #photo_name = clicked_photo.photo_name
-    #photo_remarks = clicked_photo.photo_remarks
-    image_path = clicked_photo.image_path
-    category = clicked_photo.category
-    thumbs_up_number = clicked_photo.thumbs_up_number
-    photographer_id = clicked_photo.photographer_id
-    photographer_name = clicked_photo.photographer_name
+    photo=Photo.objects.filter(id=int(photo_id))
+    this_photo=photo[0]
+    image_path = this_photo.image_path
+    photo_name = this_photo.photo_name
+    photographer_name = this_photo.photographer_name
+    photographer_remark = this_photo.photographer_remark
+    category = this_photo.category
+    thumbs_up_number = this_photo.thumbs_up_number
+    photocomment_set=PhotoComment.objects.filter( photo_id = photo_id)
 
+    # some algorithm to get image_path from photo_id
     if request.method == 'POST':
-        form = photoForm(request.POST)
+        form = photocommentForm(request.POST)
+        #return HttpResponse('successful!')
         if form.is_valid():
-            content = form.cleaned_data['content']
-            s = PhotoComment()
-            s.content = content
+            content=form.cleaned_data['content']
+            s=PhotoComment()
+            s.content=content
+            s.photo_id = photo_id
             s.save()
+            #return HttpResponse('successful!')
+        else:
+            return HttpResponse('fail!')
 
-    context = {'photo_id': photo_id,
-               #'photo_name': photo_name,
-               'PhotoComment':PhotoComment.all().order_by('-time'),
-               'form': form,
-               'image_path': image_path,
-               'thumbs_up_number': thumbs_up_number,
-               }
+    else:
+        form = photocommentForm()
+    context = {
+        'photo_id': photo_id,
+        'PhotoComment': photocomment_set.all().order_by('-time'),
+        'form': form,
+        'image_path': image_path,
+        'thumbs_up_number': thumbs_up_number,
+        'photo_name': photo_name,
+        'photographer_name': photographer_name,
+        'photographer_remark': photographer_remark,
+        'category': category,
+    }
+
     return render(request, 'album_photo.html', context)
 
+
 # upload photo
+@login_required(login_url='/ShutterWeb/login')
 def album_upload_image(request):
     if request.method == 'POST':
-        form = photoForm(request.POST,request.FILES)
+        form = photoForm(request.POST, request.FILES)
         if form.is_valid():
             if 'docfile' in request.FILES:
                 image = request.FILES["docfile"]
-                image.name = str(request.user)+str(timezone.now())+'.jpg'
+                image.name = str(timezone.now()) + '.jpg'
                 category = form.cleaned_data['category']
                 photo_name = form.cleaned_data['photo_name']
                 photographer_name = form.cleaned_data['photographer_name']
@@ -264,11 +302,11 @@ def album_upload_image(request):
                 s.photographer_name = photographer_name
                 s.photographer_remark = photographer_remark
                 s.save()
-                return HttpResponse('successful!')
+                #return HttpResponse('successful!')
+                return redirect('/ShutterWeb/album/photo/'+ str(s.id))
             else:
-                return redirect('/ShutterWeb/')
+                return HttpResponse('fail 123')
         else:
-
             image_path = None
             return HttpResponse('fail')
     else:
@@ -276,18 +314,18 @@ def album_upload_image(request):
         return render(request, 'album_upload_image.html', {'form': form})
 
 
-def thumbs_up(request,photo_id):
-    photo=Photo.objects.filter(id = photo_id)
-    this_photo=photo[0]
+def delete_photo(request, photo_id):
+    this_photo=Photo.objects.get(id = photo_id)
+    this_photo.delete()
+    return render(request,'delete_photo.html',{})
+
+
+
+def thumbs_up(request, photo_id):
+    photo = Photo.objects.filter(id=photo_id)
+    this_photo = photo[0]
     this_photo.increase_thumbs_up()
-    return render(request, 'thumbs_up.html', {'photo_id': photo_id, 'thumbs_up_number': this_photo.thumbs_up_number})
-
-
-
-
-
-
-
+    return redirect('/ShutterWeb/album/photo/' + str(this_photo.id))
 
 def user_login(request):
     if request.method == "POST":
@@ -302,9 +340,11 @@ def user_login(request):
     elif request.method == "GET":
         return render(request, "login.html",{})
 
+
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect("/ShutterWeb")
+
 
 def register(request):
     if request.method == 'POST':
@@ -316,8 +356,14 @@ def register(request):
         form = RegisterForm()
     return render(request, 'register.html', context={'form': form})
 
+<<<<<<< HEAD
 
 def Userinfo(request):
     return  render(request, 'user_profile.html',{})
 
 
+=======
+class UserinfoView(View):
+    def get(self,request):
+        return  render(request, 'user_profile.html',{})
+>>>>>>> ae3fa59d5fa89338cb674e5af3e6af9ca3749d4f

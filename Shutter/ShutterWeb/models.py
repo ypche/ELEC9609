@@ -91,12 +91,10 @@ class NewsComment(models.Model):
         remarks = models.CharField(max_length=500, null=True, blank=True)
 
 
-
 class Photo(models.Model):
-    # if it is a foreignKey, the photographer will automatically become photographer_id
-    photographer = models.ForeignKey('UserProfile', related_name='Photo_Author',on_delete=models.CASCADE,
-                                     null=True, blank=True)
-    image_path = models.ImageField(upload_to='static/images/album/%m-%Y/',blank=True,null=True)
+    photographer = models.ForeignKey('UserProfile', related_name='Photo_Author', on_delete=models.CASCADE, null=True,
+                                     blank=True)
+    image_path = models.ImageField(upload_to='static/images/album/%m-%Y/', blank=True, null=True)
     thumbs_up_number = models.IntegerField(null=False, blank=True, default=0)
     category = models.CharField(max_length=20, null=True, blank=True)
     time = models.DateTimeField(default=timezone.now)
@@ -104,9 +102,8 @@ class Photo(models.Model):
     photographer_name = models.CharField(max_length=50, null=True, blank=True)
     photographer_remark = models.CharField(max_length=500, null=True, blank=True)
 
-
     def __unicode__(self):
-        return'%s %s'%(self.owner,self.image)
+        return '%s %s' % (self.owner, self.image)
 
     def increase_thumbs_up(self):
         self.thumbs_up_number += 1
@@ -117,14 +114,14 @@ class Photo(models.Model):
 
 
 class PhotoComment(models.Model):
-    # if it is a foreignKey, the author will automatically become author_id
-    author = models.ForeignKey('UserProfile', related_name='PhotoComment_Author', on_delete=models.CASCADE)
-    photo = models.ForeignKey('Photo', related_name='PhotoComment_Photo', on_delete=models.CASCADE, null=True,
-                              blank=True)
-    #thumbs_up_number = models.IntegerField(null=True, blank=True)
-    #thumbs_down_number = models.IntegerField(null=True, blank=True)
+    author = models.ForeignKey('UserProfile', related_name='PhotoComment_Author', on_delete=models.CASCADE, null=True)
+    photo = models.ForeignKey('Photo', related_name='PhotoID', on_delete=models.CASCADE, null=True)
     time = models.DateTimeField(default=timezone.now)
     content = models.CharField(max_length=500, null=True, blank=True)
 
+    def __unicode__(self):
+        return '%s %s' % (self.photo, self.content)
+
     def __str__(self):
         return self.content
+

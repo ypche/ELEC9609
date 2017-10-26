@@ -110,31 +110,33 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body">
-            {% csrf_token %}
-              <div class="row">
-                  <div class="col-md-12">
-                    <div class="input-group">
-                      <span class="input-group-addon" id="basic-addon1">TO</span>
-                      <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+          <form method="post">
+            <div class="modal-body">
+              {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-12">
+                      <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon1">TO</span>
+                        <input type="text" class="form-control" name="receiver" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                      </div>
                     </div>
-                  </div>
-              </div>
-              <div class="row">
-                  <div class="col-md-12">
-                      <label for="messageContent">Content</label>
-                  </div>
-              </div>
-              <div class="row">
-                  <div class="col-md-12">
-                      <textarea id="messageContent" rows="5" class="form-control" placeholder="Say Something..." required></textarea>
-                  </div>
-              </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary" value="messageSend">Send</button>
-          </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="messageContent">Content</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <textarea id="messageContent" rows="5" name="content" class="form-control" placeholder="Say Something..." required></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary" name="messageSend">Send</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
