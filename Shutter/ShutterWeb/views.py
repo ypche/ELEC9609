@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect
 from django.http import Http404
 from django.core.paginator import PageNotAnInteger,Paginator,EmptyPage
 from django.db import connection
-from .models import Topic, Topiccomment, Message, Photo
-from .forms import CommentForm, TopicForm, RegisterForm, photoForm
+from .models import Topic, Topiccomment, Message, Photo, PhotoComment
+from .forms import CommentForm, TopicForm, RegisterForm, photoForm, photocommentForm
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login,logout
 from django.utils import timezone
@@ -136,19 +136,31 @@ def album_photo(request, photo_id):
     this_photo=photo[0] 
     image_path = this_photo.image_path
     thumbs_up_number = this_photo.thumbs_up_number
+    photocomment_set=PhotoComment.objects.filter( photo_id = photo_id)
     # some algorithm to get image_path from photo_id
 
     if request.method == 'POST':
-        form = photoForm(request.POST)
+        form = photocommentForm(request.POST)
+        #return HttpResponse('successful!')
+
+
         if form.is_valid():
             content=form.cleaned_data['content']
             s=PhotoComment()
             s.content=content
+            s.photo_id = photo_id
             s.save()
+            return HttpResponse('successful!')
+        else:
+            return HttpResponse('fail!')
+
+    else:
+        form = photocommentForm()
+
 
     context = {
         'photo_id': photo_id,
-        'PhotoComment':PhotoComment.all().order_by('-time'),
+        'PhotoComment':photocomment_set.all().order_by('-time'),
         'form': form,
         'image_path': image_path,
         'thumbs_up_number':thumbs_up_number

@@ -117,11 +117,13 @@ class Photo(models.Model):
 
 
 class PhotoComment(models.Model):
-    author = models.ForeignKey('UserProfile', related_name='PhotoComment_Author', on_delete=models.CASCADE)
-    photo = models.IntegerField(null=True, blank=True)
+    author = models.ForeignKey('UserProfile', related_name='PhotoComment_Author', on_delete=models.CASCADE, null=True)
+    photo = models.ForeignKey('Photo', related_name='PhotoID', on_delete=models.CASCADE,null=True)
     time = models.DateTimeField(default=timezone.now)
     content = models.CharField(max_length=500, null=True, blank=True)
 
+    def __unicode__(self):
+        return'%s %s'%(self.photo,self.content)    
     def __str__(self):
         return self.content
 
