@@ -8,34 +8,23 @@
 
 {% block MainBody %}
 
-        <!-- Post Content Column -->
+     <div class="blog-header">
         <div class="container">
-         <br>
-          <!-- Title -->
-          <h1 class="mt-lg-4">{{ topic.title }}</h1>
-          <!-- Author -->
-          <p class="text-right">
-               Author:
-            {{ topic.author }}
-          </p>
+            <br><br>
+          <h1 class="blog-title">{{ topic.title }}</h1>
+            <p class="blog-post-meta">{{ topic.time}} by <a href="#">{{ topic.author }}</a></p>
+        </div>
+      </div>
 
+    <div role="main" >
+    <div class="row">
+        <div class="container">
+        <div class="col-sm-9 blog-main">
+            <br><br>
+          <div class="blog-post">
+            {{ topic.content }}
+          </div>
 
-
-          <!-- Date/Time -->
-            <p class="text-right">Created on {{ topic.time}}</p>
-
-          <hr>
-
-          <!-- Preview Image -->
-{#          <img class="img-fluid rounded" src="http://placehold.it/900x300" alt="">#}
-{##}
-{#          <hr>#}
-
-          <!-- Post Content -->
-          <blockquote class="blockquote">
-            <div style="height: auto"> {{ topic.content }} </div>
-             <div style="height: 200px" ></div>
-          </blockquote>
 
 
 
@@ -66,18 +55,20 @@
                     <p class="text-right"><small>{{ comment.time }}</small></p>
                 </div>
                       <hr>
-
               </div>
             {% endfor %}
 
+            </div>
 
         </div>
 
+     </div>
 
-
-      <!-- /.row -->
-      </div>
     </div>
+
+
+
+
     <!-- /.container -->
 {% endblock %}
 
