@@ -91,6 +91,14 @@ def add_topic(request):
         form = TopicForm()
     return render(request, 'add_topic.html', {'form': form})
 
+
+class Conversation():
+    id = ''
+    contact = ''
+    content = ''
+    time = timezone.now()
+
+
 @login_required(login_url='/ShutterWeb/login')
 def inbox(request):
     if 'messageSortByDate' in request.POST:
@@ -115,19 +123,57 @@ def inbox(request):
         message_list = Message.objects.filter(Q(author=request.user)|Q(receiver=request.user)).order_by('-time')
     else:
         message_list = Message.objects.filter(Q(author=request.user)|Q(receiver=request.user)).order_by('-time')
-    paginator = Paginator(message_list, 5)  # Show 5 messages per page
-    paginator.count = len(list(message_list))
+
+    conversation = []
+    contacts = []
+    contact = ''
+    for m in message_list:
+        if m.author == request.user:
+            contact = str(m.receiver)
+        else:
+            contact = str(m.author)
+        if len(conversation) == 0:
+            c = Conversation()
+            c.contact = contact
+            c.content = m.content
+            c.time = m.time
+            c.id = m.id
+            conversation.append(c)
+            contacts.append(contact)
+        else:
+            for x in conversation:
+                if not contact in contacts:
+                    c = Conversation()
+                    c.contact = contact
+                    c.content = m.content
+                    c.time = m.time
+                    c.id = m.id
+                    conversation.append(c)
+                    contacts.append(contact)
+                    break
+                else:
+                    if x.time < m.time:
+                        x.time = m.time
+                        x.content = m.content
+                        x.id = m.id
+                        i = conversation.index(x)
+                        conversation.pop(i)
+                        conversation.append(x)
+                    break
+
+    paginator = Paginator(conversation, 5)  # Show 5 messages per page
+    paginator.count = len(list(conversation))
 
     page = request.GET.get('page')
     try:
-        latest_message = paginator.page(page)
+        latest_conversation = paginator.page(page)
     except PageNotAnInteger:
         # If page is not an integer, deliver first page.
-        latest_message = paginator.page(1)
+        latest_conversation = paginator.page(1)
     except EmptyPage:
         # If page is out of range (e.g. 9999), deliver last page of results.
-        latest_message = paginator.page(paginator.num_pages)
-    context = {'latest_message': latest_message}
+        latest_conversation = paginator.page(paginator.num_pages)
+    context = {'latest_conversation': latest_conversation}
     # context = {'latest_message': message_list}
     return render(request, 'inbox.html', context)
 
@@ -377,7 +423,3 @@ def editprofile(request):
     else:
         user_info_form = UserInfoForm()
     return render(request, 'edit_profile.html', context={'user_info_form': user_info_form})
-
-
-
-
