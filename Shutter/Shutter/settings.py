@@ -43,7 +43,7 @@ INSTALLED_APPS = [
 ]
 
 # path to store images in local
-MEDIA_ROOT = os.path.join("/mnt/hgfs/Git_Project/ELEC9609_Website/Shutter/ShutterWeb/")
+MEDIA_ROOT = 'ShutterWeb/static/'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

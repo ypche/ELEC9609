@@ -9,43 +9,31 @@
 {% block MainBody %}
 
 <div class="card my-4" style="top:10%">
-    <div class="card-body">
-        <form method="post" enctype="multipart/form-data">
-               {% csrf_token %}
-               <h3>Photo name</h3>
-               <div class="form-group">
- 
-               <textarea class="form-control" rows="1" name="photo_name"></textarea>
-               </div>
-               <h3>Category</h3>
-               <div class="form-group">
-               <textarea class="form-control" rows="1" name="category"></textarea>
-               </div>
-               <h3>Photographer Name</h3>
-               <div class="form-group">
-               <textarea class="form-control" rows="1" name="photographer_name"></textarea>
-               </div>
+  <div class="card-body">
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <fieldset>
+        <label for="exampleFormControlFile1">Example file input</label>
+        <input type="file" class="form-control-file" id="exampleFormControlFile1" name="image">
+      </fieldset>
+      <h3>Photo name</h3>
+      <div class="form-group">
+        <textarea class="form-control" rows="1" name="photo_name"></textarea>
+      </div>
+      <h3>Category</h3>
+      <div class="form-group">
+        <textarea class="form-control" rows="1" name="category"></textarea>
+      </div>
+      <h3>Photographer Remark</h3>
+      <div class="form-group">
+       <textarea class="form-control" rows="8" name="photographer_remark"></textarea>
+      </div>
 
-                <h3>Photographer Remark</h3>
-
-                 <div class="form-group">
-                   <textarea class="form-control" rows="8" name="photographer_remark"></textarea>
-                 </div>
-                 
-                 <fieldset>
-
-                 <legend>upload file</legend>
-
-                 <input type="file" name="docfile" />
-
-
-                 </fieldset>
-                 
-                 <button type="submit" class="btn btn-primary " >Submit</button>
-                 <a  class="btn btn-primary" href="{% url 'album_scenery_new' %}" >Cancel</a>
-               </form>
-             </div>
-           </div>
+      <button type="submit" class="btn btn-primary " >Submit</button>
+      <a  class="btn btn-primary" href="{% url 'album_scenery_new' %}" >Cancel</a>
+    </form>
+  </div>
+</div>
 
 
 

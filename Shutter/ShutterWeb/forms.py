@@ -28,7 +28,7 @@ class photoForm(forms.ModelForm):
     image = forms.ImageField(required=False)
     class Meta:
         model = Photo
-        fields = ['category', 'photo_name', 'photographer_name', 'photographer_remark', 'image_path']
+        fields = ['category', 'photo_name', 'photographer_name', 'photographer_remark', 'image']
 
 class photocommentForm(forms.ModelForm):
     class Meta:

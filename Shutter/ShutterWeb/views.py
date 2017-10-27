@@ -292,7 +292,7 @@ def album_people_hot(request):
 def album_photo(request, photo_id):
     photo=Photo.objects.filter(id=int(photo_id))
     this_photo=photo[0]
-    image_path = this_photo.image_path
+    image_path = this_photo.image
     photo_name = this_photo.photo_name
     photographer_name = this_photo.photographer_name
     photographer_remark = this_photo.photographer_remark
@@ -336,17 +336,16 @@ def album_upload_image(request):
     if request.method == 'POST':
         form = photoForm(request.POST, request.FILES)
         if form.is_valid():
-            if 'docfile' in request.FILES:
-                image = request.FILES["docfile"]
+            if 'image' in request.FILES:
+                image = request.FILES["image"]
                 image.name = str(timezone.now()) + '.jpg'
                 category = form.cleaned_data['category']
                 photo_name = form.cleaned_data['photo_name']
-                photographer_name = form.cleaned_data['photographer_name']
                 photographer_remark = form.cleaned_data['photographer_remark']
-                s = Photo(image_path=image, thumbs_up_number=0)
+                s = Photo(image=image, thumbs_up_number=0)
                 s.category = category
                 s.photo_name = photo_name
-                s.photographer_name = photographer_name
+                s.photographer_name = request.user
                 s.photographer_remark = photographer_remark
                 s.save()
                 #return HttpResponse('successful!')

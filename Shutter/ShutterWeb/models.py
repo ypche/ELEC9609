@@ -96,9 +96,10 @@ class NewsComment(models.Model):
 class Photo(models.Model):
     photographer = models.ForeignKey('UserProfile', related_name='Photo_Author',
                                      on_delete=models.CASCADE, null=True, blank=True)
-    image_path = models.ImageField(upload_to='static/images/album/%m-%Y/', blank=True, null=True)
+    image = models.ImageField(upload_to='images/album/', blank=True, null=True)
     thumbs_up_number = models.IntegerField(null=False, blank=True, default=0)
-    category = models.CharField(max_length=20, null=True, blank=True)
+    category = models.CharField(max_length=20, null=True, blank=True, default="Landscape",
+                                choices=(("Landscape", u"Landscape"), ("Cartoon", u"Cartoon"), ("People", u"People")))
     time = models.DateTimeField(default=timezone.now)
     photo_name = models.CharField(max_length=50, null=True, blank=True)
     photographer_name = models.CharField(max_length=50, null=True, blank=True)
