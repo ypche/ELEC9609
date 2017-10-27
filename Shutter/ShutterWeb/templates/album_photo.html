@@ -96,52 +96,73 @@
   <div class="album">
     <div class="container">
       <div class="row">
+        <h1 class="col-lg-8 text-muted">
+          {{ category }}
+        </h1>
         {% if photographer_name == request.user.username %}
-          <h1 class="col-lg-8 text-muted">
-            {% if category == '2' %}Portraiture
-            {% else %}Scenery
-            {% endif %}
-          </h1>
-          <div class="col-lg-2">
-            <button type="button" class="btn btn-primary" data-toggle="modal"
-                    onclick="window.location.href='/ShutterWeb/album/delete_photo/{{ photo_id}}'">
-              Delete This Photo
-            </button>
-          </div>
-          <div class="col-lg-2">
-            <button type="button" class="btn btn-primary" data-toggle="modal"
-                    onclick="window.location.href='{% url 'album_upload_image' %}'">Upload a Photo
-            </button>
-          </div>
+        <div class="col-lg-2">
+          <button type="button" class="btn btn-primary" data-toggle="modal"
+                  onclick="window.location.href='/ShutterWeb/album/delete_photo/{{ photo_id }}'">
+            Delete This Photo
+          </button>
+        </div>
         {% else %}
-          <h1 class="col-lg-10 text-muted">
-            {% if category == '2' %}Portraiture
-            {% else %}Scenery
-            {% endif %}
-          </h1>
-          <div class="col-lg-2">
-            <button type="button" class="btn btn-primary" data-toggle="modal"
-                    onclick="window.location.href='{% url 'album_upload_image' %}'">Upload a Photo
-            </button>
-          </div>
+        <div class="col-lg-2"></div>
         {% endif %}
+        <div class="col-lg-2">
+          <button type="button" class="btn btn-primary" data-toggle="modal"
+                  onclick="window.location.href='{% url 'album_upload_image' %}'">Upload a Photo
+          </button>
+        </div>
       </div>
 
       <div class="card" style="margin: 0.5rem">
-        <h2 class="card-header">{{ photo_name }}</h2>
-        <img class="card-img-top" alt="Card image cap"
-             src= "../../../../{{image_path}}">
+        <h4 class="card-header">{{ photo_name }}</h4>
         <div class="card-body">
-          <h4 class="card-title">{{ photo_name }}</h4>
-          <h6 class="card-subtitle mb-2 text-muted">{{ photographer_name }}</h6>
-          <p class="card-text">{{ photographer_remark }}</p>
-          {% if photographer_name == request.user.username %}
-            <a href="/ShutterWeb/album/thumbs_up/{{ photo_id }}"
-               class="btn btn-secondary disabled">{{ thumbs_up_number }} &nbsp Likes</a>
-          {% else %}
-            <a href="/ShutterWeb/album/thumbs_up/{{ photo_id }}"
-               class="btn btn-primary">{{ thumbs_up_number }} &nbsp Likes</a>
-          {% endif %}
+          <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+              <img class="card-img-top" alt="Card image cap" width="100%"
+             src= '{% static image_path %}'>
+            </div>
+            <div class="col-md-3"></div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+              <h4 class="card-title">Name: {{ photo_name }}</h4>
+            </div>
+            <div class="col-md-3"></div>
+          </div>
+          <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+              <h4 class="card-subtitle mb-2 text-muted">Author: {{ photographer_name }}</h4>
+            </div>
+            <div class="col-md-3"></div>
+          </div>
+          <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+              <p class="card-text">Remark: {{ photographer_remark }}</p>
+            </div>
+            <div class="col-md-3"></div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+              {% if photographer_name == request.user.username %}
+              <a href="/ShutterWeb/album/thumbs_up/{{ photo_id }}"
+                 class="btn btn-outline-danger disabled">{{ thumbs_up_number }} &nbsp Likes</a>
+              {% else %}
+                <a href="/ShutterWeb/album/thumbs_up/{{ photo_id }}"
+                   class="btn btn-outline-danger">{{ thumbs_up_number }} &nbsp Likes</a>
+              {% endif %}
+            </div>
+            <div class="col-md-3"></div>
+          </div>
         </div>
       </div>
       <br>
