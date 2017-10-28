@@ -49,6 +49,11 @@
                data-toggle="tooltip" data-placement="right" data-html="true"
                title="Enter the same password as before, for verification.">
       </div>
+      {% if form.errors %}
+      <div class="form-group">
+        <label class="form-control alert alert-warning">Register Errors: <br>{{ form.errors }}</label>
+      </div>
+      {% endif %}
       <div class="form-group">
         <button type="submit" class="btn btn-primary">SignUp</button>
       </div>
