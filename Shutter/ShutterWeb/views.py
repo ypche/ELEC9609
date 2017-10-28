@@ -390,7 +390,8 @@ def user_login(request):
             my_login(request, user)
             return render(request, "album.html")
         else:
-            return render(request,"login.html",{})
+            context = {'login_err': 'Username or Password is wrong!'}
+            return render(request, "login.html", context)
     elif request.method == "GET":
         return render(request, "login.html",{})
 

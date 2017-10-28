@@ -9,14 +9,42 @@
 {% block MainBody %}
 
 <form class="form-signin" role="form" method="post" action="{% url 'login' %}">
-    {% csrf_token %}
-    <h2 class="form-signin-heading">Please sign in</h2>
-    <input name="username" type="text" class="form-control" placeholder="Username" required="" autofocus="">
-    <input name="password" type="password" class="form-control" placeholder="Password" required="">
-
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-    <span style="color: red" >{{ login_err }}</span>
-      <div class="unit-1-3 flex-right"><span><a href="{% url 'password_reset' %}">forget password？</a></span></div>
-
+  {% csrf_token %}
+  <div class="row mt-4">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+      <h2 class="form-signin-heading">Please sign in</h2>
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" class="form-control" required autofocus>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" class="form-control" required>
+      </div>
+    </div>
+    <div class="col-md-3"></div>
+  </div>
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-3">
+      <span><a href="{% url 'password_reset' %}">Forget password？</a></span>
+    </div>
+    <div class="col-md-3 text-right">
+      <button class="btn btn-primary" type="submit">Sign in</button>
+    </div>
+    <div class="col-md-3"></div>
+  </div>
+  <div class="row mt-4">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+      {% if login_err %}
+      <div class="form-group">
+        <label class="form-control alert alert-warning">Warning: <br>{{ login_err }}</label>
+      </div>
+      {% endif %}
+    </div>
+    <div class="col-md-3"></div>
+  </div>
 </form>
 {% endblock %}
