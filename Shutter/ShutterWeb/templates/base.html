@@ -62,14 +62,14 @@
             <a class="nav-link" href="{% url 'inbox' %}">Inbox</a>
           </li>
         </ul>
-          {%if not request.user.is_authenticated%}
+        {%if not request.user.is_authenticated%}
         <div class="span12">
-           <a class="btn btn-primary" href="{% url 'register' %}" role="button">Signup</a>
-           <a class="btn btn-primary" href="{% url 'login' %}" role="button">Signin</a>
-		</div>
-          {%else%}
-          <a class="btn btn-primary" href="{% url 'info' %}" role="button">{{request.user.username}}</a>
-          <a class="btn btn-primary" href="{% url 'logout' %}" role="button">Logout</a>
+           <a class="btn btn-outline-info" href="{% url 'register' %}" role="button">Signup</a>&nbsp
+           <a class="btn btn-outline-success" href="{% url 'login' %}" role="button">Signin</a>
+		    </div>
+        {%else%}
+        <a class="btn btn-dark" href="{% url 'info' %}" role="button">{{request.user.username}}</a>&nbsp
+        <a class="btn btn-secondary" href="{% url 'logout' %}" role="button">Logout</a>
 
           {%endif%}
       </div>
