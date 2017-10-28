@@ -211,7 +211,7 @@ def message_detail(request, message_id):
 # album
 def album_scenery_new(request):
     # filter out all scenery photos (category = 1) and order by time
-    newest_scenery_photos_list = Photo.objects.filter(category=1).order_by('-time')
+    newest_scenery_photos_list = Photo.objects.order_by('-time')
     # 9 photos per page
     paginator = Paginator(newest_scenery_photos_list, 9)
     page = request.GET.get('page')
@@ -231,7 +231,7 @@ def album_scenery_new(request):
 
 def album_scenery_hot(request):
     # filter out all scenery photos (category = 1) and order by time
-    hottest_scenery_photos_list = Photo.objects.filter(category=1).order_by('-thumbs_up_number')
+    hottest_scenery_photos_list = Photo.objects.order_by('-thumbs_up_number')
     # 9 photos per page
     paginator = Paginator(hottest_scenery_photos_list, 9)
     page = request.GET.get('page')
@@ -387,7 +387,7 @@ def user_login(request):
         pass_word = request.POST.get("password","")
         user = authenticate(username=user_name, password=pass_word)
         if user is not None:
-            login(request,user)
+            my_login(request, user)
             return render(request, "album.html")
         else:
             return render(request,"login.html",{})
@@ -395,9 +395,19 @@ def user_login(request):
         return render(request, "login.html",{})
 
 
+def my_login(request, user):
+    login(request, user)
+    request.session['user_id'] = user.id
+
+
 def user_logout(request):
-    logout(request)
+    my_logout(request)
     return HttpResponseRedirect("/ShutterWeb")
+
+
+def my_logout(request):
+    logout(request)
+    request.session['user_id'] = ''
 
 
 def register(request):
@@ -405,11 +415,19 @@ def register(request):
         form = RegisterForm(request.POST)
         if form.is_valid():
             form.save()
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password1']
+            my_register(request, username, password)
             return HttpResponseRedirect("/ShutterWeb")
     else:
         form = RegisterForm()
     return render(request, 'register.html', context={'form': form})
 
+
+def my_register(request, username, password):
+    user = authenticate(username=username, password=password)
+    if user is not None:
+        my_login(request, user)
 
 def Userinfo(request):
     return  render(request, 'user_profile.html',{})
