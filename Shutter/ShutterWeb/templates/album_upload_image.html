@@ -12,29 +12,50 @@
   <div class="card-body">
     <form method="post" enctype="multipart/form-data">
       {% csrf_token %}
-      <fieldset>
-        <label for="exampleFormControlFile1">Example file input</label>
-        <input type="file" class="form-control-file" id="exampleFormControlFile1" name="image">
-      </fieldset>
-      <h3>Photo name</h3>
-      <div class="form-group">
-        <textarea class="form-control" rows="1" name="photo_name"></textarea>
+      <div class="row">
+        <div class="col-md-3">
+          <label class="custom-file">
+            <input type="file" id="upload_file" class="custom-file-input" name="image" onchange="OnFileChanged()">
+            <span id="upload_file_name" class="custom-file-control"></span>
+          </label>
+        </div>
+        <div class="col-md-9"></div>
       </div>
-      <h3>Category</h3>
+      <br>
       <div class="form-group">
-        <textarea class="form-control" rows="1" name="category"></textarea>
+        <label for="photo_name">Photo Name</label>
+        <input type="text" id="photo_name" name="photo_name" class="form-control" placeholder="Enter Photo Name">
       </div>
-      <h3>Photographer Remark</h3>
       <div class="form-group">
-       <textarea class="form-control" rows="8" name="photographer_remark"></textarea>
+        <label for="category">Category</label>
+        <select id="category" class="custom-select d-block form-control" required>
+          <option value="">Choose from...</option>
+          <option value="Landscape">Landscape</option>
+          <option value="Cartoon">Cartoon</option>
+          <option value="People">People</option>
+        </select>
       </div>
-
-      <button type="submit" class="btn btn-primary " >Submit</button>
-      <a  class="btn btn-primary" href="{% url 'album_scenery_new' %}" >Cancel</a>
+      <div class="form-group">
+        <label for="remarks">Description</label>
+        <textarea id="remarks" name="photographer_remark" rows="5" class="form-control" placeholder="Enter Photo Description..."></textarea>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <button type="submit" class="btn btn-primary " >Submit</button>
+          <a  class="btn btn-primary" href="{% url 'album_scenery_new' %}" >Cancel</a>
+        </div>
+      </div>
     </form>
   </div>
 </div>
+{% endblock %}
 
-
-
+{% block customjs %}
+<script>
+  function OnFileChanged() {
+    var file = document.getElementById('upload_file');
+    document.getElementById('upload_file_name').innerHTML = file.files.item(0).name;
+    document.getElementById('photo_name').value = file.files.item(0).name;
+  }
+</script>
 {% endblock %}
