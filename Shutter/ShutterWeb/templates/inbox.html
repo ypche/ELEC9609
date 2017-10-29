@@ -11,12 +11,15 @@
 <div class="container" style="margin-top: 0.75rem">
     <div class="row">
         <div class="col-lg-3">
+          <form method="post">
+            {% csrf_token %}
             <div class="input-group">
-              <input type="text" class="form-control" placeholder="Search for..." aria-label="Search for...">
+              <input id="search_text" type="text" class="form-control" placeholder="Search for..." aria-label="Search for...">
               <span class="input-group-btn">
-                <button class="btn btn-secondary" type="button">Go!</button>
+                <button id="SearchMessage" class="btn btn-secondary" type="submit">Go!</button>
               </span>
             </div>
+          </form>
         </div>
         <div class="col-lg-6">
             <div class="dropdown">
@@ -110,35 +113,45 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <form method="post">
+          <form method="post" action="{% url 'inbox' %}">
             <div class="modal-body">
               {% csrf_token %}
-                <div class="row">
-                    <div class="col-md-12">
-                      <div class="input-group">
-                        <span class="input-group-addon" id="basic-addon1">TO</span>
-                        <input type="text" class="form-control" name="receiver" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
-                      </div>
+              <div class="row">
+                  <div class="col-md-12">
+                    <div class="input-group">
+                      <span class="input-group-addon" id="basic-addon1">TO</span>
+                      <input type="text" class="form-control" id="receiver" name="receiver" placeholder="Username"
+                             aria-label="Username" aria-describedby="basic-addon1" required>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <label for="messageContent">Content</label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <textarea id="messageContent" rows="5" name="content" class="form-control" placeholder="Say Something..." required></textarea>
-                    </div>
-                </div>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-12">
+                      <label for="messageContent">Content</label>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-12">
+                      <textarea id="messageContent" rows="5" name="content"
+                                class="form-control" placeholder="Say Something..." required></textarea>
+                  </div>
+              </div>
+              <label id="test"></label>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary" name="messageSend">Send</button>
+              <button type="submit" id="messageSend" class="btn btn-primary" name="messageSend">Send</button>
             </div>
           </form>
         </div>
       </div>
     </div>
 </div>
+{% endblock %}
+{% block customjs %}
+<script>
+  $('#messageSend').on('click', function(event) {
+    send_message();
+  });
+</script>
 {% endblock %}

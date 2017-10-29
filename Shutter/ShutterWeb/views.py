@@ -108,7 +108,8 @@ def inbox(request):
         message_list = message_list.order_by('-time')
     elif 'messageSortByFT' in request.POST:
         message_list = Message.objects.filter(Q(author=request.user)|Q(receiver=request.user)).order_by('author')
-    elif 'messageSend' in request.POST:
+    # elif 'messageSend' in request.POST:
+    elif request.is_ajax():
         form = messageSendForm(request.POST)
         if form.is_valid():
             try:
@@ -116,7 +117,7 @@ def inbox(request):
                 message = Message()
                 message.author = request.user
                 message.receiver = receiver
-                message.content = form.cleaned_data['content']
+                message.content = request.POST['content']
                 message.save()
             except ObjectDoesNotExist:
                 print('no user admin')
