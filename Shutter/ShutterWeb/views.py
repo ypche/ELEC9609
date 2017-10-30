@@ -343,6 +343,7 @@ def album_photo(request, photo_id):
 def album_upload_image(request):
     if request.method == 'POST':
         form = photoForm(request.POST, request.FILES)
+        print(request.POST)
         if form.is_valid():
             if 'image' in request.FILES:
                 image = request.FILES["image"]

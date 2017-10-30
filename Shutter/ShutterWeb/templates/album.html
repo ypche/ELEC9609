@@ -143,7 +143,7 @@
               <a href="../../../album/photo/{{ this_photo.id }}/">
                 <!--<img class="card-img-top" alt="Card image cap" src="{% static 'images/1.jpeg' %}">-->
                 <img class="card-img-top" alt="Card image cap"
-                     src= "../../../../{{this_photo.image_path}}">
+                     src= "{% static this_photo.image %}">
               </a>
               <div class="card-body">
                 <h4 class="card-title text-center">{{ this_photo.photo_name}}</h4>
