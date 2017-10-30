@@ -8,8 +8,13 @@
 <div class="blog-header">
         <div class="container">
             <br><br>
+
           <h1 class="blog-title">{{ news.title }}</h1>
             <p class="blog-post-meta">{{ news.time}} by {{ news.author }}</a></p>
+            {%if request.user.is_staff%}
+            <button type="button" class="btn btn-link"  onclick="window.location.href='/admin/ShutterWeb/news/{{news.id}}/change/'" >Edit news</button>
+            {%else%}
+            {%endif%}
         </div>
       </div>
 
@@ -46,6 +51,10 @@
                 <img class="d-flex mr-3 rounded-circle " width="70" src="http://s3.amazonaws.com/37assets/svn/765-default-avatar.png" alt="">
                 <div class="media-body">
                   <h5 class="mt-0">Commenter: {{ comment.author }}</h5>
+                    {%if request.user.is_staff%}
+                    <button type="button" class="btn btn-link"  onclick="window.location.href='/admin/ShutterWeb/newscomment/{{comment.id}}/change/'" >Edit comment</button>
+                    {%else%}
+                    {%endif%}
                  <div class="comment-field" style="padding-top: 10px;">
               {{ comment.content }}
                </div>
