@@ -57,14 +57,14 @@ $(function() {
 function send_message() {
     var receiver_val = $('#receiver').val();
     var content_val = $('#messageContent').val();
-    console.log(content_val);
+    
     $.ajax({
         url: '',
         type: "POST",
         data: {
             receiver: receiver_val,
             content: content_val,
-            test: 'send_message'
+            name: 'send_message'
         },
 
         success: function() {
@@ -73,6 +73,31 @@ function send_message() {
 
         error: function() {
             $('#search_text').val('errmsg');
+        }
+    })
+}
+
+function show_detail(counter) {
+    var contact_id = 'contact_' + counter;
+    var contact = document.getElementById(contact_id).innerHTML;
+    var data = {'contact': contact, 'name': 'show_detail'};
+    console.log(JSON.stringify(data));
+
+    $.ajax({
+        url: '/ShutterWeb/message_detail/',
+        type: 'POST',
+        contentType: 'application/json; charset=utf-8',
+        data: JSON.stringify(data),
+
+        success: function() {
+            console.log('success');
+            window.location = '/ShutterWeb/message_detail/';
+        },
+
+        error: function(xhr, txt, err) {
+            console.log(xhr);
+            console.log(txt);
+            console.log(err);
         }
     })
 }

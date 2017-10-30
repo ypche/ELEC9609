@@ -101,6 +101,11 @@ class Conversation():
 
 @login_required(login_url='/ShutterWeb/login')
 def inbox(request):
+    if 'user_id' in request.session:
+        user_id = request.session['user_id']
+    else:
+        HttpResponseRedirect("/ShutterWeb/login")
+    user = UserProfile.objects.get(pk=user_id)
     if 'messageSortByDate' in request.POST:
         message_list = Message.objects.filter(Q(author=request.user)|Q(receiver=request.user)).order_by('-time')
     elif 'messageSortByUnread' in request.POST:
@@ -123,13 +128,13 @@ def inbox(request):
                 print('no user admin')
         message_list = Message.objects.filter(Q(author=request.user)|Q(receiver=request.user)).order_by('-time')
     else:
-        message_list = Message.objects.filter(Q(author=request.user)|Q(receiver=request.user)).order_by('-time')
+        message_list = Message.objects.filter(Q(author=user)|Q(receiver=user)).order_by('-time')
 
     conversation = []
     contacts = []
     contact = ''
     for m in message_list:
-        if m.author == request.user:
+        if m.author == user:
             contact = str(m.receiver)
         else:
             contact = str(m.author)
@@ -178,6 +183,7 @@ def inbox(request):
     # context = {'latest_message': message_list}
     return render(request, 'inbox.html', context)
 
+
 @login_required(login_url='/ShutterWeb/login')
 def message_detail(request, message_id):
     if 'messageSend' in request.POST:
@@ -193,6 +199,7 @@ def message_detail(request, message_id):
             newMessage.author = request.user
             newMessage.save()
     try:
+        print(request)
         message = Message.objects.get(pk=message_id)
         author = message.author
         receiver = message.receiver
@@ -212,7 +219,7 @@ def message_detail(request, message_id):
 # album
 def album_scenery_new(request):
     # filter out all scenery photos (category = 1) and order by time
-    newest_scenery_photos_list = Photo.objects.order_by('-time')
+    newest_scenery_photos_list = Photo.objects.filter(category=1).order_by('-time')
     # 9 photos per page
     paginator = Paginator(newest_scenery_photos_list, 9)
     page = request.GET.get('page')
@@ -232,7 +239,7 @@ def album_scenery_new(request):
 
 def album_scenery_hot(request):
     # filter out all scenery photos (category = 1) and order by time
-    hottest_scenery_photos_list = Photo.objects.order_by('-thumbs_up_number')
+    hottest_scenery_photos_list = Photo.objects.filter(category=1).order_by('-thumbs_up_number')
     # 9 photos per page
     paginator = Paginator(hottest_scenery_photos_list, 9)
     page = request.GET.get('page')
@@ -388,7 +395,8 @@ def user_login(request):
         pass_word = request.POST.get("password","")
         user = authenticate(username=user_name, password=pass_word)
         if user is not None:
-            my_login(request, user)
+            login(request, user)
+            request.session['user_id'] = user.id
             return render(request, "album.html")
         else:
             context = {'login_err': 'Username or Password is wrong!'}
@@ -397,19 +405,9 @@ def user_login(request):
         return render(request, "login.html",{})
 
 
-def my_login(request, user):
-    login(request, user)
-    request.session['user_id'] = user.id
-
-
 def user_logout(request):
-    my_logout(request)
-    return HttpResponseRedirect("/ShutterWeb")
-
-
-def my_logout(request):
     logout(request)
-    request.session['user_id'] = ''
+    return HttpResponseRedirect("/ShutterWeb")
 
 
 def register(request):
@@ -429,7 +427,8 @@ def register(request):
 def my_register(request, username, password):
     user = authenticate(username=username, password=password)
     if user is not None:
-        my_login(request, user)
+        login(request, user)
+        request.session['user_id'] = user.id
 
 def Userinfo(request):
     return  render(request, 'user_profile.html',{})

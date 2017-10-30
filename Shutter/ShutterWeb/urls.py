@@ -17,6 +17,7 @@ urlpatterns = [
 
     # message
     url(r'^inbox/$', views.inbox, name='inbox'),
+    # url(r'^message_detail/$', views.message_detail, name='message_detail'),
     url(r'^message_detail/(?P<message_id>[0-9]+)/$', views.message_detail, name='message_detail'),
 
     # news
