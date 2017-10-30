@@ -46,7 +46,7 @@
             <div class="list-group">
               {% if latest_conversation %}
               {% for m in latest_conversation %}
-              <a id="message_detail" onclick="show_detail('{{ forloop.counter }}')" href="" class="list-group-item list-group-item-action flex-column align-items-start">
+              <a id="message_detail" href="{% url 'message_detail' message_id=m.id %}" class="list-group-item list-group-item-action flex-column align-items-start">
                 <div class="d-flex w-100 justify-content-between">
                   <h5 id="contact_{{ forloop.counter }}" class="mb-1">{{ m.contact }}</h5>
                   <small>{{ m.time }}</small>
