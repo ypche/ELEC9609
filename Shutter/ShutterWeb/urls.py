@@ -21,7 +21,7 @@ urlpatterns = [
 
     # news
     url(r'^news/$', newsviews.news_list, name='news_list'),
-    url(r'^news_content/$', newsviews.news_content, name='news_content'),
+    url(r'^news_content/(?P<news_id>[0-9]+)/$', newsviews.news_content, name='news_content'),
     url(r'^news_list/$', newsviews.news_list, name='news_list'),
 
     # album

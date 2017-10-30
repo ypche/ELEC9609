@@ -16,7 +16,7 @@
     <br>
 {% for news in all_news.object_list %}
 <div class="list-group">
-  <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+  <a href= "/ShutterWeb/news_content/{{ news.id }}/" class="list-group-item list-group-item-action flex-column align-items-start">
     <div class="d-flex w-100 justify-content-between">
       <h5 class="mb-1">{{news.title}}</h5>
       <small>{{news.time}}</small>
