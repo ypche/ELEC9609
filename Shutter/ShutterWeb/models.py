@@ -98,7 +98,7 @@ class Photo(models.Model):
     image = models.ImageField(upload_to='images/album/', blank=True, null=True)
     thumbs_up_number = models.IntegerField(null=False, blank=True, default=0)
     category = models.CharField(max_length=20, null=True, blank=True, default="Landscape",
-                                choices=(("Landscape", u"Landscape"), ("Cartoon", u"Cartoon"), ("People", u"People")))
+                                choices=(("1", u"Landscape"), ("2", u"Portraiture")))
     time = models.DateTimeField(default=timezone.now)
     photo_name = models.CharField(max_length=50, null=True, blank=True)
     photographer_name = models.CharField(max_length=50, null=True, blank=True)
