@@ -103,84 +103,84 @@ class Conversation():
 def inbox(request):
     if 'user_id' in request.session:
         user_id = request.session['user_id']
+        user = UserProfile.objects.get(pk=user_id)
+        if 'messageSortByDate' in request.POST:
+            message_list = Message.objects.filter(Q(author=request.user)|Q(receiver=request.user)).order_by('-time')
+        elif 'messageSortByUnread' in request.POST:
+            message_list = Message.objects.filter((Q(author=request.user)|Q(receiver=request.user))&Q(readflag='UNREAD'))
+            message_list = message_list.order_by('-time')
+        elif 'messageSortByFT' in request.POST:
+            message_list = Message.objects.filter(Q(author=request.user)|Q(receiver=request.user)).order_by('author')
+        # elif 'messageSend' in request.POST:
+        elif request.is_ajax():
+            form = messageSendForm(request.POST)
+            if form.is_valid():
+                try:
+                    receiver = UserProfile.objects.get(username=request.POST['receiver'])
+                    message = Message()
+                    message.author = request.user
+                    message.receiver = receiver
+                    message.content = request.POST['content']
+                    message.save()
+                except ObjectDoesNotExist:
+                    print('no user admin')
+            message_list = Message.objects.filter(Q(author=request.user)|Q(receiver=request.user)).order_by('-time')
+        else:
+            message_list = Message.objects.filter(Q(author=user)|Q(receiver=user)).order_by('-time')
+
+        conversation = []
+        contacts = []
+        contact = ''
+        for m in message_list:
+            if m.author == user:
+                contact = str(m.receiver)
+            else:
+                contact = str(m.author)
+            if len(conversation) == 0:
+                c = Conversation()
+                c.contact = contact
+                c.content = m.content
+                c.time = m.time
+                c.id = m.id
+                conversation.append(c)
+                contacts.append(contact)
+            else:
+                for x in conversation:
+                    if not contact in contacts:
+                        c = Conversation()
+                        c.contact = contact
+                        c.content = m.content
+                        c.time = m.time
+                        c.id = m.id
+                        conversation.append(c)
+                        contacts.append(contact)
+                        break
+                    else:
+                        if x.time < m.time:
+                            x.time = m.time
+                            x.content = m.content
+                            x.id = m.id
+                            i = conversation.index(x)
+                            conversation.pop(i)
+                            conversation.append(x)
+                        break
+
+        paginator = Paginator(conversation, 5)  # Show 5 messages per page
+        paginator.count = len(list(conversation))
+
+        page = request.GET.get('page')
+        try:
+            latest_conversation = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            latest_conversation = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+            latest_conversation = paginator.page(paginator.num_pages)
+        context = {'latest_conversation': latest_conversation}
+        # context = {'latest_message': message_list}
     else:
         HttpResponseRedirect("/ShutterWeb/login")
-    user = UserProfile.objects.get(pk=user_id)
-    if 'messageSortByDate' in request.POST:
-        message_list = Message.objects.filter(Q(author=request.user)|Q(receiver=request.user)).order_by('-time')
-    elif 'messageSortByUnread' in request.POST:
-        message_list = Message.objects.filter((Q(author=request.user)|Q(receiver=request.user))&Q(readflag='UNREAD'))
-        message_list = message_list.order_by('-time')
-    elif 'messageSortByFT' in request.POST:
-        message_list = Message.objects.filter(Q(author=request.user)|Q(receiver=request.user)).order_by('author')
-    # elif 'messageSend' in request.POST:
-    elif request.is_ajax():
-        form = messageSendForm(request.POST)
-        if form.is_valid():
-            try:
-                receiver = UserProfile.objects.get(username=request.POST['receiver'])
-                message = Message()
-                message.author = request.user
-                message.receiver = receiver
-                message.content = request.POST['content']
-                message.save()
-            except ObjectDoesNotExist:
-                print('no user admin')
-        message_list = Message.objects.filter(Q(author=request.user)|Q(receiver=request.user)).order_by('-time')
-    else:
-        message_list = Message.objects.filter(Q(author=user)|Q(receiver=user)).order_by('-time')
-
-    conversation = []
-    contacts = []
-    contact = ''
-    for m in message_list:
-        if m.author == user:
-            contact = str(m.receiver)
-        else:
-            contact = str(m.author)
-        if len(conversation) == 0:
-            c = Conversation()
-            c.contact = contact
-            c.content = m.content
-            c.time = m.time
-            c.id = m.id
-            conversation.append(c)
-            contacts.append(contact)
-        else:
-            for x in conversation:
-                if not contact in contacts:
-                    c = Conversation()
-                    c.contact = contact
-                    c.content = m.content
-                    c.time = m.time
-                    c.id = m.id
-                    conversation.append(c)
-                    contacts.append(contact)
-                    break
-                else:
-                    if x.time < m.time:
-                        x.time = m.time
-                        x.content = m.content
-                        x.id = m.id
-                        i = conversation.index(x)
-                        conversation.pop(i)
-                        conversation.append(x)
-                    break
-
-    paginator = Paginator(conversation, 5)  # Show 5 messages per page
-    paginator.count = len(list(conversation))
-
-    page = request.GET.get('page')
-    try:
-        latest_conversation = paginator.page(page)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        latest_conversation = paginator.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        latest_conversation = paginator.page(paginator.num_pages)
-    context = {'latest_conversation': latest_conversation}
-    # context = {'latest_message': message_list}
     return render(request, 'inbox.html', context)
 
 
