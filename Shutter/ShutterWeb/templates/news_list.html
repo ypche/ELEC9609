@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Inbox{% endblock %}
+{% block title %}News{% endblock %}
 
 {% block customcss %}
 
@@ -13,6 +13,7 @@
     <div class="row">
         </div>
     </div>
+<div class="row-fluid">
     <br>
 {% for news in all_news.object_list %}
 <div class="list-group">

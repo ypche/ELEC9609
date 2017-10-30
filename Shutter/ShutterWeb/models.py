@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from datetime import timedelta
 from django.contrib.auth.models import AbstractUser
+
 import os
 
 
@@ -82,15 +83,13 @@ class News(models.Model):
         description = models.CharField(max_length=100, null=True, blank=True)
         remarks = models.CharField(max_length=500, null=True, blank=True)
 
+
 class NewsComment(models.Model):
-        topic = models.ForeignKey('News', related_name='NewsComment_Topic', on_delete=models.CASCADE, null=True,
+        topic = models.ForeignKey('News', on_delete=models.CASCADE, null=True,
                                   blank=True)
-        comment = models.ForeignKey('self', related_name='NewsComment_Comment', on_delete=models.CASCADE, null=True,
-                                    blank=True)
         content = models.CharField(max_length=500, null=True, blank=True)
         time = models.DateTimeField(default=timezone.now)
-        author = models.ForeignKey('UserProfile', related_name='NewsComment_Author', on_delete=models.CASCADE)
-        remarks = models.CharField(max_length=500, null=True, blank=True)
+        author = models.ForeignKey('UserProfile', related_name='NewsComment_Author', on_delete=models.CASCADE,null=True,blank=True)
 
 
 class Photo(models.Model):

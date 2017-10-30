@@ -1,5 +1,5 @@
 from django import forms
-from .models import Topiccomment,Topic, Photo, PhotoComment, Message, UserProfile
+from .models import Topiccomment,Topic, Photo, PhotoComment, Message, UserProfile,NewsComment
 from django.contrib.auth.forms import UserCreationForm
 
 
@@ -44,3 +44,8 @@ class UserInfoForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ['username', 'gender', 'address', 'email']
+
+class NewsCommentForm(forms.ModelForm):
+    class Meta:
+        model= NewsComment
+        fields = ['content', 'author']
