@@ -58,9 +58,6 @@ class Topic(models.Model):
         self.views += 1
         self.save(update_fields=['views'])
 
-    def recent_topic(self):
-        return self.time >= timezone.now()-timedelta(minutes=3)
-
 class Topiccomment(models.Model):
     topic = models.ForeignKey('Topic',  on_delete=models.CASCADE, null=True,
                               blank=True)
@@ -105,14 +102,14 @@ class Photo(models.Model):
     photographer_remark = models.CharField(max_length=500, null=True, blank=True)
 
     def __unicode__(self):
-        return '%s %s' % (self.owner, self.image)
+        return '%s %s' % (self.photo_name, self.image)
 
     def increase_thumbs_up(self):
         self.thumbs_up_number += 1
         self.save(update_fields=['thumbs_up_number'])
 
     def __str__(self):
-        return self.content
+        return self.photo_name
 
 
 class PhotoComment(models.Model):

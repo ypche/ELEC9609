@@ -101,6 +101,7 @@ class Conversation():
 
 @login_required(login_url='/ShutterWeb/login')
 def inbox(request):
+    context = {}
     if 'user_id' in request.session:
         user_id = request.session['user_id']
         user = UserProfile.objects.get(pk=user_id)
