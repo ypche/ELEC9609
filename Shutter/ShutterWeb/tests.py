@@ -1,5 +1,5 @@
 from django.test import TestCase
-from .models import UserProfile, Message, Topic, Topiccomment, Photo, PhotoComment
+from .models import UserProfile, Message, Topic, Topiccomment, Photo, PhotoComment, News
 from .forms import CommentForm, photoForm
 from django.utils import timezone
 from django.core.urlresolvers import reverse
@@ -46,6 +46,12 @@ class TopicTest(TestCase):
         self.assertEqual(w.__str__(), w.content)
         self.assertEqual(pv+1, av)
         self.assertEqual(pr+1, ar)
+
+class NewsTest(TestCase):
+    def create_news(self, author='', title='title', content='testing'):
+        if len(author) is 0:
+            author = UserProfileTest.create_userprofile(UserProfileTest, "Icy")
+        return News.objects.create(author=author, title=title, content=content, time=timezone.now())
 
 class TopiccommentTest(TestCase):
     def create_topiccomment(self, topic='', author='', content='comment'):
@@ -455,3 +461,32 @@ class UploadPhotoViewTest(TestCase):
         super(UploadPhotoViewTest, self).tearDown()
         self.testuser1.delete()
         self.latest_topic.delete()
+
+class NewsListViewTest(TestCase):
+    def setUp(self):
+        super(NewsListViewTest, self).setUp()
+
+    def test_index(self):
+        response = self.client.get(reverse('news_list'))
+        self.assertEqual(response.status_code, 200)
+
+    def tearDown(self):
+        super(NewsListViewTest, self).tearDown()
+
+
+class NewsContentViewTest(TestCase):
+    def setUp(self):
+        super(NewsContentViewTest, self).setUp()
+        self.news_list = NewsTest.create_news(NewsTest)
+
+    def test_index(self):
+        response = self.client.get(reverse('news_content', args=(self.news_list.id,)))
+        self.assertEqual(response.status_code, 200)
+
+    def test_news_not_exist(self):
+        response = self.client.get(reverse('news_content', args=(1000000,)))
+        self.assertEqual(response.status_code, 404)
+
+    def tearDown(self):
+        super(NewsContentViewTest, self).tearDown()
+        self.news_list.delete()
