@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'ShutterWeb.apps.ShutterwebConfig',
     'pure_pagination',
-    'django_filters'
+    'django_filters',
+    'coverage'
 ]
 
 # path to store images in local
