@@ -1,6 +1,6 @@
 from django.test import TestCase
 from .models import UserProfile, Message, Topic, Topiccomment, Photo, PhotoComment
-from .forms import CommentForm
+from .forms import CommentForm, photoForm
 from django.utils import timezone
 from django.core.urlresolvers import reverse
 import json
@@ -352,6 +352,17 @@ class LoginViewTest(TestCase):
     def tearDown(self):
         super(LoginViewTest, self).tearDown()
 
+class RegisterViewTest(TestCase):
+    def setUp(self):
+        super(RegisterViewTest, self).setUp()
+
+    def test_index(self):
+        response = self.client.get(reverse('register'))
+        self.assertEqual(response.status_code, 200)
+
+    def tearDown(self):
+        super(RegisterViewTest, self).tearDown()
+
 class editprofileViewTest(TestCase):
     def setUp(self):
         super(editprofileViewTest, self).setUp()
@@ -422,5 +433,25 @@ class AlbumPhotoViewTest(TestCase):
 
     def tearDown(self):
         super(AlbumPhotoViewTest, self).tearDown()
+        self.testuser1.delete()
+        self.latest_topic.delete()
+
+class UploadPhotoViewTest(TestCase):
+    def setUp(self):
+        super(UploadPhotoViewTest, self).setUp()
+        self.testuser1 = UserProfileTest.create_userprofile(UserProfileTest, 'Alice', 'test0001')
+        self.testuser1.set_password('test0001')
+        self.testuser1.save()
+        self.latest_topic = PhotoTest.create_photo(PhotoTest)
+
+    def test_index_logged_in(self):
+        login = self.client.login(username='Alice', password='test0001')
+        form = photoForm(data={'category': '', 'photo_name': '', 'photographer_name': '', 'photographer_remark': '', 'image': ''})
+        self.assertTrue(form.is_valid())
+        response = self.client.get(reverse('album_upload_image'))
+        self.assertEqual(response.status_code, 200)
+
+    def tearDown(self):
+        super(UploadPhotoViewTest, self).tearDown()
         self.testuser1.delete()
         self.latest_topic.delete()

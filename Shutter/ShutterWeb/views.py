@@ -20,7 +20,7 @@ def forum(request):
     paginator = Paginator(latest_topic_list, 5) # Show 25 contacts per page
 
     page = request.GET.get('page')
-    print(page)
+    # print(page)
     try:
         latest_topic = paginator.page(page)
     except PageNotAnInteger:
